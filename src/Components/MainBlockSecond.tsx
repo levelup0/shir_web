@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { commonRequestWithToken } from '@/Common/commonRequest';
-import { VOZ } from '@/Common/urls';
+import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import { useEffect, useState } from 'react';
 
@@ -28,7 +28,7 @@ export default function MainBlockSecond() {
         //     limit: limitFilter,
         //   },
         const response = await commonRequestWithToken(
-            VOZ,
+            VOZ_MAIN,
             'none',
             '',
             '',
@@ -72,7 +72,7 @@ export default function MainBlockSecond() {
     };
 
     return (
-        <div className="w-full mt-[-40px] z-50 flex justify-center items-center py-[20px]">
+        <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
             <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
                 <div className="w-full shadow flex justify-between gap-[30px] px-[30px] py-[30px] bg-white rounded-[5px] ">
                     <div className="w-full flex gap-[30px]">

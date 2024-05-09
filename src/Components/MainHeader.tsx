@@ -64,11 +64,11 @@ export default function MainHeader() {
     }, []);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col z-50">
             <div
                 className={
                     'w-full fixed  z-40 header-section transition-all ease-in ' +
-                    (pathname != '/' ? 'bg-gray-700' : '')
+                    (pathname != '/' ? 'bg-gray-700' : 'bg-gray-700')
                 }
             >
                 <div className="flex w-full lg:px-[175px] h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
@@ -130,7 +130,7 @@ export default function MainHeader() {
                                         : '')
                                 }
                             >
-                                Вызовополучатель
+                                Вызовополучатели
                             </div>
                         </Link>
                     </div>
@@ -153,12 +153,12 @@ export default function MainHeader() {
                             <>
                                 {' '}
                                 <Link href="/login">
-                                    <div className="text-[16px]  bg-primary_yellow  transition-all ease-linear w-[130px] h-[38px] px-7 pt-3 pb-[11px] text-primary_grey active:text-white  active:bg-primary_grey hover:text-primary_yellow  hover:bg-primary_grey  rounded-primary_radius border justify-center items-center flex tracking-tighter-[1.2px]">
+                                    <div className="text-[16px]  bg-primary_yellow  transition-all ease-linear w-[130px] h-[38px] px-7 pt-3 pb-[11px] text-primary_grey active:text-white  active:bg-primary_grey hover:text-primary_yellow  hover:bg-primary_grey  rounded-[4px] border justify-center items-center flex tracking-tighter-[1.2px]">
                                         Войти
                                     </div>
                                 </Link>
                                 <Link href="/register">
-                                    <div className="text-[16px] border-primary_yellow   transition-all ease-linear w-[150px] h-[38px] px-1.5 pt-[13px] pb-3 text-primary_grey bg-none rounded-primary_radius border active:bg-primary_grey_opacity active:text-primary_grey hover:text-primary_yellow hover:bg-white  border-primary_grey justify-center items-center flex tracking-tighter-[1.2px]">
+                                    <div className="text-[16px] border-primary_yellow   transition-all ease-linear w-[150px] h-[38px] px-1.5 pt-[13px] pb-3 text-primary_grey bg-none rounded-[4px] border active:bg-primary_grey_opacity active:text-primary_grey hover:text-primary_yellow hover:bg-white  border-primary_grey justify-center items-center flex tracking-tighter-[1.2px]">
                                         Регистрация
                                     </div>
                                 </Link>
@@ -252,7 +252,7 @@ export default function MainHeader() {
                     </div>
                 </div>
             ) : null}
-            {pathname == '/' ? (
+            {/* {pathname == '/' ? (
                 <div className="bg-main-bg w-full pt-[200px] bg-cover">
                     <div className="w-full flex justify-start lg:px-[255px] flex-col gap-[30px] py-[60px] ">
                         <div className="flex flex-col w-fit">
@@ -281,7 +281,7 @@ export default function MainHeader() {
                         </div>
                     </div>
                 </div>
-            ) : null}
+            ) : null} */}
         </div>
     );
 }

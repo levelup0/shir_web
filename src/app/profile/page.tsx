@@ -83,7 +83,7 @@ export default function Page() {
                             <path d="M96 128a128 128 0 1 0 256 0A128 128 0 1 0 96 128zm94.5 200.2l18.6 31L175.8 483.1l-36-146.9c-2-8.1-9.8-13.4-17.9-11.3C51.9 342.4 0 405.8 0 481.3c0 17 13.8 30.7 30.7 30.7H162.5c0 0 0 0 .1 0H168 280h5.5c0 0 0 0 .1 0H417.3c17 0 30.7-13.8 30.7-30.7c0-75.5-51.9-138.9-121.9-156.4c-8.1-2-15.9 3.3-17.9 11.3l-36 146.9L238.9 359.2l18.6-31c6.4-10.7-1.3-24.2-13.7-24.2H224 204.3c-12.4 0-20.1 13.6-13.7 24.2z" />
                         </svg>
                         <div className="flex flex-col gap-[5px] justify-center items-center">
-                            <h4 className="font-semibold text-[20px]">
+                            <h4 className="font-semibold text-[20px] text-center">
                                 {data?.name}
                             </h4>
                             <p>
@@ -156,7 +156,22 @@ export default function Page() {
                                 </Link>
                             </>
                         ) : (
-                            ''
+                            <Link href="/cv">
+                                <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                    <div className="w-[2px]  h-[55px]"></div>
+                                    <div className="flex gap-[5px] px-[15px] items-center">
+                                        <svg
+                                            height={15}
+                                            viewBox="0 0 512 512"
+                                            width={15}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
+                                        </svg>
+                                        <p className="font-medium ">CV</p>
+                                    </div>
+                                </div>
+                            </Link>
                         )}
                     </div>
                 </div>

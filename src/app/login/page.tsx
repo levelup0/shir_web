@@ -16,7 +16,6 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { signIn, SignInResponse } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 // import type { SignInResponse } from 'next-auth/react';
 
 export default function Page() {
@@ -200,7 +199,7 @@ export default function Page() {
                                 </div>
                             ) : null}
                         </button>
-                        <hr />
+                        {/* <hr />
                         <div className="flex justify-between items-center gap-[5px] w-full">
                             <div className="flex  font-semibold w-full md:w-1/2 justify-center">
                                 <span className="text-center text-[16px] ">
@@ -216,7 +215,7 @@ export default function Page() {
                                 width={200}
                             />
                         </div>
-                        <hr />
+                        <hr /> */}
                         <div className="flex gap-[10px] items-center justify-center">
                             <p>Нет акаунта Вызовы ШИР?</p>
                             <Link className="text-blue-500" href="register">

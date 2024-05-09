@@ -48,6 +48,27 @@ export default function Page() {
         const form = new FormData();
         const token_captcha = await executeRecaptcha('form_submit');
 
+        /**
+         * Валидация CV
+         */
+
+        const _files = [...files];
+
+        let sum: any = 10485760;
+
+        if (_files.length > 0) {
+            for (let i = 0; i < _files.length; i += 1) {
+                if (_files[i].file_size != null) {
+                    sum = parseFloat(sum) - parseFloat(_files[i].file_size);
+                }
+            }
+
+            if (sum < 0) {
+                toast.error('Превышение допустимого размера файлов 10 MB');
+                return false;
+            }
+        }
+
         form.append('name', name);
         form.append('type_user', typeUser);
 
@@ -58,6 +79,7 @@ export default function Page() {
         form.append('password', password);
         form.append('password_confirmation', confirm);
         form.append('token_captcha', token_captcha);
+        form.append('files', JSON.stringify(files));
 
         const response = await requestPost(REGISTER, form);
         setLoader(false);
@@ -93,6 +115,89 @@ export default function Page() {
         }
     }, [session]);
 
+    const [availableSize, setAvailableSize] = useState<any>(10485760);
+
+    const [files, setFiles] = useState<any>([]);
+
+    const addFiles = () => {
+        const _files: any = [...files];
+
+        _files.push({
+            file_format: null,
+            file_name: null,
+            file_size: null,
+            base64: null,
+        });
+        setFiles(_files);
+    };
+
+    const removeFile = (index: any) => {
+        const _files = [...files];
+        _files.splice(index, 1);
+        setFiles(_files);
+    };
+
+    const updateAvailableSize = () => {
+        const _files: any = [...files];
+
+        let sum: any = 10485760;
+
+        if (_files.length > 0) {
+            for (let i = 0; i < _files.length; i += 1) {
+                if (_files[i].file_size != null) {
+                    sum = parseFloat(sum) - parseFloat(_files[i].file_size);
+                }
+            }
+        }
+        if (sum < 0) {
+            toast.error('Превышение допустимого размера файлов 10 MB');
+            setAvailableSize(sum);
+            return false;
+        }
+
+        setAvailableSize(sum);
+
+        return true;
+    };
+
+    useEffect(() => {
+        updateAvailableSize();
+    }, [files]);
+
+    const onChangeFileInput = (e: any) => {
+        const key = e.target.getAttribute('data-key');
+        const value = e.target.files[0];
+        const _files: any = [...files];
+
+        const test =
+            /\.(gif|jpg|jpeg|tiff|png|pdf|txt|xls|xlsx|ppt|pptx|doc|docx|csv)$/i.test(
+                value.name,
+            );
+        if (!test) {
+            _files.splice(key, 1);
+            setFiles(_files);
+
+            toast.error(
+                'Доступные форматы: gif, jpg, jpeg, tiff, png, pdf, txt, xls, xlsx, ppt, pptx, doc, docx, csv',
+            );
+            return;
+        }
+
+        const reader: any = new FileReader();
+        reader.readAsDataURL(value);
+
+        reader.onloadend = function () {
+            const base64String = reader.result
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+
+            _files[key].file_format = value.name.split('.').pop();
+            _files[key].file_name = value.name;
+            _files[key].file_size = value.size;
+            _files[key].base64 = base64String;
+            setFiles(_files);
+        };
+    };
     return (
         <div className="flex flex-col gap-[5px]">
             <div className="w-full  flex flex-col gap-[5px] ">
@@ -224,18 +329,107 @@ export default function Page() {
                             ) : null}
                             {typeUser == 0 ? (
                                 <div className="flex flex-col">
-                                    <label className="text-[14px] font-light px-[5px]">
-                                        CV (файл)
-                                    </label>
-                                    <input
-                                        className="w-full md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
-                                        onChange={e =>
-                                            setUrlTelegram(e.target.value)
-                                        }
-                                        placeholder="CV"
-                                        type="text"
-                                        value={urlTelegram}
-                                    />
+                                    <div className="awards-subtitle">
+                                        <div className="row mt-4 mb-4 d-flex">
+                                            {availableSize > 0 ? (
+                                                <label
+                                                    className="text text-green-600 text-[14px] fs-6 text-muted"
+                                                    htmlFor="file"
+                                                >
+                                                    {' Доступно: '}
+                                                    {(
+                                                        availableSize /
+                                                        1024 /
+                                                        1024
+                                                    ).toFixed(2)}
+                                                    МБ
+                                                </label>
+                                            ) : (
+                                                <label
+                                                    className="text text-red-500 fs-6"
+                                                    htmlFor="file"
+                                                >
+                                                    {}
+                                                    {' Превышено допущенного'}
+                                                    {(
+                                                        availableSize /
+                                                        1024 /
+                                                        1024
+                                                    ).toFixed(2)}{' '}
+                                                    MB
+                                                </label>
+                                            )}
+                                        </div>
+
+                                        <div className="col-md-6">
+                                            {files.length > 0
+                                                ? files.map(
+                                                      (
+                                                          value: any,
+                                                          index: number,
+                                                      ) => (
+                                                          <div
+                                                              className="input-group mb-3"
+                                                              key={index}
+                                                          >
+                                                              <input
+                                                                  aria-describedby="basic-addon1"
+                                                                  aria-label="Username"
+                                                                  className="form-control"
+                                                                  data-key={
+                                                                      index
+                                                                  }
+                                                                  id="file"
+                                                                  name="file"
+                                                                  onChange={
+                                                                      onChangeFileInput
+                                                                  }
+                                                                  placeholder=""
+                                                                  type="file"
+                                                              />
+
+                                                              <button
+                                                                  className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                  onClick={() =>
+                                                                      removeFile(
+                                                                          index,
+                                                                      )
+                                                                  }
+                                                              >
+                                                                  <svg
+                                                                      className="fill-white"
+                                                                      height={
+                                                                          15
+                                                                      }
+                                                                      viewBox="0 0 448 512"
+                                                                      width={12}
+                                                                      xmlns="http://www.w3.org/2000/svg"
+                                                                  >
+                                                                      <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                                                  </svg>
+                                                              </button>
+                                                          </div>
+                                                      ),
+                                                  )
+                                                : null}
+
+                                            <div className="col-sm-6 col-md-5">
+                                                <div className="awards-form__button last">
+                                                    <button
+                                                        className="flex justify-center items-center px-[20px] w-full md:max-w-[400px]  h-[50px] rounded-[10px] bg-primary_yellow border text-[#FFF] text-[16px] font-normal hover:active:bg-[#FFF] hover:active:text-primary2 transition-all ease-in-out"
+                                                        onClick={() =>
+                                                            addFiles()
+                                                        }
+                                                        type="button"
+                                                    >
+                                                        {
+                                                            'CV, рекомендательные информации и.т.д (файл)'
+                                                        }
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ) : null}
                             {typeUser == 0 ? (
@@ -313,7 +507,7 @@ export default function Page() {
                                 </div>
                             ) : null}
                         </button>
-                        <hr />
+                        {/* <hr />
                         <div className="flex justify-between items-center gap-[5px] w-full">
                             <div className="flex  font-semibold w-1/2 justify-center">
                                 <span className="text-center text-[16px] ">
@@ -328,7 +522,7 @@ export default function Page() {
                                 src={'/images/googlesign.png'}
                                 width={200}
                             />
-                        </div>
+                        </div> */}
                         <hr />
                         <div className="flex gap-[10px] items-center justify-center">
                             <p>У вас есть акаунт Вызовы ШИР?</p>

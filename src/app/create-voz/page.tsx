@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -33,7 +34,7 @@ export default function Page() {
             if (response?.success == true) {
                 setCategoryVozList(response?.data);
                 if (response?.data?.length > 0) {
-                    setSelectedCategory(response?.data[0]);
+                    setSelectedCategory(response?.data[0]?.id);
                 }
             }
         });
@@ -91,7 +92,7 @@ export default function Page() {
         form.append('description', description);
         form.append('publish_date', publishDate);
         form.append('end_date', endDate);
-        form.append('category_voz_id', selectedCategory?.id);
+        form.append('category_voz_id', selectedCategory);
 
         const response = await requestPostWithToken(VOZ, form);
         if (response?.success == true) {
@@ -242,7 +243,12 @@ export default function Page() {
                                     Категория вызова:
                                 </span>
                                 {categoryVozList?.length > 0 ? (
-                                    <select className="border py-[12px] px-[5px]">
+                                    <select
+                                        className="border py-[12px] px-[5px]"
+                                        onChange={e => {
+                                            setSelectedCategory(e.target.value);
+                                        }}
+                                    >
                                         {categoryVozList?.length > 0 &&
                                             categoryVozList?.map(
                                                 (value: any, index: number) => {
@@ -250,7 +256,7 @@ export default function Page() {
                                                         selectedCategory != null
                                                     ) {
                                                         if (
-                                                            selectedCategory?.id ==
+                                                            selectedCategory ==
                                                             value?.id
                                                         ) {
                                                             return (
