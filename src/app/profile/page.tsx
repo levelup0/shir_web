@@ -27,6 +27,12 @@ export default function Page() {
     const [password, setPassword] = useState('');
     const [resultImage, setResultImg] = useState('');
 
+    const [dateBirth, setDateBirth] = useState('');
+    const [vuz, setVuz] = useState('');
+    const [educationCourse, setEducationCourse] = useState('');
+    const [interes, setInteres] = useState('');
+    const [urlTelegram, setUrlTelegram] = useState('');
+
     const router = useRouter();
 
     const getData = () => {
@@ -36,6 +42,13 @@ export default function Page() {
                 setName(response?.user?.name);
                 setActionSector(response?.user?.action_sector);
                 setBusinessSector(response?.user?.business_sector);
+
+                setDateBirth(response?.user?.date_birth);
+                setVuz(response?.user?.vuz);
+                setEducationCourse(response?.user?.education_course);
+                setInteres(response?.user?.interes);
+                setUrlTelegram(response?.user?.url_telegram);
+
                 if (response?.user?.avatar != null) {
                     setResultImg(response?.user?.avatar);
                 }
@@ -52,6 +65,12 @@ export default function Page() {
         form.append('name', name);
         form.append('avatar', resultImage);
         form.append('business_sector', businessSector);
+
+        form.append('date_birth', dateBirth);
+        form.append('vuz', vuz);
+        form.append('education_course', educationCourse);
+        form.append('interes', interes);
+        form.append('url_telegram', urlTelegram);
 
         const response = await requestPostWithToken(USER_PASSWORD_UPDATE, form);
         if (response?.success == true) {
@@ -317,32 +336,99 @@ export default function Page() {
                                     value={name}
                                 />
                             </div>
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">
-                                    Сфера бизнеса:
-                                </span>
-                                <input
-                                    className="border shadow px-[10px] py-[10px]"
-                                    onChange={e =>
-                                        setBusinessSector(e.target.value)
-                                    }
-                                    placeholder=""
-                                    type="text"
-                                    value={businessSector}
-                                />
-                            </div>
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">
-                                    Описание деятельности:
-                                </span>
-                                <textarea
-                                    className="border shadow px-[10px] py-[10px]"
-                                    onChange={e =>
-                                        setActionSector(e.target.value)
-                                    }
-                                    value={actionSector}
-                                ></textarea>
-                            </div>
+                            {data?.roles?.name == 'caller' ? (
+                                <>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Сфера бизнеса:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setBusinessSector(
+                                                    e.target.value,
+                                                )
+                                            }
+                                            placeholder=""
+                                            type="text"
+                                            value={businessSector}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Описание деятельности:
+                                        </span>
+                                        <textarea
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setActionSector(e.target.value)
+                                            }
+                                            value={actionSector}
+                                        ></textarea>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Дата рождения:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setDateBirth(e.target.value)
+                                            }
+                                            placeholder="Your name"
+                                            type="datetime-local"
+                                            value={dateBirth}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            ВУЗ:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setVuz(e.target.value)
+                                            }
+                                            placeholder="Your name"
+                                            type="text"
+                                            value={vuz}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Краткое описание своих интересов:
+                                        </span>
+                                        <textarea
+                                            className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                            cols={15}
+                                            onChange={e =>
+                                                setInteres(e.target.value)
+                                            }
+                                            placeholder="Краткое описание своих интересов"
+                                            rows={10}
+                                            value={interes}
+                                        ></textarea>
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Ссылка на Telegram:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setUrlTelegram(e.target.value)
+                                            }
+                                            placeholder="Your name"
+                                            type="text"
+                                            value={urlTelegram}
+                                        />
+                                    </div>
+                                </>
+                            )}
+
                             <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">Эл Почта:</span>
                                 <input

@@ -38,6 +38,7 @@ export default function Page() {
     const [vuz, setVuz] = useState('');
     const [educationCourse, setEducationCourse] = useState('');
     const [interes, setInteres] = useState('');
+
     const [urlTelegram, setUrlTelegram] = useState('');
 
     const [businessSector, setBusinessSector] = useState('');
@@ -74,6 +75,12 @@ export default function Page() {
 
         form.append('business_sector', businessSector);
         form.append('action_sector', actionSector);
+
+        form.append('date_birth', dateBirth);
+        form.append('vuz', vuz);
+        form.append('education_course', educationCourse);
+        form.append('interes', interes);
+        form.append('url_telegram', urlTelegram);
 
         form.append('email', email);
         form.append('password', password);
