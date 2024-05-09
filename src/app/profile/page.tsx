@@ -1,12 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import MainHeader from '@/Components/MainHeader';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GETUSER, USER_PASSWORD_UPDATE } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
+import { Cropper, ReactCropperElement } from 'react-cropper';
+import Image from 'next/image';
+import InputTypeFile from '@/HtmlComponent/InputTypeFile';
+import CHdescription1 from '@/HtmlComponent/CHdescription1';
+import PrimaryBtn01 from '@/HtmlComponent/PrimaryBtn01';
+import CancelBtn01 from '@/HtmlComponent/CancelBtn01';
+
+import 'cropperjs/dist/cropper.css';
+import AvatarComponent from '@/Common/AvatarComponent';
 export default function Page() {
     const [data, setData] = useState<any>();
 
@@ -14,6 +25,7 @@ export default function Page() {
     const [actionSector, setActionSector] = useState('');
     const [businessSector, setBusinessSector] = useState('');
     const [password, setPassword] = useState('');
+    const [resultImage, setResultImg] = useState('');
 
     const router = useRouter();
 
@@ -24,8 +36,9 @@ export default function Page() {
                 setName(response?.user?.name);
                 setActionSector(response?.user?.action_sector);
                 setBusinessSector(response?.user?.business_sector);
-
-                console.log(response?.user);
+                if (response?.user?.avatar != null) {
+                    setResultImg(response?.user?.avatar);
+                }
             }
         });
     };
@@ -37,6 +50,7 @@ export default function Page() {
         form.append('password', password);
         form.append('action_sector', actionSector);
         form.append('name', name);
+        form.append('avatar', resultImage);
         form.append('business_sector', businessSector);
 
         const response = await requestPostWithToken(USER_PASSWORD_UPDATE, form);
@@ -66,22 +80,103 @@ export default function Page() {
         //Тут значит пользователь авторизован
     }, []);
 
+    const [trueImage, setTrueImage] = useState(false);
+
+    const cropperRef = useRef<ReactCropperElement>(null);
+    const [cropData, setCropData] = useState('#');
+
+    const [image, setImage] = useState('');
+
+    const [modalShow, setModalShow] = useState(false);
+    const [sizeOfImage, setSizeOfImage] = useState(512000); //500KB
+    const [selectedSizeOfImage, setSelectedSizeOfImage] = useState<any>(0); //500KB
+
+    const typedSize = 'kB';
+
+    const onChange = (e: any) => {
+        e.preventDefault();
+        let files;
+        if (e.dataTransfer) {
+            files = e.dataTransfer.files;
+        } else if (e.target) {
+            files = e.target.files;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImage(reader.result as any);
+        };
+        reader.readAsDataURL(files[0]);
+
+        //reader.readAsDataURL();
+        setModalShow(true);
+    };
+
+    const getCropData = () => {
+        if (typeof cropperRef.current?.cropper !== 'undefined') {
+            setCropData(
+                cropperRef.current?.cropper.getCroppedCanvas().toDataURL(),
+            );
+            const _string = cropperRef.current.cropper
+                .getCroppedCanvas()
+                .toDataURL();
+            const a = new Blob([_string]).size;
+            if (a > 0) {
+                const result: any = a / 1024;
+                setSelectedSizeOfImage(parseFloat(result).toFixed(2));
+            }
+            if (a > 819200) {
+                setTrueImage(false);
+            } else {
+                setTrueImage(true);
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (cropData != '#') {
+            setResultImg(cropData);
+            setModalShow(false);
+        }
+    }, [cropData]);
+
+    const cancelImage = () => {
+        setModalShow(false);
+    };
+
     return (
         <div className="flex flex-col">
             {/* Header Menu */}
             <MainHeader />
+            <div
+                className={
+                    'fixed left-0 top-0 h-[100vh] w-full flex flex-col justify-center items-center z-50 ' +
+                    (modalShow == true ? '' : 'hidden')
+                }
+            >
+                <div className="w-fit flex flex-col gap-[20px] bg-orange-50 p-[50px] rounded-[30px]">
+                    <div className="flex gap-[20px]">
+                        <Cropper
+                            initialAspectRatio={1}
+                            minCropBoxHeight={100}
+                            minCropBoxWidth={100}
+                            ref={cropperRef}
+                            src={image}
+                            style={{ height: 300, width: 500 }}
+                        />
+                    </div>
+                    <div className="flex gap-[20px]">
+                        <PrimaryBtn01 onClick={getCropData} title="Сохранить" />
+                        <CancelBtn01 onClick={cancelImage} title="Отмена" />
+                    </div>
+                </div>
+            </div>
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">
                     <div className="w-full shadow flex flex-col gap-[20px] justify-center items-center py-[30px]">
-                        <svg
-                            className="w-[145px] h-[146px] rounded-full"
-                            hanging={145}
-                            viewBox="0 0 448 512"
-                            width={145}
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M96 128a128 128 0 1 0 256 0A128 128 0 1 0 96 128zm94.5 200.2l18.6 31L175.8 483.1l-36-146.9c-2-8.1-9.8-13.4-17.9-11.3C51.9 342.4 0 405.8 0 481.3c0 17 13.8 30.7 30.7 30.7H162.5c0 0 0 0 .1 0H168 280h5.5c0 0 0 0 .1 0H417.3c17 0 30.7-13.8 30.7-30.7c0-75.5-51.9-138.9-121.9-156.4c-8.1-2-15.9 3.3-17.9 11.3l-36 146.9L238.9 359.2l18.6-31c6.4-10.7-1.3-24.2-13.7-24.2H224 204.3c-12.4 0-20.1 13.6-13.7 24.2z" />
-                        </svg>
+                        <div className="w-[145px] h-[145px] relative">
+                            <AvatarComponent resultImage={resultImage} />
+                        </div>
+
                         <div className="flex flex-col gap-[5px] justify-center items-center">
                             <h4 className="font-semibold text-[20px] text-center">
                                 {data?.name}
@@ -183,6 +278,35 @@ export default function Page() {
                         <hr />
 
                         <div className="w-full grid grid-cols-2 gap-[10px] ">
+                            <div className="w-full flex flex-col gap-[5px]">
+                                <InputTypeFile
+                                    onChange={onChange}
+                                    title={'Добавить фото'}
+                                />
+
+                                <div className="flex flex-col">
+                                    <CHdescription1
+                                        className={
+                                            '' +
+                                            (selectedSizeOfImage < 500 ||
+                                            selectedSizeOfImage == 0
+                                                ? '!text-green-700'
+                                                : '!text-orange-700')
+                                        }
+                                        title={`Размер аватара не должен превышать ${sizeOfImage / 1024}  ${typedSize}`}
+                                    />
+                                    <CHdescription1
+                                        className={
+                                            '' +
+                                            (selectedSizeOfImage < 500 ||
+                                            selectedSizeOfImage == 0
+                                                ? '!text-green-700'
+                                                : '!text-orange-700')
+                                        }
+                                        title={`Текущий размер: ${selectedSizeOfImage}  ${typedSize}`}
+                                    />
+                                </div>
+                            </div>
                             <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">ФИО:</span>
                                 <input

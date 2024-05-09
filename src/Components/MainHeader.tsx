@@ -67,7 +67,7 @@ export default function MainHeader() {
         <div className="flex flex-col z-50">
             <div
                 className={
-                    'w-full fixed  z-40 header-section transition-all ease-in ' +
+                    'w-full fixed  header-section transition-all ease-in ' +
                     (pathname != '/' ? 'bg-gray-700' : 'bg-gray-700')
                 }
             >
