@@ -2,12 +2,17 @@
 import AvatarComponent from '@/Common/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { commonRequestWithToken } from '@/Common/commonRequest';
-import { VOZ, VOZ_MAIN } from '@/Common/urls';
+import {
+    commonRequest,
+    commonRequestUsers,
+    commonRequestWithToken,
+} from '@/Common/commonRequest';
+import { CONTACT_ASSETS, USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function MainBlockSecond() {
+export default function ReceipentData() {
     const [listData, setListData] = useState<any>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -19,16 +24,13 @@ export default function MainBlockSecond() {
     const [sortFilter, setSortFilter] = useState<string>('-1');
     const [dateFilter, setDateFilter] = useState<string>('');
 
-    const getVoz = async () => {
-        const response = await commonRequestWithToken(
-            VOZ_MAIN,
-            'none',
-            '',
-            '',
-            '',
+    const getData = async () => {
+        const response = await commonRequestUsers(
+            USERS,
+            'recipient',
+            searchText,
             currentPage,
             limitFilter,
-            searchText,
         );
         if (response?.success == true) {
             setListData(response?.data?.data);
@@ -41,11 +43,11 @@ export default function MainBlockSecond() {
     useEffect(() => {
         if (searchText) {
             const delayDebounceFn = setTimeout(() => {
-                getVoz();
+                getData();
             }, 500);
             return () => clearTimeout(delayDebounceFn);
         }
-        getVoz();
+        getData();
     }, [
         currentPage,
         searchText,
@@ -72,16 +74,16 @@ export default function MainBlockSecond() {
                         <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             onChange={(e: any) => handleSearch(e.target?.value)}
-                            placeholder="Поиск по вызову..."
+                            placeholder="Поиск..."
                             value={searchText}
                         />
                         {/* <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             placeholder="Поиск городу..."
                         /> */}
-                        <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
+                        {/* <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
                             <option>Поиск по типу</option>
-                        </select>
+                        </select> */}
                     </div>
                     <div className="border-">
                         <button className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 ">
@@ -93,7 +95,7 @@ export default function MainBlockSecond() {
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {totalItems} Вызовов
+                            {totalItems} Вызовополучатели
                         </p>
                         <hr />
                     </div>
@@ -104,15 +106,15 @@ export default function MainBlockSecond() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full flex flex-col gap-[25px] h-[150px] shadow px-[10px] py-[20px]"
+                                        className="w-full flex flex-col gap-[25px]  shadow px-[10px] py-[20px]"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">
                                             <div className="w-[60px] h-[60px] relative">
-                                                {value?.user?.avatar != null ? (
+                                                {value?.avatar != null ? (
                                                     <AvatarComponent
                                                         resultImage={
-                                                            value?.user?.avatar
+                                                            value?.avatar
                                                         }
                                                     />
                                                 ) : (
@@ -163,25 +165,65 @@ export default function MainBlockSecond() {
                                                     {value?.name}
                                                 </p>
                                                 <span className="text-[14px] font-light">
-                                                    {value?.description}
+                                                    {value?.interes}
                                                 </span>
+                                                <div className="flex gap-[15px]">
+                                                    <span className="text-[14px] font-light">
+                                                        Файлы:
+                                                    </span>
+                                                    <div className="text-[14px] font-light w-full flex gap-[5px]">
+                                                        {value?.cv != null &&
+                                                            value?.cv?.length >
+                                                                0 &&
+                                                            value?.cv?.map(
+                                                                (
+                                                                    v: any,
+                                                                    i: number,
+                                                                ) => {
+                                                                    return (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                        >
+                                                                            <Link
+                                                                                className="bg-blue-400 w-full text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                                href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS}/${v?.src}`}
+                                                                                target="_blank"
+                                                                            >
+                                                                                {
+                                                                                    v?.name
+                                                                                }
+                                                                            </Link>
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
-                                                {value?.category?.name}
+                                            <span className="w-fit flex justify-center items-center text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
+                                                {value?.education_course}
                                             </span>
                                             <div className="flex flex-col">
                                                 <span className="text-[14px] ">
-                                                    Создано:{' '}
+                                                    ВУЗ:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.publish_date}
+                                                        {value?.vuz}
                                                     </span>
                                                 </span>
                                                 <span className="text-[14px] ">
-                                                    Да закрытия вызова:{' '}
+                                                    Дата рождение:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.end_date}
+                                                        {value?.date_birth}
+                                                    </span>
+                                                </span>
+                                                <span className="text-[14px] ">
+                                                    Телеграм:{' '}
+                                                    <span className="font-semibold">
+                                                        {value?.url_telegram}
                                                     </span>
                                                 </span>
                                             </div>
@@ -200,15 +242,6 @@ export default function MainBlockSecond() {
                                 totalItems={totalItems}
                             />
                         ) : null}
-                        {/* <div className="w-[30px] h-[30px] bg-blue-800 text-white flex justify-center items-center font-light text-[14px]">
-                            1
-                        </div>
-                        <div className="w-[30px] h-[30px]  flex justify-center items-center font-light text-[14px]">
-                            2
-                        </div>
-                        <div className="w-[30px] h-[30px]  flex justify-center items-center font-light text-[14px]">
-                            3
-                        </div> */}
                     </div>
                 </div>
             </div>

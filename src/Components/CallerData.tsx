@@ -2,12 +2,16 @@
 import AvatarComponent from '@/Common/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { commonRequestWithToken } from '@/Common/commonRequest';
-import { VOZ, VOZ_MAIN } from '@/Common/urls';
+import {
+    commonRequest,
+    commonRequestUsers,
+    commonRequestWithToken,
+} from '@/Common/commonRequest';
+import { USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import { useEffect, useState } from 'react';
 
-export default function MainBlockSecond() {
+export default function CallerData() {
     const [listData, setListData] = useState<any>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -19,16 +23,13 @@ export default function MainBlockSecond() {
     const [sortFilter, setSortFilter] = useState<string>('-1');
     const [dateFilter, setDateFilter] = useState<string>('');
 
-    const getVoz = async () => {
-        const response = await commonRequestWithToken(
-            VOZ_MAIN,
-            'none',
-            '',
-            '',
-            '',
+    const getData = async () => {
+        const response = await commonRequestUsers(
+            USERS,
+            'caller',
+            searchText,
             currentPage,
             limitFilter,
-            searchText,
         );
         if (response?.success == true) {
             setListData(response?.data?.data);
@@ -41,11 +42,11 @@ export default function MainBlockSecond() {
     useEffect(() => {
         if (searchText) {
             const delayDebounceFn = setTimeout(() => {
-                getVoz();
+                getData();
             }, 500);
             return () => clearTimeout(delayDebounceFn);
         }
-        getVoz();
+        getData();
     }, [
         currentPage,
         searchText,
@@ -72,16 +73,16 @@ export default function MainBlockSecond() {
                         <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             onChange={(e: any) => handleSearch(e.target?.value)}
-                            placeholder="Поиск по вызову..."
+                            placeholder="Поиск..."
                             value={searchText}
                         />
                         {/* <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             placeholder="Поиск городу..."
                         /> */}
-                        <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
+                        {/* <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
                             <option>Поиск по типу</option>
-                        </select>
+                        </select> */}
                     </div>
                     <div className="border-">
                         <button className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 ">
@@ -93,7 +94,7 @@ export default function MainBlockSecond() {
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {totalItems} Вызовов
+                            {totalItems} Вызоводатели
                         </p>
                         <hr />
                     </div>
@@ -109,10 +110,10 @@ export default function MainBlockSecond() {
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">
                                             <div className="w-[60px] h-[60px] relative">
-                                                {value?.user?.avatar != null ? (
+                                                {value?.avatar != null ? (
                                                     <AvatarComponent
                                                         resultImage={
-                                                            value?.user?.avatar
+                                                            value?.avatar
                                                         }
                                                     />
                                                 ) : (
@@ -163,25 +164,25 @@ export default function MainBlockSecond() {
                                                     {value?.name}
                                                 </p>
                                                 <span className="text-[14px] font-light">
-                                                    {value?.description}
+                                                    {value?.action_sector}
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
                                             <span className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
-                                                {value?.category?.name}
+                                                {value?.business_sector}
                                             </span>
                                             <div className="flex flex-col">
                                                 <span className="text-[14px] ">
-                                                    Создано:{' '}
+                                                    Email:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.publish_date}
+                                                        {value?.email}
                                                     </span>
                                                 </span>
                                                 <span className="text-[14px] ">
-                                                    Да закрытия вызова:{' '}
+                                                    Роль:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.end_date}
+                                                        {value?.roles.name}
                                                     </span>
                                                 </span>
                                             </div>

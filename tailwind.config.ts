@@ -29,7 +29,7 @@ const config: Config = {
 
                 primary_blue: '#002c54',
                 primary_white: '#fff',
-                primary_grey: '#ffffffc9',
+                primary_grey: '#75a1f0',
 
                 primary2: '#00aa63',
                 primary2_opacity: '#a9ddc7',

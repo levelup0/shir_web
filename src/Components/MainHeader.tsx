@@ -95,7 +95,7 @@ export default function MainHeader() {
                             <div
                                 className={
                                     'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
-                                    (activeLink == '/price'
+                                    (activeLink == '/'
                                         ? '!text-primary_grey'
                                         : '')
                                 }
@@ -105,12 +105,12 @@ export default function MainHeader() {
                         </Link>
                         <Link
                             className="h-[90px] flex items-center justify-center"
-                            href="/"
+                            href="/caller"
                         >
                             <div
                                 className={
                                     'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
-                                    (activeLink == '/price'
+                                    (activeLink == '/caller'
                                         ? '!text-primary_grey'
                                         : '')
                                 }
@@ -120,12 +120,12 @@ export default function MainHeader() {
                         </Link>
                         <Link
                             className="h-[90px] flex items-center justify-center"
-                            href="/"
+                            href="/recipient"
                         >
                             <div
                                 className={
                                     'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
-                                    (activeLink == '/price'
+                                    (activeLink == '/recipient'
                                         ? '!text-primary_grey'
                                         : '')
                                 }

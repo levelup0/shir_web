@@ -33,7 +33,6 @@ export default function Page() {
     const { executeRecaptcha } = useReCaptcha();
 
     const [typeUser, setTypeUser] = useState<any>(0); //Вызоводатель
-
     const [dateBirth, setDateBirth] = useState('');
     const [vuz, setVuz] = useState('');
     const [educationCourse, setEducationCourse] = useState('');

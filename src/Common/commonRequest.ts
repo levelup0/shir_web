@@ -27,6 +27,23 @@ export async function commonRequest(
     return response;
 }
 
+export async function commonRequestUsers(
+    src: string,
+    role: string = 'all',
+    search: string = '',
+    currentPage: number = 1,
+    limit: number = 10000,
+) {
+    const response = await requestGetWithoutToken(src, {
+        user_role: role,
+        search: search,
+        page: currentPage,
+        limit: limit,
+    });
+
+    return response;
+}
+
 export async function commonRequestWithToken(
     src: string,
     my: string = 'none',
