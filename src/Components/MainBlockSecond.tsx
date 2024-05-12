@@ -5,6 +5,7 @@ import AvatarComponent from '@/Common/AvatarComponent';
 import { commonRequestWithToken } from '@/Common/commonRequest';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function MainBlockSecond() {
@@ -103,8 +104,12 @@ export default function MainBlockSecond() {
                         {listData?.length > 0 &&
                             listData?.map((value: any, index: number) => {
                                 return (
-                                    <div
-                                        className="w-full flex flex-col gap-[25px] h-[150px] shadow px-[10px] py-[20px]"
+                                    <Link
+                                        className="w-full flex flex-col gap-[25px] shadow rounded-[4px] px-[10px] py-[20px] hover:bg-blue-50"
+                                        href={{
+                                            pathname: '/voz',
+                                            query: { voz_id: value?.id },
+                                        }}
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">
@@ -159,34 +164,45 @@ export default function MainBlockSecond() {
                                                 )}
                                             </div>
                                             <div className="w-full flex flex-col gap-[5px]">
-                                                <p className="text-[18px] font-semibold">
-                                                    {value?.name}
-                                                </p>
-                                                <span className="text-[14px] font-light">
-                                                    {value?.description}
-                                                </span>
+                                                <div className="flex justify-between">
+                                                    <div className="">
+                                                        <p className="text-[18px] font-semibold">
+                                                            {value?.name}
+                                                        </p>
+                                                        <span className="text-[14px] font-light">
+                                                            {value?.description}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
+                                            <span className="w-fit h-[40px] text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
                                                 {value?.category?.name}
                                             </span>
-                                            <div className="flex flex-col">
-                                                <span className="text-[14px] ">
-                                                    Создано:{' '}
-                                                    <span className="font-semibold">
-                                                        {value?.publish_date}
+                                            <div className="flex flex-col gap-[10px]">
+                                                <div className="flex flex-col">
+                                                    <span className="text-[14px] ">
+                                                        Создано:{' '}
+                                                        <span className="font-semibold">
+                                                            {
+                                                                value?.publish_date
+                                                            }
+                                                        </span>
                                                     </span>
-                                                </span>
-                                                <span className="text-[14px] ">
-                                                    Да закрытия вызова:{' '}
-                                                    <span className="font-semibold">
-                                                        {value?.end_date}
+                                                    <span className="text-[14px] ">
+                                                        Да закрытия вызова:{' '}
+                                                        <span className="font-semibold">
+                                                            {value?.end_date}
+                                                        </span>
                                                     </span>
-                                                </span>
+                                                </div>
+                                                <button className="w-fit self-end h-[40px] rounded-[4px] bg-blue-500 hover:bg-blue-600 active:bg-blue-900 font-normal text-white py-[1px] px-[10px]">
+                                                    Подробнее
+                                                </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })}
                     </div>

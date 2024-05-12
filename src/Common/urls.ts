@@ -18,3 +18,4 @@ export const MASS_ACTION = 'mass-action';
 export const CV = 'cv';
 export const CONTACT_ASSETS = 'contact-assets';
 export const USERS = 'users';
+export const APROVE = 'aprove';

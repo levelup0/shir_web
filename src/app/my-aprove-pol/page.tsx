@@ -6,16 +6,40 @@ import MainHeader from '@/Components/MainHeader';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { GETUSER, MASS_ACTION, VOZ } from '@/Common/urls';
+import { APROVE, GETUSER, MASS_ACTION, VOZ } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { currentDate } from '@/Common/function';
-import { commonRequestWithToken } from '@/Common/commonRequest';
+import { currentDate, formatStatus } from '@/Common/function';
+import {
+    commonRequestAproveWithToken,
+    commonRequestWithToken,
+} from '@/Common/commonRequest';
 import TableheadCheckbox from '@/Common/TableheadCheckbox';
 import TableheadSort from '@/Common/TableheadSort';
 import AvatarComponent from '@/Common/AvatarComponent';
+import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
+    const searchParams = useSearchParams();
+    const _voz_id: any = searchParams.get('voz_id');
+
+    const getMyAprove = async (user_id: any) => {
+        const response = await commonRequestAproveWithToken(
+            APROVE,
+            'none',
+            _voz_id,
+            'none',
+        );
+        console.log('response myaprove', response);
+        if (response?.success == true) {
+            if (response?.data?.data?.length == 0) {
+                // setMyAprove(false);
+            } else {
+                setListData(response?.data?.data);
+            }
+        }
+    };
+
     const [resultImage, setResultImg] = useState('');
     const [listData, setListData] = useState<any>([]);
     const [data, setData] = useState<any>();
@@ -32,6 +56,7 @@ export default function Page() {
         requestGet(`${GETUSER}`, {}).then(response => {
             if (response?.success == true) {
                 setData(response?.user);
+                getMyAprove(response?.user?.id);
                 if (response?.user?.avatar != null) {
                     setResultImg(response?.user?.avatar);
                 }
@@ -39,12 +64,12 @@ export default function Page() {
         });
     };
 
-    const getVoz = async () => {
-        const response = await commonRequestWithToken(VOZ, 'yes');
-        if (response?.success == true) {
-            setListData(response?.data?.data);
-        }
-    };
+    // const getVoz = async () => {
+    //     const response = await commonRequestWithToken(VOZ, 'yes');
+    //     if (response?.success == true) {
+    //         setListData(response?.data?.data);
+    //     }
+    // };
 
     const removeItem = async (itemId: any) => {
         requestGet(MASS_ACTION, {
@@ -54,7 +79,7 @@ export default function Page() {
         }).then((response: any) => {
             if (response.success) {
                 toast.success('Успешно!');
-                getVoz();
+                // getMyAprove();
             }
         });
     };
@@ -72,7 +97,7 @@ export default function Page() {
             getData();
         }
 
-        getVoz();
+        // getVoz();
 
         //Тут значит пользователь авторизован
     }, []);
@@ -177,22 +202,22 @@ export default function Page() {
                                 <tr className=" bg-blue-100 border py-[10px]">
                                     <th className="border flex items-center font-medium text-black dark:text-white"></th>
                                     <th className="border font-medium text-black dark:text-white">
-                                        Название
+                                        Вызовополучатель
                                     </th>
                                     <th className="border font-medium text-black dark:text-white">
-                                        Категория
+                                        Email
                                     </th>
-                                    {/* <th className="font-medium text-black dark:text-white">
-                                        Сфера вызова
-                                    </th> */}
                                     <th className="font-medium text-black dark:text-white">
-                                        Описание
+                                        Курс обучения
+                                    </th>
+                                    <th className="font-medium text-black dark:text-white">
+                                        Дата рождения
                                     </th>
                                     <th className=" items-center font-medium text-black dark:text-white">
-                                        Дата публикации
+                                        Телеграмм
                                     </th>
                                     <th className=" items-center font-medium text-black dark:text-white">
-                                        Дата закрытия
+                                        Сфера бизнеса
                                     </th>
                                     <th className="items-center font-medium text-black dark:text-white">
                                         Статус
@@ -216,38 +241,44 @@ export default function Page() {
                                                     {item?.id}
                                                 </td>
                                                 <td className=" border border-[#eee]  dark:border-strokedark">
-                                                    {item?.name}
+                                                    {item?.user?.name}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.category?.name}
+                                                    {item?.user?.email}
                                                 </td>
-                                                {/* <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.sector}
-                                                </td> */}
+                                                <td className="border border-[#eee]  dark:border-strokedark">
+                                                    {
+                                                        item?.user
+                                                            ?.education_course
+                                                    }
+                                                </td>
                                                 <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
-                                                    {item?.description}
+                                                    {item?.user?.date_birth}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.publish_date}
+                                                    {item?.user?.url_telegram}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.end_date}
+                                                    {
+                                                        item?.user
+                                                            ?.business_sector
+                                                    }
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.status}
+                                                    {formatStatus(item?.status)}
                                                 </td>
 
                                                 <td className="border-b border-[#eee]  dark:border-strokedark">
                                                     <div className="flex gap-[5px]">
                                                         <button
-                                                            className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                            onClick={() =>
-                                                                removeItem(
-                                                                    item?.id,
-                                                                )
-                                                            }
+                                                            className="bg-green-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                            // onClick={() =>
+                                                            //     removeItem(
+                                                            //         item?.id,
+                                                            //     )
+                                                            // }
                                                         >
-                                                            <svg
+                                                            {/* <svg
                                                                 className="fill-white"
                                                                 height={15}
                                                                 viewBox="0 0 448 512"
@@ -255,9 +286,10 @@ export default function Page() {
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                             >
                                                                 <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-                                                            </svg>
+                                                            </svg> */}
+                                                            Принять
                                                         </button>
-                                                        <Link
+                                                        {/* <Link
                                                             className="bg-green-500 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                             href={{
                                                                 pathname:
@@ -276,7 +308,7 @@ export default function Page() {
                                                             >
                                                                 <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
                                                             </svg>
-                                                        </Link>
+                                                        </Link> */}
                                                     </div>
                                                 </td>
                                             </tr>

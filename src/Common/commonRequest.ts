@@ -74,6 +74,27 @@ export async function commonRequestWithToken(
     return response;
 }
 
+export async function commonRequestAproveWithToken(
+    src: string,
+    user_id: string = 'none',
+    voz_id: string = 'none',
+    status: string = 'none',
+    currentPage: number = 1,
+    limit: number = 10000,
+    search: string = '',
+) {
+    const response = await requestGet(src, {
+        page: currentPage,
+        search: search,
+        status: status,
+        limit: limit,
+        user_id: user_id,
+        voz_id: voz_id,
+    });
+
+    return response;
+}
+
 export async function getcommonDataById(src: string, id: string) {
     const response = await requestGetWithoutToken(`${src}/${id}`, {
         // language_filter: JSON.stringify([selectedLanguage]),

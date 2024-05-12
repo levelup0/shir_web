@@ -48,6 +48,10 @@ export const currentDate = () => {
     return moment().format('YYYY-MM-DD HH-mm-ss');
 };
 
+export const formatDate = (date: string) => {
+    return moment(date).format('DD.MM.YYYY');
+};
+
 // Format long text to short for readability
 export const translateLanguageId = (id: number | undefined) => {
     switch (id) {
@@ -82,4 +86,60 @@ export const loaderSvg = () => {
             />
         </svg>
     );
+};
+
+// Format status from number to good label
+export const formatStatus = (status: string | undefined) => {
+    switch (status) {
+        /**
+         * default statuses
+         */
+        case '1':
+            return (
+                <span className="inline-flex rounded bg-success px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    Активный
+                </span>
+            );
+
+        case '0':
+            return (
+                <span className="inline-flex rounded bg-danger px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    Не активный
+                </span>
+            );
+
+        /**
+         * complaints and suggestions statuses
+         */
+        case 'new':
+            return (
+                <span className="inline-flex rounded bg-secondary px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    Новая
+                </span>
+            );
+
+        case 'in_progress':
+            return (
+                <span className="bg-yellow-600 text-[14px] inline-flex rounded bg-warning px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    В процессе
+                </span>
+            );
+
+        case 'closed':
+            return (
+                <span className="inline-flex rounded bg-success px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    Закрыта
+                </span>
+            );
+
+        case 'cancelled':
+            return (
+                <span className="inline-flex rounded bg-danger px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                    Отменена
+                </span>
+            );
+
+        default:
+            return status;
+    }
 };

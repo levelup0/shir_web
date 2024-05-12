@@ -204,7 +204,7 @@ export default function ReceipentData() {
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit flex justify-center items-center text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
+                                            <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
                                                 {value?.education_course}
                                             </span>
                                             <div className="flex flex-col">
