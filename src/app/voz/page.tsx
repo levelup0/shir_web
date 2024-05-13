@@ -146,7 +146,7 @@ export default function Page() {
                                                 className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
                                                 onClick={() => apply()}
                                             >
-                                                Предложить
+                                                Подать заявку
                                             </button>
                                         ) : (
                                             <button

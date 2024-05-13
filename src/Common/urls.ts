@@ -19,3 +19,5 @@ export const CV = 'cv';
 export const CONTACT_ASSETS = 'contact-assets';
 export const USERS = 'users';
 export const APROVE = 'aprove';
+
+export const APROVE_UPDATE_STATUS = 'aprove-update-status';

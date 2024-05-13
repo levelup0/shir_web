@@ -135,17 +135,12 @@ export default function Page() {
         const value = e.target.files[0];
         const _files: any = [...files];
 
-        const test =
-            /\.(gif|jpg|jpeg|tiff|png|pdf|txt|xls|xlsx|ppt|pptx|doc|docx|csv)$/i.test(
-                value.name,
-            );
+        const test = /\.(pdf)$/i.test(value.name);
         if (!test) {
             _files.splice(key, 1);
             setFiles(_files);
 
-            toast.error(
-                'Доступные форматы: gif, jpg, jpeg, tiff, png, pdf, txt, xls, xlsx, ppt, pptx, doc, docx, csv',
-            );
+            toast.error('Доступные форматы: pdf');
             return;
         }
 

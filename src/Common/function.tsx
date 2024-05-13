@@ -120,21 +120,21 @@ export const formatStatus = (status: string | undefined) => {
 
         case 'in_progress':
             return (
-                <span className="bg-yellow-600 text-[14px] inline-flex rounded bg-warning px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                <span className="bg-yellow-600 text-[12px] inline-flex rounded bg-warning px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
                     В процессе
                 </span>
             );
 
-        case 'closed':
+        case 'approved':
             return (
-                <span className="inline-flex rounded bg-success px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
-                    Закрыта
+                <span className="bg-green-600 text-[12px] inline-flex rounded bg-success px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
+                    Принято
                 </span>
             );
 
         case 'cancelled':
             return (
-                <span className="inline-flex rounded bg-danger px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                <span className="inline-flex rounded bg-danger px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
                     Отменена
                 </span>
             );

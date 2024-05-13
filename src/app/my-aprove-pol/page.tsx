@@ -6,16 +6,17 @@ import MainHeader from '@/Components/MainHeader';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { APROVE, GETUSER, MASS_ACTION, VOZ } from '@/Common/urls';
+import {
+    APROVE,
+    APROVE_UPDATE_STATUS,
+    GETUSER,
+    MASS_ACTION,
+    VOZ,
+} from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { currentDate, formatStatus } from '@/Common/function';
-import {
-    commonRequestAproveWithToken,
-    commonRequestWithToken,
-} from '@/Common/commonRequest';
-import TableheadCheckbox from '@/Common/TableheadCheckbox';
-import TableheadSort from '@/Common/TableheadSort';
+import { commonRequestAproveWithToken } from '@/Common/commonRequest';
 import AvatarComponent from '@/Common/AvatarComponent';
 import { useSearchParams } from 'next/navigation';
 
@@ -30,7 +31,6 @@ export default function Page() {
             _voz_id,
             'none',
         );
-        console.log('response myaprove', response);
         if (response?.success == true) {
             if (response?.data?.data?.length == 0) {
                 // setMyAprove(false);
@@ -44,12 +44,6 @@ export default function Page() {
     const [listData, setListData] = useState<any>([]);
     const [data, setData] = useState<any>();
 
-    const [name, setName] = useState('');
-    const [sector, setSector] = useState('');
-    const [description, setDescription] = useState<any>('');
-    const [publishDate, setPublishDate] = useState<string>(currentDate());
-    const [endDate, setEnddate] = useState<string>(currentDate());
-
     const router = useRouter();
 
     const getData = () => {
@@ -60,26 +54,6 @@ export default function Page() {
                 if (response?.user?.avatar != null) {
                     setResultImg(response?.user?.avatar);
                 }
-            }
-        });
-    };
-
-    // const getVoz = async () => {
-    //     const response = await commonRequestWithToken(VOZ, 'yes');
-    //     if (response?.success == true) {
-    //         setListData(response?.data?.data);
-    //     }
-    // };
-
-    const removeItem = async (itemId: any) => {
-        requestGet(MASS_ACTION, {
-            ids: JSON.stringify([itemId]),
-            action_type: 'act_delete',
-            model: VOZ,
-        }).then((response: any) => {
-            if (response.success) {
-                toast.success('Успешно!');
-                // getMyAprove();
             }
         });
     };
@@ -96,11 +70,23 @@ export default function Page() {
         } else {
             getData();
         }
-
-        // getVoz();
-
-        //Тут значит пользователь авторизован
     }, []);
+
+    const changeStatus = async (id: any, status: any) => {
+        console.log(id);
+
+        const form = new FormData();
+        form.append('aprove_id', id);
+        form.append('status', status);
+
+        const response = await requestPostWithToken(APROVE_UPDATE_STATUS, form);
+        if (response?.success == true) {
+            toast.success(response?.msg);
+            getData();
+        } else {
+            toast.error(response?.msg);
+        }
+    };
 
     return (
         <div className="flex flex-col">
@@ -192,9 +178,18 @@ export default function Page() {
                 </div>
                 <div className="w-full">
                     <div className="w-full px-[10px] flex flex-col gap-[20px]">
-                        <p className="w-full text-[20px] font-semibold">
-                            Мои вызовы
-                        </p>
+                        <div className="w-full flex justify-between">
+                            <Link
+                                className="bg-gray-400 px-[10px] py-[4px] rounded-[4px]"
+                                href="/my-voz"
+                            >
+                                Назад
+                            </Link>
+                            <p className="text-[20px] font-semibold">
+                                Все заявки по проекту
+                            </p>
+                        </div>
+
                         <hr />
 
                         <table className="w-full table-auto">
@@ -264,31 +259,38 @@ export default function Page() {
                                                             ?.business_sector
                                                     }
                                                 </td>
-                                                <td className="border border-[#eee]  dark:border-strokedark">
+                                                <td className="border border-[#eee] !text-[12px]  dark:border-strokedark">
                                                     {formatStatus(item?.status)}
                                                 </td>
 
                                                 <td className="border-b border-[#eee]  dark:border-strokedark">
                                                     <div className="flex gap-[5px]">
-                                                        <button
-                                                            className="bg-green-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                            // onClick={() =>
-                                                            //     removeItem(
-                                                            //         item?.id,
-                                                            //     )
-                                                            // }
-                                                        >
-                                                            {/* <svg
-                                                                className="fill-white"
-                                                                height={15}
-                                                                viewBox="0 0 448 512"
-                                                                width={12}
-                                                                xmlns="http://www.w3.org/2000/svg"
+                                                        {item?.status !=
+                                                        'approved' ? (
+                                                            <button
+                                                                className="bg-green-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                onClick={() =>
+                                                                    changeStatus(
+                                                                        item?.id,
+                                                                        'approved',
+                                                                    )
+                                                                }
                                                             >
-                                                                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-                                                            </svg> */}
-                                                            Принять
-                                                        </button>
+                                                                Принять
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="bg-yellow-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                onClick={() =>
+                                                                    changeStatus(
+                                                                        item?.id,
+                                                                        'in_progress',
+                                                                    )
+                                                                }
+                                                            >
+                                                                Отменить
+                                                            </button>
+                                                        )}
                                                         {/* <Link
                                                             className="bg-green-500 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                             href={{
