@@ -50,19 +50,6 @@ export default function Page() {
         }
     };
 
-    const removeItem = async (itemId: any) => {
-        requestGet(MASS_ACTION, {
-            ids: JSON.stringify([itemId]),
-            action_type: 'act_delete',
-            model: CV,
-        }).then((response: any) => {
-            if (response.success) {
-                toast.success('Успешно!');
-                getVoz();
-            }
-        });
-    };
-
     useEffect(() => {
         const store_albi_userauth_bool =
             localStorage.getItem('voz_userauth_bool');
