@@ -7,6 +7,8 @@ import { LOGOUT } from '@/Common/urls';
 import BurgerIcon from '@/icons/BurgerIcon';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
+import logOutIcon from '/public/icons/logout-svgrepo-com.svg';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
@@ -67,11 +69,11 @@ export default function MainHeader() {
         <div className="flex flex-col z-50">
             <div
                 className={
-                    'w-full fixed  header-section transition-all ease-in ' +
-                    (pathname != '/' ? 'bg-gray-700' : 'bg-gray-700')
+                    'w-full fixed  header-section transition-all ease-in bg-gray-700'
                 }
             >
-                <div className="flex w-full lg:px-[175px] h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
+                {/* <div className="flex w-full lg:px-[175px] h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center "> */}
+                <div className="flex lg:container h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
                     <Link
                         className="flex flex-col leading-[34px] justify-center italic font-bold text-white text-[42px]"
                         href="/"
@@ -166,7 +168,7 @@ export default function MainHeader() {
                                         : '')
                                 }
                             >
-                                Вызовополучатели
+                                Студенты
                             </div>
                         </Link>
                     </div>
@@ -179,10 +181,16 @@ export default function MainHeader() {
                                     </div>
                                 </Link>
                                 <div
-                                    className="text-[16px] border-primary_yellow   transition-all ease-linear cursor-pointer hover:text-white   active:text-white  w-[130px] h-[38px] px-7 pt-3 pb-[11px] text-primary_grey  rounded-[4px] border border-primary_grey justify-center items-center flex tracking-tighter-[1.2px]"
+                                    className="transition-all ease-linear cursor-pointer px-7 pt-3 pb-[11px] rounded-[4px] justify-center items-center flex tracking-tighter-[1.2px]"
                                     onClick={() => userLogout()}
                                 >
-                                    Выйти
+                                    <Image
+                                        alt="logout"
+                                        height={30}
+                                        // onClick={() => userLogout()}
+                                        src={logOutIcon}
+                                        width={30}
+                                    />
                                 </div>
                             </>
                         ) : (
