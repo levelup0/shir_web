@@ -3,6 +3,7 @@ import AvatarComponent from '@/Common/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { commonRequestWithToken } from '@/Common/commonRequest';
+import { formatDateWithoutTime } from '@/Common/function';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
@@ -180,20 +181,22 @@ export default function MainBlockSecond() {
                                             <span className="w-fit h-[40px] text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
                                                 {value?.category?.name}
                                             </span>
-                                            <div className="flex flex-col gap-[10px]">
+                                            <div className="flex flex-row gap-[10px]">
                                                 <div className="flex flex-col">
                                                     <span className="text-[14px] ">
                                                         Создано:{' '}
                                                         <span className="font-semibold">
-                                                            {
-                                                                value?.publish_date
-                                                            }
+                                                            {formatDateWithoutTime(
+                                                                value?.publish_date,
+                                                            )}
                                                         </span>
                                                     </span>
                                                     <span className="text-[14px] ">
-                                                        Да закрытия вызова:{' '}
+                                                        Подача заявок до:{' '}
                                                         <span className="font-semibold">
-                                                            {value?.end_date}
+                                                            {formatDateWithoutTime(
+                                                                value?.end_date,
+                                                            )}
                                                         </span>
                                                     </span>
                                                 </div>

@@ -1,5 +1,8 @@
 'use client';
 import moment from 'moment';
+import 'moment/locale/ru'; // without this line it didn't work
+moment.locale('ru');
+
 // Access Token
 export const storeToken = (token: string) => {
     localStorage.setItem('auth_token_voz', token);
@@ -50,6 +53,10 @@ export const currentDate = () => {
 
 export const formatDate = (date: string) => {
     return moment(date).format('DD.MM.YYYY');
+};
+
+export const formatDateWithoutTime = (date: string) => {
+    return moment(date).format('D MMM YYYY');
 };
 
 // Format long text to short for readability

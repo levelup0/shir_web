@@ -323,7 +323,7 @@ export default function Page() {
                                         setPublishDate(e.target.value)
                                     }
                                     placeholder="dd-mm-yyyy"
-                                    type="datetime-local"
+                                    type="date"
                                 />
                             </div>
                             <div className="w-full flex flex-col gap-[5px]">
@@ -335,7 +335,7 @@ export default function Page() {
                                     defaultValue={endDate}
                                     onChange={e => setEnddate(e.target.value)}
                                     placeholder="dd-mm-yyyy"
-                                    type="datetime-local"
+                                    type="date"
                                 />
                             </div>
                         </div>

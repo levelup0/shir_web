@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { GETUSER, MASS_ACTION, VOZ } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { currentDate } from '@/Common/function';
+import { currentDate, formatDateWithoutTime } from '@/Common/function';
 import { commonRequestWithToken } from '@/Common/commonRequest';
 import TableheadCheckbox from '@/Common/TableheadCheckbox';
 import TableheadSort from '@/Common/TableheadSort';
@@ -228,10 +228,14 @@ export default function Page() {
                                                     {item?.description}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.publish_date}
+                                                    {formatDateWithoutTime(
+                                                        item?.publish_date,
+                                                    )}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.end_date}
+                                                    {formatDateWithoutTime(
+                                                        item?.end_date,
+                                                    )}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.status}
