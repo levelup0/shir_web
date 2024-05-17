@@ -82,7 +82,7 @@ export const loaderSvg = () => {
     return (
         <svg
             aria-hidden="true"
-            className="inline h-[26px] w-[26px] animate-spin  fill-black text-primary2 dark:fill-gray-300 dark:text-gray-600"
+            className="inline h-[26px] w-[26px] animate-spin  fill-black text-blue-200 dark:fill-gray-300 dark:text-gray-600"
             fill="none"
             viewBox="0 0 100 101"
             xmlns="http://www.w3.org/2000/svg"

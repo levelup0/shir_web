@@ -6,6 +6,7 @@ import { commonRequestWithToken } from '@/Common/commonRequest';
 import {
     formatDateWithoutTime,
     formatDateWithtimeTime,
+    loaderSvg,
 } from '@/Common/function';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
@@ -13,6 +14,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function MainBlockSecond() {
+    const [loader, setLoader] = useState(false);
     const [listData, setListData] = useState<any>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -25,6 +27,7 @@ export default function MainBlockSecond() {
     const [dateFilter, setDateFilter] = useState<string>('');
 
     const getVoz = async () => {
+        setLoader(true);
         const response = await commonRequestWithToken(
             VOZ_MAIN,
             'none',
@@ -36,6 +39,7 @@ export default function MainBlockSecond() {
             searchText,
         );
         if (response?.success == true) {
+            setLoader(false);
             setListData(response?.data?.data);
             setCurrentPage(response.data?.current_page ?? 1);
             setTotalPages(response.data?.last_page ?? 0);
@@ -105,6 +109,11 @@ export default function MainBlockSecond() {
 
                     <div className="w-full flex flex-col gap-[20px]">
                         {/* Item */}
+                        {loader == true ? (
+                            <div className="w-full flex justify-center items-center">
+                                {loaderSvg()}
+                            </div>
+                        ) : null}
                         {listData?.length > 0 &&
                             listData?.map((value: any, index: number) => {
                                 return (
