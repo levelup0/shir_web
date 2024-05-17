@@ -59,6 +59,10 @@ export const formatDateWithoutTime = (date: string) => {
     return moment(date).format('D MMM YYYY');
 };
 
+export const formatDateWithtimeTime = (date: string) => {
+    return moment(date).format('D MMM YYYY HH:mm');
+};
+
 // Format long text to short for readability
 export const translateLanguageId = (id: number | undefined) => {
     switch (id) {

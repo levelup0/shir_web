@@ -179,12 +179,12 @@ export default function CallerData() {
                                                         {value?.email}
                                                     </span>
                                                 </span>
-                                                <span className="text-[14px] ">
+                                                {/* <span className="text-[14px] ">
                                                     Роль:{' '}
                                                     <span className="font-semibold">
                                                         {value?.roles.name}
                                                     </span>
-                                                </span>
+                                                </span> */}
                                             </div>
                                         </div>
                                     </div>

@@ -288,36 +288,6 @@ export default function MainHeader() {
                     </div>
                 </div>
             ) : null}
-            {/* {pathname == '/' ? (
-                <div className="bg-main-bg w-full pt-[200px] bg-cover">
-                    <div className="w-full flex justify-start lg:px-[255px] flex-col gap-[30px] py-[60px] ">
-                        <div className="flex flex-col w-fit">
-                            <h1 className="text-[120px] font-extrabold leading-[130px] text-primary_grey">
-                                Вызовы ШИР
-                            </h1>
-                            <span className="text-end text-white opacity-70">
-                                Платформа Вызовы ШИР
-                            </span>
-                        </div>
-                        <div className="flex flex-col">
-                            <div className="flex w-[450px] gap-[30px] justify-center items-center ">
-                                <div className="w-[50px] bg-primary_grey h-[100px]"></div>
-                                <h2 className="text-[18px]  text-white opacity-70">
-                                    Платформа Вызовы ШИР создается для
-                                    размещения в сети интернет и предоставления
-                                    пользователям удобного функционала для
-                                    размещения и взятия “Вызовов”.
-                                </h2>
-                            </div>
-                        </div>
-                        <div className="">
-                            <button className="text-[16px] shadow-yellow text-white bg-primary_yellow py-[10px] px-[15px] rounded-primary_radius">
-                                Начать сейчас бесплатно
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            ) : null} */}
         </div>
     );
 }

@@ -232,7 +232,7 @@ export default function Page() {
                         </Link>
                         {data?.roles?.name == 'caller' ? (
                             <>
-                                <Link href="/create-voz">
+                                <Link href="/create-challenges">
                                     <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
                                         <div className="w-[2px]  h-[55px]"></div>
                                         <div className="flex gap-[5px] px-[15px] items-center">
@@ -399,7 +399,7 @@ export default function Page() {
                                                 setDateBirth(e.target.value)
                                             }
                                             placeholder="Your name"
-                                            type="datetime-local"
+                                            type="date"
                                             value={dateBirth}
                                         />
                                     </div>
@@ -419,18 +419,19 @@ export default function Page() {
                                     </div>
                                     <div className="w-full flex flex-col gap-[5px]">
                                         <span className="font-medium">
-                                            Краткое описание своих интересов:
+                                            Курс обучения:
                                         </span>
-                                        <textarea
-                                            className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
-                                            cols={15}
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
                                             onChange={e =>
-                                                setInteres(e.target.value)
+                                                setEducationCourse(
+                                                    e.target.value,
+                                                )
                                             }
-                                            placeholder="Краткое описание своих интересов"
-                                            rows={10}
-                                            value={interes}
-                                        ></textarea>
+                                            placeholder="Курс обучения"
+                                            type="text"
+                                            value={educationCourse}
+                                        />
                                     </div>
                                     <div className="w-full flex flex-col gap-[5px]">
                                         <span className="font-medium">
@@ -445,6 +446,21 @@ export default function Page() {
                                             type="text"
                                             value={urlTelegram}
                                         />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Краткое описание своих интересов:
+                                        </span>
+                                        <textarea
+                                            className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                            cols={15}
+                                            onChange={e =>
+                                                setInteres(e.target.value)
+                                            }
+                                            placeholder="Краткое описание своих интересов"
+                                            rows={10}
+                                            value={interes}
+                                        ></textarea>
                                     </div>
                                 </>
                             )}

@@ -3,7 +3,10 @@ import AvatarComponent from '@/Common/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { commonRequestWithToken } from '@/Common/commonRequest';
-import { formatDateWithoutTime } from '@/Common/function';
+import {
+    formatDateWithoutTime,
+    formatDateWithtimeTime,
+} from '@/Common/function';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
@@ -95,7 +98,7 @@ export default function MainBlockSecond() {
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {totalItems} Вызовов
+                            {/* {totalItems} Вызовов */}
                         </p>
                         <hr />
                     </div>
@@ -194,7 +197,7 @@ export default function MainBlockSecond() {
                                                     <span className="text-[14px] ">
                                                         Подача заявок до:{' '}
                                                         <span className="font-semibold">
-                                                            {formatDateWithoutTime(
+                                                            {formatDateWithtimeTime(
                                                                 value?.end_date,
                                                             )}
                                                         </span>

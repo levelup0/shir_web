@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'next/navigation';
+import { formatDateWithoutTime } from '@/Common/function';
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -126,36 +127,41 @@ export default function Page() {
                                             </span>
                                         </div>
                                         <div className="flex text-[15px]">
-                                            Категория:{' '}
+                                            Категория:{'   '}
                                             <span className="text-primary_blue font-semibold">
                                                 {response?.data?.category?.name}
                                             </span>
                                         </div>
                                         <div className="flex text-[15px]">
-                                            Размещено:{' '}
+                                            Дата размещения:{'   '}
                                             <span className="text-primary_blue font-semibold">
                                                 {response?.data != null &&
-                                                    response?.data
-                                                        ?.publish_date}
+                                                    formatDateWithoutTime(
+                                                        response?.data
+                                                            ?.publish_date,
+                                                    )}
                                             </span>
                                         </div>
                                     </div>
                                     <div className=" flex items-end justify-end">
-                                        {myAprove == false ? (
+                                        {myAprove == false &&
+                                        data?.roles?.name != 'caller' ? (
                                             <button
                                                 className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
                                                 onClick={() => apply()}
                                             >
                                                 Подать заявку
                                             </button>
-                                        ) : (
+                                        ) : null}
+
+                                        {myAprove == true ? (
                                             <button
                                                 className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
                                                 disabled
                                             >
                                                 Заявка отправлена
                                             </button>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>

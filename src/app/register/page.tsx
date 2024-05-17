@@ -428,9 +428,7 @@ export default function Page() {
                                                         }
                                                         type="button"
                                                     >
-                                                        {
-                                                            'CV, рекомендательные информации и.т.д (файл)'
-                                                        }
+                                                        {'добавить файл'}
                                                     </button>
                                                 </div>
                                             </div>
@@ -445,7 +443,7 @@ export default function Page() {
                                         onChange={e =>
                                             setUrlTelegram(e.target.value)
                                         }
-                                        placeholder="Ссылка на Telegram"
+                                        placeholder="@name"
                                         type="text"
                                         value={urlTelegram}
                                     />
@@ -531,7 +529,7 @@ export default function Page() {
                         </div> */}
                         <hr />
                         <div className="flex gap-[10px] items-center justify-center">
-                            <p>У вас есть акаунт Вызовы ШИР?</p>
+                            <p>У вас есть акаунт Шторм-трек?</p>
                             <Link className="text-blue-500" href="/login">
                                 Войти
                             </Link>

@@ -124,7 +124,7 @@ export default function Page() {
                         </Link>
                         {data?.roles?.name == 'caller' ? (
                             <>
-                                <Link href="/create-voz">
+                                <Link href="/create-challenges">
                                     <div className="w-full h-[55px]  border-b-[1px]  hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
                                         <div className="w-[2px]  h-[55px]"></div>
                                         <div className="flex gap-[5px] px-[15px] items-center">
