@@ -2,7 +2,7 @@
 export default function BurgerIcon({ setMobileMenuShow, mobileMenuShow }: any) {
     return (
         <svg
-            className="cursor-pointer fill-boxdark-2 dark:fill-bodydark1"
+            className="cursor-pointer fill-white"
             height="30"
             onClick={() => setMobileMenuShow(!mobileMenuShow)}
             viewBox="0 0 25 25"
