@@ -181,9 +181,30 @@ export default function MainBlockSecond() {
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit h-[40px] text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
+                                            <div className="flex gap-[5px]">
+                                                {value?.category_voz?.length >
+                                                    0 &&
+                                                    value?.category_voz?.map(
+                                                        (v: any, i: number) => {
+                                                            return (
+                                                                <span
+                                                                    className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]"
+                                                                    key={i}
+                                                                >
+                                                                    {
+                                                                        v
+                                                                            ?.category
+                                                                            ?.name
+                                                                    }
+                                                                </span>
+                                                            );
+                                                        },
+                                                    )}
+                                            </div>
+
+                                            {/* <span className="w-fit h-[40px] text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
                                                 {value?.category?.name}
-                                            </span>
+                                            </span> */}
                                             <div className="flex flex-row gap-[10px]">
                                                 <div className="flex flex-col">
                                                     <span className="text-[14px] ">

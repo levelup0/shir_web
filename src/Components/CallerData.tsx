@@ -169,9 +169,27 @@ export default function CallerData() {
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
-                                                {value?.business_sector}
-                                            </span>
+                                            <div className="flex gap-[5px]">
+                                                {value?.category_voz?.length >
+                                                    0 &&
+                                                    value?.category_voz?.map(
+                                                        (v: any, i: number) => {
+                                                            return (
+                                                                <span
+                                                                    className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]"
+                                                                    key={i}
+                                                                >
+                                                                    {
+                                                                        v
+                                                                            ?.category
+                                                                            ?.name
+                                                                    }
+                                                                </span>
+                                                            );
+                                                        },
+                                                    )}
+                                            </div>
+
                                             <div className="flex flex-col">
                                                 <span className="text-[14px] ">
                                                     Email:{' '}

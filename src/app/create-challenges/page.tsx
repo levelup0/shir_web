@@ -11,12 +11,10 @@ import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { currentDate } from '@/Common/function';
 import AvatarComponent from '@/Common/AvatarComponent';
+import MultiSelect from '@/Components/Multiselect';
 export default function Page() {
     const [resultImage, setResultImg] = useState('');
     const [data, setData] = useState<any>();
-
-    const [categoryVozList, setCategoryVozList] = useState<any>([]);
-    const [selectedCategory, setSelectedCategory] = useState<any>(null);
 
     const [name, setName] = useState('');
     const [sector, setSector] = useState('');
@@ -25,6 +23,9 @@ export default function Page() {
     const [endDate, setEnddate] = useState<string>('');
 
     const router = useRouter();
+
+    const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
     const getData = () => {
         requestGet(`${GETUSER}`, {}).then(response => {
@@ -35,14 +36,16 @@ export default function Page() {
                 }
             }
         });
+
         requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
             if (response?.success == true) {
-                setCategoryVozList(response?.data);
-                if (response?.data?.length > 0) {
-                    setSelectedCategory(response?.data[0]?.id);
-                }
+                setCategoryVoz(response?.data);
             }
         });
+    };
+
+    const handleLanguageFilter = (data: string) => {
+        setSelectedCategory(data);
     };
 
     const validatePage = () => {
@@ -97,7 +100,8 @@ export default function Page() {
         form.append('description', description);
         form.append('publish_date', publishDate);
         form.append('end_date', endDate);
-        form.append('category_voz_id', selectedCategory);
+        // form.append('category_voz_id', selectedCategory);
+        form.append('voz_category_relation', selectedCategory);
 
         const response = await requestPostWithToken(VOZ, form);
         if (response?.success == true) {
@@ -106,7 +110,7 @@ export default function Page() {
             setDescription(' ');
             setPublishDate(' ');
             setEnddate('');
-            setSelectedCategory(categoryVozList[0].id);
+            // setSelectedCategory(categoryVozList[0].id);
 
             // setCreateProfileStatus(false);
         } else {
@@ -243,7 +247,13 @@ export default function Page() {
                                 <span className="font-medium">
                                     Категория вызова:
                                 </span>
-                                {categoryVozList?.length > 0 ? (
+                                {categoryVoz.length > 0 ? (
+                                    <MultiSelect
+                                        onChange={handleLanguageFilter}
+                                        options={categoryVoz}
+                                    />
+                                ) : null}
+                                {/* {categoryVozList?.length > 0 ? (
                                     <select
                                         className="border py-[12px] px-[5px]"
                                         onChange={e => {
@@ -288,7 +298,7 @@ export default function Page() {
                                                 },
                                             )}
                                     </select>
-                                ) : null}
+                                ) : null} */}
                             </div>
                             {/* <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">

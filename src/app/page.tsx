@@ -1,4 +1,3 @@
-// import MainFooter from '@/Components/MainFooter';
 import MainBlockSecond from '@/Components/MainBlockSecond';
 import MainHeader from '@/Components/MainHeader';
 

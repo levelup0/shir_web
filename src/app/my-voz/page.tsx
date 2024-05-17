@@ -218,8 +218,28 @@ export default function Page() {
                                                 <td className=" border border-[#eee]  dark:border-strokedark">
                                                     {item?.name}
                                                 </td>
-                                                <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.category?.name}
+                                                <td className="flex gap-[5px] border border-[#eee]  dark:border-strokedark">
+                                                    {item?.category_voz
+                                                        ?.length > 0 &&
+                                                        item?.category_voz?.map(
+                                                            (
+                                                                v: any,
+                                                                i: any,
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="bg-blue-100 px-[5px] py-[2px] rounded-[4px]"
+                                                                        key={i}
+                                                                    >
+                                                                        {
+                                                                            v
+                                                                                ?.category
+                                                                                ?.name
+                                                                        }
+                                                                    </div>
+                                                                );
+                                                            },
+                                                        )}
                                                 </td>
                                                 {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.sector}

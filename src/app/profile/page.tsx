@@ -6,7 +6,7 @@ import MainHeader from '@/Components/MainHeader';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { GETUSER, USER_PASSWORD_UPDATE } from '@/Common/urls';
+import { CATEGORY_VOZ, GETUSER, USER_PASSWORD_UPDATE } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { Cropper, ReactCropperElement } from 'react-cropper';
@@ -18,6 +18,7 @@ import CancelBtn01 from '@/HtmlComponent/CancelBtn01';
 
 import 'cropperjs/dist/cropper.css';
 import AvatarComponent from '@/Common/AvatarComponent';
+import MultiSelect from '@/Components/Multiselect';
 export default function Page() {
     const [data, setData] = useState<any>();
 
@@ -34,6 +35,19 @@ export default function Page() {
     const [urlTelegram, setUrlTelegram] = useState('');
 
     const router = useRouter();
+
+    const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [defaultCategory, setDefaultCategory] = useState<any>([]);
+    const [categoryVoz, setCategoryVoz] = useState<any>([]);
+
+    const getCategoryVoz = () => {
+        requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
+            getData();
+            if (response?.success == true) {
+                setCategoryVoz(response?.data);
+            }
+        });
+    };
 
     const getData = () => {
         requestGet(`${GETUSER}`, {}).then(response => {
@@ -52,8 +66,20 @@ export default function Page() {
                 if (response?.user?.avatar != null) {
                     setResultImg(response?.user?.avatar);
                 }
+
+                if (response?.user?.category_voz?.length > 0) {
+                    setDefaultCategory(response?.user?.category_voz);
+                }
+
+                if (response?.user?.category_voz?.length > 0) {
+                    setSelectedCategory(response?.user?.category_voz);
+                }
             }
         });
+    };
+
+    const handleLanguageFilter = (data: string) => {
+        setSelectedCategory(data);
     };
 
     const update = async () => {
@@ -71,11 +97,12 @@ export default function Page() {
         form.append('education_course', educationCourse);
         form.append('interes', interes);
         form.append('url_telegram', urlTelegram);
+        form.append('voz_category_relation', selectedCategory);
 
         const response = await requestPostWithToken(USER_PASSWORD_UPDATE, form);
         if (response?.success == true) {
             toast.success(response?.msg);
-            getData();
+            getCategoryVoz();
             // setCreateProfileStatus(false);
         } else {
             toast.error(response?.msg);
@@ -93,7 +120,7 @@ export default function Page() {
         ) {
             router.push('/');
         } else {
-            getData();
+            getCategoryVoz();
         }
 
         //Тут значит пользователь авторизован
@@ -362,7 +389,14 @@ export default function Page() {
                                         <span className="font-medium">
                                             Сфера бизнеса:
                                         </span>
-                                        <input
+                                        {categoryVoz.length > 0 ? (
+                                            <MultiSelect
+                                                defaultValue={defaultCategory}
+                                                onChange={handleLanguageFilter}
+                                                options={categoryVoz}
+                                            />
+                                        ) : null}
+                                        {/* <input
                                             className="border shadow px-[10px] py-[10px]"
                                             onChange={e =>
                                                 setBusinessSector(
@@ -372,7 +406,7 @@ export default function Page() {
                                             placeholder=""
                                             type="text"
                                             value={businessSector}
-                                        />
+                                        /> */}
                                     </div>
                                     <div className="w-full flex flex-col gap-[5px]">
                                         <span className="font-medium">

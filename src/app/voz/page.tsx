@@ -128,9 +128,29 @@ export default function Page() {
                                         </div>
                                         <div className="flex text-[15px]">
                                             Категория:{'   '}
-                                            <span className="text-primary_blue font-semibold">
+                                            <div className="flex gap-[5px]">
+                                                {response?.data?.category_voz
+                                                    ?.length > 0 &&
+                                                    response?.data?.category_voz?.map(
+                                                        (v: any, i: number) => {
+                                                            return (
+                                                                <span
+                                                                    className="w-fit text-[14px] font-light bg-blue-100 px-[2px] py-[2px] text-blue-700 rounded-[5px]"
+                                                                    key={i}
+                                                                >
+                                                                    {
+                                                                        v
+                                                                            ?.category
+                                                                            ?.name
+                                                                    }
+                                                                </span>
+                                                            );
+                                                        },
+                                                    )}
+                                            </div>
+                                            {/* <span className="text-primary_blue font-semibold">
                                                 {response?.data?.category?.name}
-                                            </span>
+                                            </span> */}
                                         </div>
                                         <div className="flex text-[15px]">
                                             Дата размещения:{'   '}
