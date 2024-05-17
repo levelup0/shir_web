@@ -254,10 +254,27 @@ export default function Page() {
                                                     {item?.user?.url_telegram}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {
-                                                        item?.user
-                                                            ?.business_sector
-                                                    }
+                                                    {item?.voz?.category_voz
+                                                        ?.length > 0 &&
+                                                        item?.voz?.category_voz?.map(
+                                                            (
+                                                                v: any,
+                                                                i: any,
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="bg-blue-100 px-[5px] py-[2px] rounded-[4px]"
+                                                                        key={i}
+                                                                    >
+                                                                        {
+                                                                            v
+                                                                                ?.category
+                                                                                ?.name
+                                                                        }
+                                                                    </div>
+                                                                );
+                                                            },
+                                                        )}
                                                 </td>
                                                 <td className="border border-[#eee] !text-[12px]  dark:border-strokedark">
                                                     {formatStatus(item?.status)}
