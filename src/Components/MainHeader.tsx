@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
 export default function MainHeader() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { currentUser, setCurrentUser, userAuth, setUserAuth } =
         useContext(CommonContext);
 
