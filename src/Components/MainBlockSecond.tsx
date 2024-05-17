@@ -74,10 +74,10 @@ export default function MainBlockSecond() {
     };
 
     return (
-        <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
+        <div className="w-full mt-[90px] flex justify-center items-center py-[5px] md:py-[20px]">
             <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
-                <div className="w-full shadow flex justify-between gap-[30px] px-[30px] py-[30px] bg-white rounded-[5px] ">
-                    <div className="w-full flex gap-[30px]">
+                <div className="w-full shadow flex justify-between gap-[10px] md:gap-[30px] px-[10px] md:px-[30px] py-[30px] md:py-[10px] bg-white rounded-[5px] ">
+                    <div className="w-full flex gap-[10px] md:gap-[30px]">
                         <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             onChange={(e: any) => handleSearch(e.target?.value)}
@@ -88,24 +88,24 @@ export default function MainBlockSecond() {
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             placeholder="Поиск городу..."
                         /> */}
-                        <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
+                        {/* <select className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]">
                             <option>Поиск по типу</option>
-                        </select>
+                        </select> */}
                     </div>
-                    <div className="border-">
+                    {/* <div className="border-">
                         <button className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 ">
                             Поиск
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
-                <div className="w-full mt-[30px] flex flex-col gap-[20px]">
-                    <div className="w-full flex flex-col gap-[20px]">
+                <div className="w-full  flex flex-col gap-[20px]">
+                    {/* <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {/* {totalItems} Вызовов */}
+                            {totalItems} Вызовов
                         </p>
                         <hr />
-                    </div>
+                    </div> */}
 
                     <div className="w-full flex flex-col gap-[20px]">
                         {/* Item */}
@@ -118,14 +118,14 @@ export default function MainBlockSecond() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <Link
-                                        className="w-full flex flex-col gap-[25px] shadow rounded-[4px] px-[10px] py-[20px] hover:bg-blue-50"
+                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] py-[20px] hover:bg-blue-50"
                                         href={{
                                             pathname: '/voz',
                                             query: { voz_id: value?.id },
                                         }}
                                         key={index}
                                     >
-                                        <div className="w-full flex gap-[20px] px-[1px]">
+                                        <div className="w-full flex gap-[5px] md:gap-[20px] px-[1px]">
                                             <div className="w-[60px] h-[60px] relative">
                                                 {value?.user?.avatar != null ? (
                                                     <AvatarComponent
@@ -189,7 +189,8 @@ export default function MainBlockSecond() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-full flex justify-between">
+
+                                        <div className="w-full flex flex-col md:flex-row justify-between gap-[5px]">
                                             <div className="flex gap-[5px]">
                                                 {value?.category_voz?.length >
                                                     0 &&
@@ -211,10 +212,7 @@ export default function MainBlockSecond() {
                                                     )}
                                             </div>
 
-                                            {/* <span className="w-fit h-[40px] text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
-                                                {value?.category?.name}
-                                            </span> */}
-                                            <div className="flex flex-row gap-[10px]">
+                                            <div className="flex flex-row gap-[10px] md:justify-between">
                                                 <div className="flex flex-col">
                                                     <span className="text-[14px] ">
                                                         Создано:{' '}

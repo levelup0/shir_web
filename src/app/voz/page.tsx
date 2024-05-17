@@ -118,7 +118,7 @@ export default function Page() {
                                             />
                                         )}
                                 </div>
-                                <div className="w-full flex justify-between">
+                                <div className="w-full gap-[10px] md:gap-[0px] flex-col flex md:flex-row justify-start md:justify-between ">
                                     <div className="flex flex-col gap-[5px]">
                                         <div className="flex text-[15px]">
                                             Вызоводатель:{' '}
@@ -148,9 +148,6 @@ export default function Page() {
                                                         },
                                                     )}
                                             </div>
-                                            {/* <span className="text-primary_blue font-semibold">
-                                                {response?.data?.category?.name}
-                                            </span> */}
                                         </div>
                                         <div className="flex text-[15px]">
                                             Дата размещения:{'   '}
@@ -163,7 +160,7 @@ export default function Page() {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className=" flex items-end justify-end">
+                                    <div className="flex items-end justify-end md:justify-end">
                                         {myAprove == false &&
                                         data?.roles?.name != 'caller' ? (
                                             <button

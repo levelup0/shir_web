@@ -111,9 +111,6 @@ export default function MainHeader() {
                                 </clipPath>
                             </defs>
                         </svg>
-
-                        {/* <span>ШИР</span>
-                        <span>МФТИ</span> */}
                     </Link>
 
                     <div className="flex mdd:hidden">
@@ -204,7 +201,7 @@ export default function MainHeader() {
                 </div>
             </div>
             {mobileMenuShow == true ? (
-                <div className="w-full px-[20px] transition-all ease-linear">
+                <div className="w-full mt-[100px] px-[20px] transition-all ease-linear">
                     <div className="justify-start items-start gap-[10px] flex flex-col p-[5px] shadow">
                         <Link
                             className="flex items-center justify-center"
@@ -212,28 +209,28 @@ export default function MainHeader() {
                         >
                             <div
                                 className={
-                                    'transition-all ease-linear text-center   text-[16px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
+                                    'transition-all ease-linear text-center text-[16px] hover:text-primary_grey  tracking-tighter-[1.2px] ' +
                                     (activeLink == '/'
                                         ? '!text-primary_grey'
                                         : '')
                                 }
                             >
-                                Главная
+                                Все вызовы
                             </div>
                         </Link>
                         <Link
                             className="flex items-center justify-center"
-                            href="/price"
+                            href="/caller"
                         >
                             <div
                                 className={
-                                    'transition-all ease-linear text-center   text-[16px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
-                                    (activeLink == '/price'
+                                    'transition-all ease-linear text-center   text-[16px] hover:text-primary_grey  tracking-tighter-[1.2px] ' +
+                                    (activeLink == '/caller'
                                         ? '!text-primary_grey'
                                         : '')
                                 }
                             >
-                                Цены
+                                Вызоводатели
                             </div>
                         </Link>
                         {/* <div className="text-center text-[12px] text_default  font-normal   tracking-wider">
@@ -241,17 +238,17 @@ export default function MainHeader() {
                         </div> */}
                         <Link
                             className="flex items-center justify-center"
-                            href="/contacts"
+                            href="/recipient"
                         >
                             <div
                                 className={
-                                    'transition-all ease-linear text-center   text-[16px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
-                                    (activeLink == '/contacts'
+                                    'transition-all ease-linear text-center   text-[16px] hover:text-primary_grey tracking-tighter-[1.2px] ' +
+                                    (activeLink == '/recipient'
                                         ? '!text-primary_grey'
                                         : '')
                                 }
                             >
-                                Контакты
+                                Вызовополучатели
                             </div>
                         </Link>
                         <div className="w-full justify-between items-center flex">
@@ -259,7 +256,7 @@ export default function MainHeader() {
                                 <>
                                     <Link href="/profile">
                                         <div className="text-[16px]     transition-all ease-linear hover:text-primary_grey   hover:bg-white active:bg-primary_grey_opacity w-[150px] h-[38px] px-1.5 pt-[13px] pb-3 text-white bg-primary_grey rounded-[4px] border border-primary_grey justify-center items-center flex tracking-tighter-[1.2px]">
-                                            Личный кабинет
+                                            Мой профиль
                                         </div>
                                     </Link>
                                     <div
