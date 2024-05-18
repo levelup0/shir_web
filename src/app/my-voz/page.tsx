@@ -70,16 +70,12 @@ export default function Page() {
             router.push('/');
         } else {
             getData();
+            getVoz();
         }
-
-        getVoz();
-
-        //Тут значит пользователь авторизован
     }, []);
 
     return (
         <div className="flex flex-col">
-            {/* Header Menu */}
             <MainHeader />
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">
@@ -241,9 +237,6 @@ export default function Page() {
                                                             },
                                                         )}
                                                 </td>
-                                                {/* <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.sector}
-                                                </td> */}
                                                 <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
                                                     {item?.description}
                                                 </td>

@@ -5,8 +5,8 @@ import { removeToken, store_albi_userauth_bool } from '@/Common/function';
 import { requestPostWithToken } from '@/Common/requests';
 import { LOGOUT } from '@/Common/urls';
 import BurgerIcon from '@/icons/BurgerIcon';
-import LogoStormTrack from '@/icons/LogoStormTrack';
 import LogOutIcon from '@/icons/LogOutIcon';
+import StormtrackLogo from '@/icons/StormtrackLogo';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -47,10 +47,13 @@ export default function MainHeader() {
                     'w-full fixed header-section transition-all ease-in bg-gray-700 z-10'
                 }
             >
-                <div className="flex lg:container h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
-                    <Link href="/">
-                        <LogoStormTrack
-                            color={'white'}
+                <div className="flex w-full lg:px-[175px] h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
+                    <Link
+                        className="flex flex-col leading-[34px] justify-center italic font-bold text-white text-[42px]"
+                        href="/"
+                    >
+                        <StormtrackLogo
+                            className="text-white"
                             height={80}
                             width={200}
                         />

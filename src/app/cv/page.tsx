@@ -72,13 +72,10 @@ export default function Page() {
         }
 
         getVoz();
-
-        //Тут значит пользователь авторизован
     }, []);
 
     return (
         <div className="flex flex-col">
-            {/* Header Menu */}
             <MainHeader />
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">

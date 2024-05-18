@@ -9,7 +9,6 @@ export default function MultiSelect({
     defaultValue = [],
 }: any) {
     let defaultValueStateOld: any = [];
-    // const [defaultValueState, setDefaultValueState] = useState<any>([]);
 
     const handleChange = (selectedOptions: any) => {
         if (!selectedOptions.length) {
@@ -28,17 +27,7 @@ export default function MultiSelect({
                     name: defaultValue[i].category?.name,
                 });
             }
-
-            // setDefaultValueState(defaultValueStateOld);
         }
-        console.log('geg');
-        console.log(defaultValueStateOld);
-        // console.log(defaultValueState);
-        // const parsedData = JSON.parse(defaultValue);
-        // defaultValueState = {
-        //     label: parsedData[0].name,
-        //     value: parsedData[0].id,
-        // };
     } catch (e) {
         defaultValueStateOld = null;
     }
