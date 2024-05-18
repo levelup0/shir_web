@@ -127,7 +127,7 @@ export default function MainHeader() {
                                         className={
                                             'w-[150px] h-[38px] flex justify-center items-center text-[18px] rounded-[10px] text-white hover:bg-primary_yellow transition-all' +
                                             (activeLink == '/profile'
-                                                ? ' bg-primary_yellow'
+                                                ? ' !bg-primary_yellow'
                                                 : '')
                                         }
                                     >
@@ -173,7 +173,7 @@ export default function MainHeader() {
             {mobileMenuShow == true ? (
                 <div
                     className={
-                        "fixed top-0 right-0 bg-gray-600 z-0 mt-[80px] w-[230px] h-[250px] pt-[20px] pb-[20px] pr-[35px] rounded-[10px] transition-all ease-linear bg:white lg:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col justify-between items-center"
+                        "fixed top-0 right-0 bg-gray-600 z-0 mt-[80px] w-[230px] pt-[20px] pb-[20px] pr-[40px] rounded-[10px] transition-all ease-linear bg:white lg:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col justify-between items-center"
                     }
                 >
                     <Link
@@ -181,12 +181,10 @@ export default function MainHeader() {
                         href="/about"
                     >
                         <div
-                            className={
-                                'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
-                                (activeLink == '/about'
-                                    ? '!text-primary_grey'
-                                    : '')
-                            }
+                            className={`
+                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                ${activeLink === '/about' ? '!text-primary_grey' : ''}
+                            `}
                         >
                             О платформе
                         </div>
@@ -196,10 +194,10 @@ export default function MainHeader() {
                         href="/"
                     >
                         <div
-                            className={
-                                'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-white   tracking-tighter-[1.2px] ' +
-                                (activeLink == '/' ? '!text-primary_grey' : '')
-                            }
+                            className={`
+                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                ${activeLink === '/' ? '!text-primary_grey' : ''}
+                            `}
                         >
                             Все вызовы
                         </div>
@@ -210,12 +208,10 @@ export default function MainHeader() {
                         href="/recipient"
                     >
                         <div
-                            className={
-                                'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-white   tracking-tighter-[1.2px] ' +
-                                (activeLink == '/recipient'
-                                    ? '!text-primary_grey'
-                                    : '')
-                            }
+                            className={`
+                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                ${activeLink === '/recipient' ? '!text-primary_grey' : ''}
+                            `}
                         >
                             Вызовополучатели
                         </div>
@@ -226,25 +222,26 @@ export default function MainHeader() {
                         href="/caller"
                     >
                         <div
-                            className={
-                                'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-white   tracking-tighter-[1.2px] ' +
-                                (activeLink == '/caller'
-                                    ? '!text-primary_grey'
-                                    : '')
-                            }
+                            className={`
+                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                ${activeLink === '/caller' ? '!text-primary_grey' : ''}
+                            `}
                         >
                             Вызоводатели
                         </div>
                     </Link>
 
-                    <Link href={userAuth == true ? '/profile' : '/login'}>
+                    <div className="w-[200px] h-[30px]"></div>
+
+                    <Link
+                        className="w-[200px] h-[38px] flex items-center justify-end"
+                        href={userAuth == true ? '/profile' : '/login'}
+                    >
                         <div
-                            className={
-                                'w-[200px] h-[38px] flex justify-end items-center text-[18px] rounded-[10px] text-white hover:text-primary_grey transition-all' +
-                                (activeLink == '/profile'
-                                    ? ' bg-primary_yellow'
-                                    : '')
-                            }
+                            className={`
+                                transition-all ease-linear text-center hover:px-3 rounded-[10px] text-[18px] hover:bg-primary_yellow text-white
+                                ${activeLink === '/login' || activeLink === '/profile' ? 'bg-primary_yellow !px-3' : ''}
+                            `}
                         >
                             {userAuth == true ? 'Мой профиль' : 'Войти'}
                         </div>
@@ -262,17 +259,18 @@ export default function MainHeader() {
                             />
                         </button>
                     ) : (
-                        <Link href="/register">
-                            <div
-                                className={
-                                    'w-[200px] h-[38px] flex justify-end items-center text-[18px] rounded-[10px] text-white hover:text-primary_grey transition-all' +
-                                    (activeLink == '/profile'
-                                        ? ' bg-primary_yellow'
-                                        : '')
-                                }
+                        <Link
+                            className="w-[200px] h-[38px] flex items-center justify-end"
+                            href="/register"
+                        >
+                            <button
+                                className={`
+                                    transition-all ease-linear text-center hover:px-3 rounded-[10px] text-[18px] hover:bg-white text-white hover:text-black
+                                    ${activeLink === '/register' ? '!bg-white !text-black !px-3' : ''}
+                                `}
                             >
                                 Регистрация
-                            </div>
+                            </button>
                         </Link>
                     )}
                 </div>
