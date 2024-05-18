@@ -7,10 +7,11 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
-import { loaderSvg } from '@/Common/function';
+import { is_user_logged_in, loaderSvg } from '@/Common/function';
 import { CONTACT_ASSETS, USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ReceipentData() {
@@ -25,6 +26,8 @@ export default function ReceipentData() {
     const [statusFilter, setStatusFilter] = useState<string>('-1');
     const [sortFilter, setSortFilter] = useState<string>('-1');
     const [dateFilter, setDateFilter] = useState<string>('');
+
+    const router = useRouter();
 
     const getData = async () => {
         setLoader(true);
@@ -69,6 +72,12 @@ export default function ReceipentData() {
         setSearchText(data);
         setCurrentPage(1);
     };
+
+    useEffect(() => {
+        if (!is_user_logged_in()) {
+            router.push('/about');
+        }
+    }, []);
 
     return (
         <div className="w-full mt-[90px] flex justify-center items-center py-[5px] md:py-[20px]">

@@ -3,9 +3,11 @@ import AvatarComponent from '@/Common/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { commonRequestWithToken } from '@/Common/commonRequest';
+import { useRouter } from 'next/navigation';
 import {
     formatDateWithoutTime,
     formatDateWithtimeTime,
+    is_user_logged_in,
     loaderSvg,
 } from '@/Common/function';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
@@ -25,6 +27,8 @@ export default function MainBlockSecond() {
     const [statusFilter, setStatusFilter] = useState<string>('-1');
     const [sortFilter, setSortFilter] = useState<string>('-1');
     const [dateFilter, setDateFilter] = useState<string>('');
+
+    const router = useRouter();
 
     const getVoz = async () => {
         setLoader(true);
@@ -72,6 +76,12 @@ export default function MainBlockSecond() {
         setSearchText(data);
         setCurrentPage(1);
     };
+
+    useEffect(() => {
+        if (!is_user_logged_in()) {
+            router.push('/about');
+        }
+    }, []);
 
     return (
         <div className="w-full mt-[90px] flex justify-center items-center py-[5px] md:py-[20px]">

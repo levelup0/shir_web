@@ -7,9 +7,10 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
-import { loaderSvg } from '@/Common/function';
+import { is_user_logged_in, loaderSvg } from '@/Common/function';
 import { USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function CallerData() {
@@ -24,6 +25,8 @@ export default function CallerData() {
     const [statusFilter, setStatusFilter] = useState<string>('-1');
     const [sortFilter, setSortFilter] = useState<string>('-1');
     const [dateFilter, setDateFilter] = useState<string>('');
+
+    const router = useRouter();
 
     const getData = async () => {
         setLoader(true);
@@ -68,6 +71,12 @@ export default function CallerData() {
         setSearchText(data);
         setCurrentPage(1);
     };
+
+    useEffect(() => {
+        if (!is_user_logged_in()) {
+            router.push('/about');
+        }
+    }, []);
 
     return (
         <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">

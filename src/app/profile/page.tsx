@@ -19,6 +19,7 @@ import CancelBtn01 from '@/HtmlComponent/CancelBtn01';
 import 'cropperjs/dist/cropper.css';
 import AvatarComponent from '@/Common/AvatarComponent';
 import MultiSelect from '@/Components/Multiselect';
+import { is_user_logged_in } from '@/Common/function';
 export default function Page() {
     const [data, setData] = useState<any>();
 
@@ -111,14 +112,8 @@ export default function Page() {
     };
 
     useEffect(() => {
-        const store_albi_userauth_bool =
-            localStorage.getItem('voz_userauth_bool');
-        if (
-            store_albi_userauth_bool == '' ||
-            store_albi_userauth_bool == null ||
-            store_albi_userauth_bool == 'false'
-        ) {
-            router.push('/');
+        if (!is_user_logged_in()) {
+            router.push('/about');
         } else {
             getCategoryVoz();
         }

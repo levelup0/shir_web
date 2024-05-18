@@ -13,14 +13,16 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { useSearchParams } from 'next/navigation';
-import { formatDateWithoutTime } from '@/Common/function';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { formatDateWithoutTime, is_user_logged_in } from '@/Common/function';
 
 export default function Page() {
     const searchParams = useSearchParams();
     const _voz_id: any = searchParams.get('voz_id');
     const [data, setData] = useState<any>();
     const [myAprove, setMyAprove] = useState<any>(false);
+
+    const router = useRouter();
 
     const getMyAprove = async (user_id: any) => {
         const response = await commonRequestAproveWithToken(
@@ -55,9 +57,14 @@ export default function Page() {
         const res: any = await getcommonDataById(VOZ_MAIN, _voz_id);
         setResponse(res);
     };
+
     useEffect(() => {
-        getData();
-        getUser();
+        if (!is_user_logged_in()) {
+            router.push('/about');
+        } else {
+            getData();
+            getUser();
+        }
     }, []);
 
     const apply = async () => {

@@ -16,7 +16,11 @@ import {
 } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { currentDate, formatStatus } from '@/Common/function';
+import {
+    currentDate,
+    formatStatus,
+    is_user_logged_in,
+} from '@/Common/function';
 import {
     commonRequestAproveWithToken,
     commonRequestWithToken,
@@ -63,14 +67,8 @@ export default function Page() {
     };
 
     useEffect(() => {
-        const store_albi_userauth_bool =
-            localStorage.getItem('voz_userauth_bool');
-        if (
-            store_albi_userauth_bool == '' ||
-            store_albi_userauth_bool == null ||
-            store_albi_userauth_bool == 'false'
-        ) {
-            router.push('/');
+        if (!is_user_logged_in()) {
+            router.push('/about');
         } else {
             getData();
         }

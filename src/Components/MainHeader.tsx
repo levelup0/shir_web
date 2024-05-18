@@ -75,93 +75,98 @@ export default function MainHeader() {
                                 О платформе
                             </div>
                         </Link>
-                        <Link
-                            className="h-[90px] flex items-center justify-center"
-                            href="/"
-                        >
-                            <div
-                                className={
-                                    'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
-                                    (activeLink == '/'
-                                        ? '!text-primary_grey'
-                                        : '')
-                                }
-                            >
-                                Все вызовы
-                            </div>
-                        </Link>
-                        <Link
-                            className="h-[90px] flex items-center justify-center"
-                            href="/caller"
-                        >
-                            <div
-                                className={
-                                    'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
-                                    (activeLink == '/caller'
-                                        ? '!text-primary_grey'
-                                        : '')
-                                }
-                            >
-                                Вызоводатели
-                            </div>
-                        </Link>
-                        <Link
-                            className="h-[90px] flex items-center justify-center"
-                            href="/recipient"
-                        >
-                            <div
-                                className={
-                                    'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
-                                    (activeLink == '/recipient'
-                                        ? '!text-primary_grey'
-                                        : '')
-                                }
-                            >
-                                Студенты
-                            </div>
-                        </Link>
-                    </div>
 
-                    <div className="max-w-[290px] justify-center items-center gap-2.5 hidden lg:flex">
                         {userAuth == true ? (
                             <>
-                                <Link href="/profile">
+                                <Link
+                                    className="h-[90px] flex items-center justify-center"
+                                    href="/"
+                                >
                                     <div
                                         className={
-                                            'w-[150px] h-[38px] flex justify-center items-center text-[18px] rounded-[10px] text-white hover:bg-primary_yellow transition-all' +
-                                            (activeLink == '/profile'
-                                                ? ' !bg-primary_yellow'
+                                            'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
+                                            (activeLink == '/'
+                                                ? '!text-primary_grey'
                                                 : '')
                                         }
                                     >
-                                        Мой профиль
+                                        Все вызовы
                                     </div>
                                 </Link>
-                                <button
-                                    className="w-[38px] h-[38px] transition-all cursor-pointer rounded-[10px] justify-center items-center flex hover:bg-primary_yellow"
-                                    onClick={() => userLogout()}
+                                <Link
+                                    className="h-[90px] flex items-center justify-center"
+                                    href="/caller"
                                 >
-                                    <LogOutIcon
-                                        className="fill-white"
-                                        height={25}
-                                        width={25}
-                                    />
-                                </button>
+                                    <div
+                                        className={
+                                            'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
+                                            (activeLink == '/caller'
+                                                ? '!text-primary_grey'
+                                                : '')
+                                        }
+                                    >
+                                        Вызоводатели
+                                    </div>
+                                </Link>
+                                <Link
+                                    className="h-[90px] flex items-center justify-center"
+                                    href="/recipient"
+                                >
+                                    <div
+                                        className={
+                                            'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
+                                            (activeLink == '/recipient'
+                                                ? '!text-primary_grey'
+                                                : '')
+                                        }
+                                    >
+                                        Студенты
+                                    </div>
+                                </Link>
                             </>
+                        ) : null}
+                    </div>
+
+                    <div className="max-w-[290px] justify-center items-center gap-2.5 hidden lg:flex">
+                        <Link
+                            className="w-[200px] h-[38px] flex items-center justify-end"
+                            href={userAuth == true ? '/profile' : '/login'}
+                        >
+                            <div
+                                className={`
+                                    transition-all ease-linear text-center hover:px-3 rounded-[10px] text-[18px] hover:bg-primary_yellow text-white
+                                    ${activeLink === '/login' || activeLink === '/profile' ? 'bg-primary_yellow !px-3' : ''}
+                                `}
+                            >
+                                {userAuth == true ? 'Мой профиль' : 'Войти'}
+                            </div>
+                        </Link>
+
+                        {userAuth == true ? (
+                            <button
+                                className="w-[200px] h-[38px] transition-all cursor-pointer rounded-[10px] justify-end items-center flex"
+                                onClick={() => userLogout()}
+                            >
+                                <LogOutIcon
+                                    className="cursor-pointer fill-white hover:fill-primary_grey"
+                                    height={25}
+                                    width={25}
+                                />
+                            </button>
                         ) : (
-                            <>
-                                {' '}
-                                <Link href="/login">
-                                    <div className="text-[16px]  bg-primary_yellow  transition-all ease-linear w-[130px] h-[38px] px-7 pt-3 pb-[11px] text-white active:text-white  active:bg-primary_grey hover:text-primary_yellow  hover:bg-primary_grey  rounded-[10px] justify-center items-center flex tracking-tighter-[1.2px]">
-                                        Войти
-                                    </div>
-                                </Link>
-                                <Link href="/register">
-                                    <div className="text-[16px] border-primary_yellow   transition-all ease-linear w-[150px] h-[38px] px-1.5 pt-[13px] pb-3 text-primary_grey bg-none rounded-[10px] active:bg-primary_grey_opacity active:text-primary_grey hover:text-primary_yellow hover:bg-white justify-center items-center flex tracking-tighter-[1.2px]">
-                                        Регистрация
-                                    </div>
-                                </Link>
-                            </>
+                            <Link
+                                className="w-[200px] h-[38px] flex items-center justify-end"
+                                href="/register"
+                            >
+                                <button
+                                    className={`
+                                        transition-all ease-linear text-center hover:px-3 rounded-[10px] text-[18px] hover:bg-white text-white hover:text-black
+                                        ${activeLink === '/register' ? '!bg-white !text-black !px-3' : ''}
+                                    `}
+                                >
+                                    Регистрация
+                                </button>
+                            </Link>
                         )}
                     </div>
 
@@ -192,49 +197,52 @@ export default function MainHeader() {
                             О платформе
                         </div>
                     </Link>
-                    <Link
-                        className="w-[200px] h-[38px] flex items-center justify-end"
-                        href="/"
-                    >
-                        <div
-                            className={`
-                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
-                                ${activeLink === '/' ? '!text-primary_grey' : ''}
-                            `}
-                        >
-                            Все вызовы
-                        </div>
-                    </Link>
 
-                    <Link
-                        className="w-[200px] h-[38px] flex items-center justify-end"
-                        href="/recipient"
-                    >
-                        <div
-                            className={`
-                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
-                                ${activeLink === '/recipient' ? '!text-primary_grey' : ''}
-                            `}
-                        >
-                            Вызовополучатели
-                        </div>
-                    </Link>
+                    {userAuth == true ? (
+                        <>
+                            <Link
+                                className="w-[200px] h-[38px] flex items-center justify-end"
+                                href="/"
+                            >
+                                <div
+                                    className={`
+                                    transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                    ${activeLink === '/' ? '!text-primary_grey' : ''}
+                                `}
+                                >
+                                    Все вызовы
+                                </div>
+                            </Link>
 
-                    <Link
-                        className="w-[200px] h-[38px] flex items-center justify-end"
-                        href="/caller"
-                    >
-                        <div
-                            className={`
-                                transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
-                                ${activeLink === '/caller' ? '!text-primary_grey' : ''}
-                            `}
-                        >
-                            Вызоводатели
-                        </div>
-                    </Link>
+                            <Link
+                                className="w-[200px] h-[38px] flex items-center justify-end"
+                                href="/recipient"
+                            >
+                                <div
+                                    className={`
+                                    transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                    ${activeLink === '/recipient' ? '!text-primary_grey' : ''}
+                                `}
+                                >
+                                    Вызовополучатели
+                                </div>
+                            </Link>
 
-                    <div className="w-[200px] h-[30px]"></div>
+                            <Link
+                                className="w-[200px] h-[38px] flex items-center justify-end"
+                                href="/caller"
+                            >
+                                <div
+                                    className={`
+                                    transition-all ease-linear text-center rounded-[10px] text-[18px] hover:text-primary_grey text-white
+                                    ${activeLink === '/caller' ? '!text-primary_grey' : ''}
+                                `}
+                                >
+                                    Вызоводатели
+                                </div>
+                            </Link>
+                        </>
+                    ) : null}
 
                     <Link
                         className="w-[200px] h-[38px] flex items-center justify-end"

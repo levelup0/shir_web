@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { CONTACT_ASSETS, CV, GETUSER, MASS_ACTION, VOZ } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { currentDate } from '@/Common/function';
+import { currentDate, is_user_logged_in } from '@/Common/function';
 import { commonRequestWithToken } from '@/Common/commonRequest';
 import TableheadCheckbox from '@/Common/TableheadCheckbox';
 import TableheadSort from '@/Common/TableheadSort';
@@ -59,14 +59,8 @@ export default function Page() {
     };
 
     useEffect(() => {
-        const store_albi_userauth_bool =
-            localStorage.getItem('voz_userauth_bool');
-        if (
-            store_albi_userauth_bool == '' ||
-            store_albi_userauth_bool == null ||
-            store_albi_userauth_bool == 'false'
-        ) {
-            router.push('/');
+        if (!is_user_logged_in()) {
+            router.push('/about');
         } else {
             getData();
         }

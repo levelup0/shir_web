@@ -21,8 +21,13 @@ export const store_albi_userauth_bool = (boleanData: string) => {
     localStorage.setItem('voz_userauth_bool', boleanData);
 };
 
-export const get_albi_userauth_bool = () => {
-    localStorage.getItem('voz_userauth_bool');
+export const is_user_logged_in = () => {
+    const store_albi_userauth_bool = get_albi_userauth_bool();
+    return store_albi_userauth_bool == 'true';
+};
+
+export const get_albi_userauth_bool = (): string | null => {
+    return localStorage.getItem('voz_userauth_bool');
 };
 
 export const remove_albi_userauth_bool = () => {
