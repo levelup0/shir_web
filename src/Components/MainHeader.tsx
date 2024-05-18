@@ -123,6 +123,21 @@ export default function MainHeader() {
                     <div className="justify-start items-center gap-x-[30px] hidden mdd:flex">
                         <Link
                             className="h-[90px] flex items-center justify-center"
+                            href="/about"
+                        >
+                            <div
+                                className={
+                                    'transition-all ease-linear text-center   text-[18px] hover:text-primary_grey text-text_default   tracking-tighter-[1.2px] ' +
+                                    (activeLink == '/about'
+                                        ? '!text-primary_grey'
+                                        : '')
+                                }
+                            >
+                                О платформе
+                            </div>
+                        </Link>
+                        <Link
+                            className="h-[90px] flex items-center justify-center"
                             href="/"
                         >
                             <div
