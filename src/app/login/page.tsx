@@ -6,17 +6,13 @@ import {
     store_albi_userauth_bool,
     storeToken,
 } from '@/Common/function';
-// import { requestPost } from '@/Common/requests';
-// import { LOGIN } from '@/Common/urls';
 import MainHeader from '@/Components/MainHeader';
-// import { useReCaptcha } from 'next-recaptcha-v3';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { signIn, SignInResponse } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-// import type { SignInResponse } from 'next-auth/react';
 
 export default function Page() {
     const router = useRouter();
@@ -33,8 +29,6 @@ export default function Page() {
         if (session?.accessToken != null && session?.accessToken != '') {
             getConf(session?.accessToken);
         }
-        console.log('see');
-        console.log(session);
     }, [session]);
 
     const { setUserAuth } = useContext(CommonContext);
@@ -43,30 +37,8 @@ export default function Page() {
     const [password, setPassword] = useState('');
     const [loader, setLoader] = useState(false);
 
-    // const { executeRecaptcha } = useReCaptcha();
-
     const login = async () => {
         setLoader(true);
-        /* const form = new FormData();
-        const token_captcha = await executeRecaptcha('form_submit');
-
-        form.append('email', email);
-        form.append('password', password);
-        form.append('token_captcha', token_captcha);
-
-        const response = await requestPost(LOGIN, form);
-        setLoader(false);
-        if (response?.success == true) {
-            toast.success(response?.msg);
-            if (response?.token?.token != '') {
-                await storeToken(response?.token?.token);
-                await store_albi_userauth_bool('true');
-                setUserAuth(true);
-                router.push('/');
-            }
-        } else {
-            toast.error(response?.msg);
-        }*/
         const form = new FormData();
         form.append('email', email);
         form.append('password', password);
@@ -82,14 +54,12 @@ export default function Page() {
 
         if (!!response && response.error) {
             setLoader(false);
-            console.log('response', response);
             switch (response.error) {
                 case 'SessionRequired':
                     router.push('/');
                     break;
                 default:
                     try {
-                        console.log(response);
                         toast.error(JSON.parse(response.error).errors);
                     } catch (e) {
                         console.error(e);
@@ -100,14 +70,12 @@ export default function Page() {
         setLoader(false);
     };
 
-    const [typeUser, setTypeUser] = useState(0); //Вызоводатель
+    const [typeUser, setTypeUser] = useState(0);
 
     return (
         <div className="flex flex-col gap-[5px]">
             <div className="w-full  flex flex-col gap-[5px] ">
-                {/* Header Menu */}
                 <MainHeader />
-                {/* Main Text */}
                 <div className="flex w-full mt-[100px] md:max-w-[1200px] m-auto px-[20px] md:px-[30px] py-[15px] md:py-[45px] justify-center">
                     <div className="flex flex-col gap-[20px] w-full md:max-w-[400px]">
                         <h2 className="text-[18px] font-semibold text-center">
@@ -199,23 +167,6 @@ export default function Page() {
                                 </div>
                             ) : null}
                         </button>
-                        {/* <hr />
-                        <div className="flex justify-between items-center gap-[5px] w-full">
-                            <div className="flex  font-semibold w-full md:w-1/2 justify-center">
-                                <span className="text-center text-[16px] ">
-                                    Или
-                                </span>
-                            </div>
-                            <Image
-                                alt="Google SingIn"
-                                className="w-1/2 cursor-pointer"
-                                height={20}
-                                onClick={() => signIn('google')}
-                                src={'/images/googlesign.png'}
-                                width={200}
-                            />
-                        </div>
-                        <hr /> */}
                         <div className="flex gap-[10px] items-center justify-center">
                             <p>Нет акаунта Шторм-трек?</p>
                             <Link className="text-blue-500" href="register">

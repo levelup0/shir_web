@@ -58,10 +58,6 @@ export default function Page() {
             toast.error('Поле название не заполнено');
             return false;
         }
-        // if (sector == '' || typeof sector == 'undefined' || sector == null) {
-        //     toast.error('Поле сфера вызова не заполнено');
-        //     return false;
-        // }
 
         if (
             description == '' ||
@@ -90,7 +86,6 @@ export default function Page() {
     };
 
     const createVoz = async () => {
-        // setCreateProfileStatus(true);
         if (!validatePage()) {
             return;
         }
@@ -100,7 +95,6 @@ export default function Page() {
         form.append('description', description);
         form.append('publish_date', publishDate);
         form.append('end_date', endDate);
-        // form.append('category_voz_id', selectedCategory);
         form.append('voz_category_relation', selectedCategory);
 
         const response = await requestPostWithToken(VOZ, form);
@@ -110,12 +104,8 @@ export default function Page() {
             setDescription(' ');
             setPublishDate(' ');
             setEnddate('');
-            // setSelectedCategory(categoryVozList[0].id);
-
-            // setCreateProfileStatus(false);
         } else {
             toast.error(response?.msg);
-            // setCreateProfileStatus(false);
         }
     };
 
@@ -131,13 +121,10 @@ export default function Page() {
         } else {
             getData();
         }
-
-        //Тут значит пользователь авторизован
     }, []);
 
     return (
         <div className="flex flex-col">
-            {/* Header Menu */}
             <MainHeader />
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">
@@ -253,65 +240,7 @@ export default function Page() {
                                         options={categoryVoz}
                                     />
                                 ) : null}
-                                {/* {categoryVozList?.length > 0 ? (
-                                    <select
-                                        className="border py-[12px] px-[5px]"
-                                        onChange={e => {
-                                            setSelectedCategory(e.target.value);
-                                        }}
-                                    >
-                                        {categoryVozList?.length > 0 &&
-                                            categoryVozList?.map(
-                                                (value: any, index: number) => {
-                                                    if (
-                                                        selectedCategory != null
-                                                    ) {
-                                                        if (
-                                                            selectedCategory ==
-                                                            value?.id
-                                                        ) {
-                                                            return (
-                                                                <option
-                                                                    key={index}
-                                                                    selected
-                                                                    value={
-                                                                        value?.id
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        value?.name
-                                                                    }
-                                                                </option>
-                                                            );
-                                                        }
-                                                        return (
-                                                            <option
-                                                                key={index}
-                                                                value={
-                                                                    value?.id
-                                                                }
-                                                            >
-                                                                {value?.name}
-                                                            </option>
-                                                        );
-                                                    }
-                                                },
-                                            )}
-                                    </select>
-                                ) : null} */}
                             </div>
-                            {/* <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">
-                                    Сфера вызова:
-                                </span>
-                                <input
-                                    className="border shadow px-[10px] py-[10px]"
-                                    onChange={e => setSector(e.target.value)}
-                                    placeholder="Сфера вызова"
-                                    type="text"
-                                    value={sector}
-                                />
-                            </div> */}
                         </div>
                         <div className="w-full flex flex-col gap-[5px]">
                             <div className="w-full flex flex-col gap-[5px]">

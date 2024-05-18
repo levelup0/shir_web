@@ -46,14 +46,10 @@ export default function Page() {
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
-    const login = async () => {
+    const register = async () => {
         setLoader(true);
         const form = new FormData();
         const token_captcha = await executeRecaptcha('form_submit');
-
-        /**
-         * Валидация CV
-         */
 
         const _files = [...files];
 
@@ -229,9 +225,7 @@ export default function Page() {
     return (
         <div className="flex flex-col gap-[5px]">
             <div className="w-full  flex flex-col gap-[5px] ">
-                {/* Header Menu */}
                 <MainHeader />
-                {/* Main Text */}
                 <div className="flex w-full mt-[100px] md:max-w-[1200px] m-auto px-[20px] md:px-[30px] py-[15px] md:py-[45px] justify-center">
                     <div className="flex flex-col gap-[20px] w-full md:w-[400px]">
                         <h2 className="text-[18px] font-semibold text-center">
@@ -480,15 +474,6 @@ export default function Page() {
                                             options={categoryVoz}
                                         />
                                     ) : null}
-                                    {/* <input
-                                        className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
-                                        onChange={e =>
-                                            setBusinessSector(e.target.value)
-                                        }
-                                        placeholder="Сфера бизнеса"
-                                        type="text"
-                                        value={businessSector}
-                                    /> */}
                                 </div>
                             ) : null}
                             {typeUser == 1 ? (
@@ -530,7 +515,7 @@ export default function Page() {
                         <button
                             className="flex justify-center items-center px-[20px] w-full md:max-w-[400px]  h-[50px] rounded-[10px] bg-primary_yellow border text-[#FFF] text-[16px] font-normal hover:active:bg-[#FFF] hover:active:text-primary2 transition-all ease-in-out"
                             disabled={loader}
-                            onClick={() => login()}
+                            onClick={() => register()}
                         >
                             Регистрация
                             {loader ? (
@@ -539,22 +524,6 @@ export default function Page() {
                                 </div>
                             ) : null}
                         </button>
-                        {/* <hr />
-                        <div className="flex justify-between items-center gap-[5px] w-full">
-                            <div className="flex  font-semibold w-1/2 justify-center">
-                                <span className="text-center text-[16px] ">
-                                    Или
-                                </span>
-                            </div>
-                            <Image
-                                alt="Google SingIn"
-                                className="w-1/2 cursor-pointer"
-                                height={20}
-                                onClick={() => signIn('google')}
-                                src={'/images/googlesign.png'}
-                                width={200}
-                            />
-                        </div> */}
                         <hr />
                         <div className="flex gap-[10px] items-center justify-center">
                             <p>У вас есть акаунт Шторм-трек?</p>
