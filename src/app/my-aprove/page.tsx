@@ -62,19 +62,6 @@ export default function Page() {
         });
     };
 
-    const removeItem = async (itemId: any) => {
-        // requestGet(MASS_ACTION, {
-        //     ids: JSON.stringify([itemId]),
-        //     action_type: 'act_delete',
-        //     model: CV,
-        // }).then((response: any) => {
-        //     if (response.success) {
-        //         toast.success('Успешно!');
-        //         getVoz();
-        //     }
-        // });
-    };
-
     useEffect(() => {
         const store_albi_userauth_bool =
             localStorage.getItem('voz_userauth_bool');
@@ -87,13 +74,10 @@ export default function Page() {
         } else {
             getData();
         }
-
-        //Тут значит пользователь авторизован
     }, []);
 
     return (
         <div className="flex flex-col">
-            {/* Header Menu */}
             <MainHeader />
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">
@@ -243,9 +227,6 @@ export default function Page() {
                                     <th className="border font-medium text-black dark:text-white">
                                         Размер
                                     </th>
-                                    {/* <th className="font-medium text-black dark:text-white">
-                                        Вызоводатель
-                                    </th> */}
                                     <th className="font-medium text-black dark:text-white">
                                         Статус
                                     </th>

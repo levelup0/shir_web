@@ -122,8 +122,6 @@ export default function Page() {
         } else {
             getCategoryVoz();
         }
-
-        //Тут значит пользователь авторизован
     }, []);
 
     const [trueImage, setTrueImage] = useState(false);
@@ -153,7 +151,6 @@ export default function Page() {
         };
         reader.readAsDataURL(files[0]);
 
-        //reader.readAsDataURL();
         setModalShow(true);
     };
 
@@ -191,7 +188,6 @@ export default function Page() {
 
     return (
         <div className="flex flex-col">
-            {/* Header Menu */}
             <MainHeader />
             <div
                 className={
@@ -396,17 +392,6 @@ export default function Page() {
                                                 options={categoryVoz}
                                             />
                                         ) : null}
-                                        {/* <input
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setBusinessSector(
-                                                    e.target.value,
-                                                )
-                                            }
-                                            placeholder=""
-                                            type="text"
-                                            value={businessSector}
-                                        /> */}
                                     </div>
                                     <div className="w-full flex flex-col gap-[5px]">
                                         <span className="font-medium">

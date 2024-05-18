@@ -29,7 +29,6 @@ export default function Page() {
             _voz_id,
             'in_progress',
         );
-        console.log('response myaprove', response);
         if (response?.success == true) {
             if (response?.data?.data?.length == 0) {
                 setMyAprove(false);
@@ -62,7 +61,6 @@ export default function Page() {
     }, []);
 
     const apply = async () => {
-        // Сначало проверям пользователь авторизован или нет
         if (typeof data == 'undefined' || data == null || data == '') {
             toast.error('Пользователь не авторизован!');
             return;
