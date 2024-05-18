@@ -6,8 +6,8 @@ import {
     store_albi_userauth_bool,
     storeToken,
 } from '@/Common/function';
-import { requestPost } from '@/Common/requests';
-import { REGISTER } from '@/Common/urls';
+import { requestGet, requestPost } from '@/Common/requests';
+import { CATEGORY_VOZ, REGISTER } from '@/Common/urls';
 import MainHeader from '@/Components/MainHeader';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ import { CommonContext } from '@/Common/context';
 import { signIn, SignInResponse, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import MainFooter from '@/Components/MainFooter';
+import MultiSelect from '@/Components/Multiselect';
 
 export default function Page() {
     const router = useRouter();
@@ -42,6 +42,9 @@ export default function Page() {
 
     const [businessSector, setBusinessSector] = useState('');
     const [actionSector, setActionSector] = useState('');
+
+    const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
     const login = async () => {
         setLoader(true);
@@ -86,6 +89,8 @@ export default function Page() {
         form.append('password_confirmation', confirm);
         form.append('token_captcha', token_captcha);
         form.append('files', JSON.stringify(files));
+
+        form.append('voz_category_relation', selectedCategory);
 
         const response = await requestPost(REGISTER, form);
         setLoader(false);
@@ -204,6 +209,23 @@ export default function Page() {
             setFiles(_files);
         };
     };
+
+    const getData = () => {
+        requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
+            if (response?.success == true) {
+                setCategoryVoz(response?.data);
+            }
+        });
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const handleLanguageFilter = (data: string) => {
+        setSelectedCategory(data);
+    };
+
     return (
         <div className="flex flex-col gap-[5px]">
             <div className="w-full  flex flex-col gap-[5px] ">
@@ -428,9 +450,7 @@ export default function Page() {
                                                         }
                                                         type="button"
                                                     >
-                                                        {
-                                                            'CV, рекомендательные информации и.т.д (файл)'
-                                                        }
+                                                        {'добавить файл'}
                                                     </button>
                                                 </div>
                                             </div>
@@ -445,7 +465,7 @@ export default function Page() {
                                         onChange={e =>
                                             setUrlTelegram(e.target.value)
                                         }
-                                        placeholder="Ссылка на Telegram"
+                                        placeholder="@name"
                                         type="text"
                                         value={urlTelegram}
                                     />
@@ -454,7 +474,13 @@ export default function Page() {
 
                             {typeUser == 1 ? (
                                 <div className="flex flex-col">
-                                    <input
+                                    {categoryVoz.length > 0 ? (
+                                        <MultiSelect
+                                            onChange={handleLanguageFilter}
+                                            options={categoryVoz}
+                                        />
+                                    ) : null}
+                                    {/* <input
                                         className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                         onChange={e =>
                                             setBusinessSector(e.target.value)
@@ -462,7 +488,7 @@ export default function Page() {
                                         placeholder="Сфера бизнеса"
                                         type="text"
                                         value={businessSector}
-                                    />
+                                    /> */}
                                 </div>
                             ) : null}
                             {typeUser == 1 ? (
@@ -531,7 +557,7 @@ export default function Page() {
                         </div> */}
                         <hr />
                         <div className="flex gap-[10px] items-center justify-center">
-                            <p>У вас есть акаунт Вызовы ШИР?</p>
+                            <p>У вас есть акаунт Шторм-трек?</p>
                             <Link className="text-blue-500" href="/login">
                                 Войти
                             </Link>

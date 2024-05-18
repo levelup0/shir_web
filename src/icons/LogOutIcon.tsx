@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export default function LogOutIcon({ width, height, color }: any) {
+export default function LogOutIcon({ width, height, className }: any) {
     return (
         <svg
-            fill={color}
+            className={className}
             height={height}
             viewBox="0 0 384.971 384.971"
             width={width}

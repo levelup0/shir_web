@@ -41,10 +41,10 @@ export default function MainHeader() {
     const [mobileMenuShow, setMobileMenuShow] = useState(false);
 
     return (
-        <div className="flex flex-col z-50">
+        <div className="flex flex-col">
             <div
                 className={
-                    'w-full fixed header-section transition-all ease-in bg-gray-700'
+                    'w-full fixed header-section transition-all ease-in bg-gray-700 z-10'
                 }
             >
                 <div className="flex lg:container h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
@@ -57,6 +57,21 @@ export default function MainHeader() {
                     </Link>
 
                     <div className="justify-start items-center gap-x-[30px] hidden lg:flex">
+                        <Link
+                            className="h-[90px] flex items-center justify-center"
+                            href="/about"
+                        >
+                            <div
+                                className={
+                                    'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
+                                    (activeLink == '/about'
+                                        ? '!text-primary_grey'
+                                        : '')
+                                }
+                            >
+                                О платформе
+                            </div>
+                        </Link>
                         <Link
                             className="h-[90px] flex items-center justify-center"
                             href="/"
@@ -124,7 +139,7 @@ export default function MainHeader() {
                                     onClick={() => userLogout()}
                                 >
                                     <LogOutIcon
-                                        color={'white'}
+                                        className="fill-white"
                                         height={25}
                                         width={25}
                                     />
@@ -158,9 +173,24 @@ export default function MainHeader() {
             {mobileMenuShow == true ? (
                 <div
                     className={
-                        "fixed top-0 right-0 bg-gray-600 z-10 mt-[80px] w-[230px] h-[250px] pt-[20px] pb-[20px] pr-[35px] rounded-[10px] transition-all ease-linear bg:white lg:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col justify-between items-center"
+                        "fixed top-0 right-0 bg-gray-600 z-0 mt-[80px] w-[230px] h-[250px] pt-[20px] pb-[20px] pr-[35px] rounded-[10px] transition-all ease-linear bg:white lg:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col justify-between items-center"
                     }
                 >
+                    <Link
+                        className="w-[200px] h-[38px] flex items-center justify-end"
+                        href="/about"
+                    >
+                        <div
+                            className={
+                                'transition-all ease-linear text-center text-[18px] hover:text-primary_grey text-white tracking-tighter-[1.2px]' +
+                                (activeLink == '/about'
+                                    ? '!text-primary_grey'
+                                    : '')
+                            }
+                        >
+                            О платформе
+                        </div>
+                    </Link>
                     <Link
                         className="w-[200px] h-[38px] flex items-center justify-end"
                         href="/"
@@ -177,7 +207,7 @@ export default function MainHeader() {
 
                     <Link
                         className="w-[200px] h-[38px] flex items-center justify-end"
-                        href="/price"
+                        href="/recipient"
                     >
                         <div
                             className={
@@ -193,7 +223,7 @@ export default function MainHeader() {
 
                     <Link
                         className="w-[200px] h-[38px] flex items-center justify-end"
-                        href="/contacts"
+                        href="/caller"
                     >
                         <div
                             className={
@@ -210,7 +240,7 @@ export default function MainHeader() {
                     <Link href={userAuth == true ? '/profile' : '/login'}>
                         <div
                             className={
-                                'w-[200px] h-[38px] flex justify-end items-center text-[18px] rounded-[10px] text-white hover:bg-primary_yellow transition-all' +
+                                'w-[200px] h-[38px] flex justify-end items-center text-[18px] rounded-[10px] text-white hover:text-primary_grey transition-all' +
                                 (activeLink == '/profile'
                                     ? ' bg-primary_yellow'
                                     : '')
@@ -222,18 +252,25 @@ export default function MainHeader() {
 
                     {userAuth == true ? (
                         <button
-                            className="w-[200px] h-[38px] transition-all cursor-pointer rounded-[10px] justify-end items-center flex hover:bg-primary_yellow"
+                            className="w-[200px] h-[38px] transition-all cursor-pointer rounded-[10px] justify-end items-center flex"
                             onClick={() => userLogout()}
                         >
                             <LogOutIcon
-                                color={'white'}
+                                className="cursor-pointer fill-white hover:fill-primary_grey"
                                 height={25}
                                 width={25}
                             />
                         </button>
                     ) : (
                         <Link href="/register">
-                            <div className="text-[16px]      transition-all ease-linear w-[200px] h-[38px] px-1.5 pt-[13px] pb-3 text-white bg-primary_grey rounded-[4px] border active:bg-primary_grey_opacity active:text-primary_grey hover:text-primary_grey hover:bg-white  border-primary_grey justify-end items-center flex tracking-tighter-[1.2px]">
+                            <div
+                                className={
+                                    'w-[200px] h-[38px] flex justify-end items-center text-[18px] rounded-[10px] text-white hover:text-primary_grey transition-all' +
+                                    (activeLink == '/profile'
+                                        ? ' bg-primary_yellow'
+                                        : '')
+                                }
+                            >
                                 Регистрация
                             </div>
                         </Link>

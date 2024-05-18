@@ -217,7 +217,7 @@ export default function Page() {
                         </div>
                         <hr /> */}
                         <div className="flex gap-[10px] items-center justify-center">
-                            <p>Нет акаунта Вызовы ШИР?</p>
+                            <p>Нет акаунта Шторм-трек?</p>
                             <Link className="text-blue-500" href="register">
                                 Зарегистрироваться
                             </Link>

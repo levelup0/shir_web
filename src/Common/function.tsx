@@ -1,5 +1,8 @@
 'use client';
 import moment from 'moment';
+import 'moment/locale/ru'; // without this line it didn't work
+moment.locale('ru');
+
 // Access Token
 export const storeToken = (token: string) => {
     localStorage.setItem('auth_token_voz', token);
@@ -52,6 +55,14 @@ export const formatDate = (date: string) => {
     return moment(date).format('DD.MM.YYYY');
 };
 
+export const formatDateWithoutTime = (date: string) => {
+    return moment(date).format('D MMM YYYY');
+};
+
+export const formatDateWithtimeTime = (date: string) => {
+    return moment(date).format('D MMM YYYY HH:mm');
+};
+
 // Format long text to short for readability
 export const translateLanguageId = (id: number | undefined) => {
     switch (id) {
@@ -71,7 +82,7 @@ export const loaderSvg = () => {
     return (
         <svg
             aria-hidden="true"
-            className="inline h-[26px] w-[26px] animate-spin  fill-black text-primary2 dark:fill-gray-300 dark:text-gray-600"
+            className="inline h-[26px] w-[26px] animate-spin  fill-black text-blue-200 dark:fill-gray-300 dark:text-gray-600"
             fill="none"
             viewBox="0 0 100 101"
             xmlns="http://www.w3.org/2000/svg"

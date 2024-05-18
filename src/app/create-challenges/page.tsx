@@ -11,20 +11,21 @@ import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { currentDate } from '@/Common/function';
 import AvatarComponent from '@/Common/AvatarComponent';
+import MultiSelect from '@/Components/Multiselect';
 export default function Page() {
     const [resultImage, setResultImg] = useState('');
     const [data, setData] = useState<any>();
 
-    const [categoryVozList, setCategoryVozList] = useState<any>([]);
-    const [selectedCategory, setSelectedCategory] = useState<any>(null);
-
     const [name, setName] = useState('');
     const [sector, setSector] = useState('');
     const [description, setDescription] = useState<any>('');
-    const [publishDate, setPublishDate] = useState<string>(currentDate());
-    const [endDate, setEnddate] = useState<string>(currentDate());
+    const [publishDate, setPublishDate] = useState<string>('');
+    const [endDate, setEnddate] = useState<string>('');
 
     const router = useRouter();
+
+    const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
     const getData = () => {
         requestGet(`${GETUSER}`, {}).then(response => {
@@ -35,14 +36,16 @@ export default function Page() {
                 }
             }
         });
+
         requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
             if (response?.success == true) {
-                setCategoryVozList(response?.data);
-                if (response?.data?.length > 0) {
-                    setSelectedCategory(response?.data[0]?.id);
-                }
+                setCategoryVoz(response?.data);
             }
         });
+    };
+
+    const handleLanguageFilter = (data: string) => {
+        setSelectedCategory(data);
     };
 
     const validatePage = () => {
@@ -97,15 +100,18 @@ export default function Page() {
         form.append('description', description);
         form.append('publish_date', publishDate);
         form.append('end_date', endDate);
-        form.append('category_voz_id', selectedCategory);
+        // form.append('category_voz_id', selectedCategory);
+        form.append('voz_category_relation', selectedCategory);
 
         const response = await requestPostWithToken(VOZ, form);
         if (response?.success == true) {
             toast.success(response?.msg);
             setName('');
-            setDescription('');
-            setPublishDate(currentDate());
-            setEnddate(currentDate());
+            setDescription(' ');
+            setPublishDate(' ');
+            setEnddate('');
+            // setSelectedCategory(categoryVozList[0].id);
+
             // setCreateProfileStatus(false);
         } else {
             toast.error(response?.msg);
@@ -176,7 +182,7 @@ export default function Page() {
                         </Link>
                         {data?.roles?.name == 'caller' ? (
                             <>
-                                <Link href="/create-voz">
+                                <Link href="/create-challenges">
                                     <div className="w-full h-[55px]  border-b-[1px] bg-blue-100 hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
                                         <div className="w-[2px] bg-blue-800 h-[55px]"></div>
                                         <div className="flex gap-[5px] px-[15px] items-center">
@@ -241,7 +247,13 @@ export default function Page() {
                                 <span className="font-medium">
                                     Категория вызова:
                                 </span>
-                                {categoryVozList?.length > 0 ? (
+                                {categoryVoz.length > 0 ? (
+                                    <MultiSelect
+                                        onChange={handleLanguageFilter}
+                                        options={categoryVoz}
+                                    />
+                                ) : null}
+                                {/* {categoryVozList?.length > 0 ? (
                                     <select
                                         className="border py-[12px] px-[5px]"
                                         onChange={e => {
@@ -286,7 +298,7 @@ export default function Page() {
                                                 },
                                             )}
                                     </select>
-                                ) : null}
+                                ) : null} */}
                             </div>
                             {/* <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">
@@ -300,6 +312,8 @@ export default function Page() {
                                     value={sector}
                                 />
                             </div> */}
+                        </div>
+                        <div className="w-full flex flex-col gap-[5px]">
                             <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">
                                     Описание Вызова:
@@ -312,30 +326,32 @@ export default function Page() {
                                     value={description}
                                 ></textarea>
                             </div>
+                        </div>
+                        <div className="w-full flex gap-[5px]">
                             <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">
                                     Дата публикации вызова:
                                 </span>
                                 <input
                                     className="border shadow px-[10px] py-[10px]"
-                                    defaultValue={publishDate}
                                     onChange={e =>
                                         setPublishDate(e.target.value)
                                     }
                                     placeholder="dd-mm-yyyy"
-                                    type="datetime-local"
+                                    type="date"
+                                    value={publishDate}
                                 />
                             </div>
                             <div className="w-full flex flex-col gap-[5px]">
                                 <span className="font-medium">
-                                    Дата закрытия вызова:
+                                    Сбор заявок до:
                                 </span>
                                 <input
                                     className="border shadow px-[10px] py-[10px]"
-                                    defaultValue={endDate}
                                     onChange={e => setEnddate(e.target.value)}
                                     placeholder="dd-mm-yyyy"
                                     type="datetime-local"
+                                    value={endDate}
                                 />
                             </div>
                         </div>

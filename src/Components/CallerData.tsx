@@ -7,11 +7,13 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
+import { loaderSvg } from '@/Common/function';
 import { USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import { useEffect, useState } from 'react';
 
 export default function CallerData() {
+    const [loader, setLoader] = useState(false);
     const [listData, setListData] = useState<any>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -24,6 +26,7 @@ export default function CallerData() {
     const [dateFilter, setDateFilter] = useState<string>('');
 
     const getData = async () => {
+        setLoader(true);
         const response = await commonRequestUsers(
             USERS,
             'caller',
@@ -32,6 +35,7 @@ export default function CallerData() {
             limitFilter,
         );
         if (response?.success == true) {
+            setLoader(false);
             setListData(response?.data?.data);
             setCurrentPage(response.data?.current_page ?? 1);
             setTotalPages(response.data?.last_page ?? 0);
@@ -100,6 +104,12 @@ export default function CallerData() {
                     </div>
 
                     <div className="w-full flex flex-col gap-[20px]">
+                        {loader == true ? (
+                            <div className="w-full flex justify-center items-center">
+                                {loaderSvg()}
+                            </div>
+                        ) : null}
+
                         {/* Item */}
                         {listData?.length > 0 &&
                             listData?.map((value: any, index: number) => {
@@ -169,9 +179,27 @@ export default function CallerData() {
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">
-                                            <span className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
-                                                {value?.business_sector}
-                                            </span>
+                                            <div className="flex gap-[5px]">
+                                                {value?.category_voz?.length >
+                                                    0 &&
+                                                    value?.category_voz?.map(
+                                                        (v: any, i: number) => {
+                                                            return (
+                                                                <span
+                                                                    className="w-fit text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]"
+                                                                    key={i}
+                                                                >
+                                                                    {
+                                                                        v
+                                                                            ?.category
+                                                                            ?.name
+                                                                    }
+                                                                </span>
+                                                            );
+                                                        },
+                                                    )}
+                                            </div>
+
                                             <div className="flex flex-col">
                                                 <span className="text-[14px] ">
                                                     Email:{' '}
@@ -179,12 +207,12 @@ export default function CallerData() {
                                                         {value?.email}
                                                     </span>
                                                 </span>
-                                                <span className="text-[14px] ">
+                                                {/* <span className="text-[14px] ">
                                                     Роль:{' '}
                                                     <span className="font-semibold">
                                                         {value?.roles.name}
                                                     </span>
-                                                </span>
+                                                </span> */}
                                             </div>
                                         </div>
                                     </div>

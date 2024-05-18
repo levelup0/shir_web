@@ -135,7 +135,7 @@ export default function Page() {
                         </Link>
                         {data?.roles?.name == 'caller' ? (
                             <>
-                                <Link href="/create-voz">
+                                <Link href="/create-challenges">
                                     <div className="w-full h-[55px]  border-b-[1px]  hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
                                         <div className="w-[2px]  h-[55px]"></div>
                                         <div className="flex gap-[5px] px-[15px] items-center">
@@ -254,10 +254,27 @@ export default function Page() {
                                                     {item?.user?.url_telegram}
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {
-                                                        item?.user
-                                                            ?.business_sector
-                                                    }
+                                                    {item?.voz?.category_voz
+                                                        ?.length > 0 &&
+                                                        item?.voz?.category_voz?.map(
+                                                            (
+                                                                v: any,
+                                                                i: any,
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="bg-blue-100 px-[5px] py-[2px] rounded-[4px]"
+                                                                        key={i}
+                                                                    >
+                                                                        {
+                                                                            v
+                                                                                ?.category
+                                                                                ?.name
+                                                                        }
+                                                                    </div>
+                                                                );
+                                                            },
+                                                        )}
                                                 </td>
                                                 <td className="border border-[#eee] !text-[12px]  dark:border-strokedark">
                                                     {formatStatus(item?.status)}

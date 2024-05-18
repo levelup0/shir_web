@@ -50,19 +50,6 @@ export default function Page() {
         }
     };
 
-    const removeItem = async (itemId: any) => {
-        requestGet(MASS_ACTION, {
-            ids: JSON.stringify([itemId]),
-            action_type: 'act_delete',
-            model: CV,
-        }).then((response: any) => {
-            if (response.success) {
-                toast.success('Успешно!');
-                getVoz();
-            }
-        });
-    };
-
     useEffect(() => {
         const store_albi_userauth_bool =
             localStorage.getItem('voz_userauth_bool');
@@ -244,7 +231,7 @@ export default function Page() {
                         </Link>
                         {data?.roles?.name == 'caller' ? (
                             <>
-                                <Link href="/create-voz">
+                                <Link href="/create-challenges">
                                     <div className="w-full h-[55px]  border-b-[1px]  hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
                                         <div className="w-[2px]  h-[55px]"></div>
                                         <div className="flex gap-[5px] px-[15px] items-center">

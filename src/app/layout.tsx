@@ -35,8 +35,8 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
-    title: 'Вызовы ШИР',
-    description: 'Платформа Вызовы ШИР',
+    title: 'Шторм-трек',
+    description: 'Платформа Шторм-трек',
 };
 
 export default function RootLayout({
@@ -48,10 +48,10 @@ export default function RootLayout({
         <html lang="en">
             <meta content="en_US" property="og:locale"></meta>
             <meta content="article" property="og:type"></meta>
-            <meta content="Вызовы ШИР" property="og:title"></meta>
-            <meta content="Вызовы ШИР" property="og:description"></meta>
+            <meta content="Шторм-трек" property="og:title"></meta>
+            <meta content="Шторм-трек" property="og:description"></meta>
             <meta content="https://www.google.com" property="og:url"></meta>
-            <meta content="Вызовы ШИР" property="og:site_name"></meta>
+            <meta content="Шторм-трек" property="og:site_name"></meta>
             <meta
                 content="https://www.facebook.com/vizovishir"
                 property="article:publisher"

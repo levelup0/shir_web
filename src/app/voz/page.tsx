@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'next/navigation';
+import { formatDateWithoutTime } from '@/Common/function';
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -117,7 +118,7 @@ export default function Page() {
                                             />
                                         )}
                                 </div>
-                                <div className="w-full flex justify-between">
+                                <div className="w-full gap-[10px] md:gap-[0px] flex-col flex md:flex-row justify-start md:justify-between ">
                                     <div className="flex flex-col gap-[5px]">
                                         <div className="flex text-[15px]">
                                             Вызоводатель:{' '}
@@ -126,36 +127,58 @@ export default function Page() {
                                             </span>
                                         </div>
                                         <div className="flex text-[15px]">
-                                            Категория:{' '}
-                                            <span className="text-primary_blue font-semibold">
-                                                {response?.data?.category?.name}
-                                            </span>
+                                            Категория:{'   '}
+                                            <div className="flex gap-[5px]">
+                                                {response?.data?.category_voz
+                                                    ?.length > 0 &&
+                                                    response?.data?.category_voz?.map(
+                                                        (v: any, i: number) => {
+                                                            return (
+                                                                <span
+                                                                    className="w-fit text-[14px] font-light bg-blue-100 px-[2px] py-[2px] text-blue-700 rounded-[5px]"
+                                                                    key={i}
+                                                                >
+                                                                    {
+                                                                        v
+                                                                            ?.category
+                                                                            ?.name
+                                                                    }
+                                                                </span>
+                                                            );
+                                                        },
+                                                    )}
+                                            </div>
                                         </div>
                                         <div className="flex text-[15px]">
-                                            Размещено:{' '}
+                                            Дата размещения:{'   '}
                                             <span className="text-primary_blue font-semibold">
                                                 {response?.data != null &&
-                                                    response?.data
-                                                        ?.publish_date}
+                                                    formatDateWithoutTime(
+                                                        response?.data
+                                                            ?.publish_date,
+                                                    )}
                                             </span>
                                         </div>
                                     </div>
-                                    <div className=" flex items-end justify-end">
-                                        {myAprove == false ? (
+                                    <div className="flex items-end justify-end md:justify-end">
+                                        {myAprove == false &&
+                                        data?.roles?.name != 'caller' ? (
                                             <button
                                                 className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
                                                 onClick={() => apply()}
                                             >
                                                 Подать заявку
                                             </button>
-                                        ) : (
+                                        ) : null}
+
+                                        {myAprove == true ? (
                                             <button
                                                 className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
                                                 disabled
                                             >
                                                 Заявка отправлена
                                             </button>
-                                        )}
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>

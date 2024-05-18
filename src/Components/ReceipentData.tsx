@@ -7,12 +7,14 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
+import { loaderSvg } from '@/Common/function';
 import { CONTACT_ASSETS, USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function ReceipentData() {
+    const [loader, setLoader] = useState(false);
     const [listData, setListData] = useState<any>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -25,6 +27,7 @@ export default function ReceipentData() {
     const [dateFilter, setDateFilter] = useState<string>('');
 
     const getData = async () => {
+        setLoader(true);
         const response = await commonRequestUsers(
             USERS,
             'recipient',
@@ -33,6 +36,7 @@ export default function ReceipentData() {
             limitFilter,
         );
         if (response?.success == true) {
+            setLoader(false);
             setListData(response?.data?.data);
             setCurrentPage(response.data?.current_page ?? 1);
             setTotalPages(response.data?.last_page ?? 0);
@@ -67,10 +71,10 @@ export default function ReceipentData() {
     };
 
     return (
-        <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
+        <div className="w-full mt-[90px] flex justify-center items-center py-[5px] md:py-[20px]">
             <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
-                <div className="w-full shadow flex justify-between gap-[30px] px-[30px] py-[30px] bg-white rounded-[5px] ">
-                    <div className="w-full flex gap-[30px]">
+                <div className="w-full shadow flex justify-between gap-[10px] md:gap-[30px] px-[10px] md:px-[30px] py-[30px] md:py-[10px] bg-white rounded-[5px] ">
+                    <div className="w-full flex gap-[10px] md:gap-[30px]">
                         <input
                             className="border-b-[2px] border-b-blue-500 px-[10px] py-[10px]"
                             onChange={(e: any) => handleSearch(e.target?.value)}
@@ -85,16 +89,16 @@ export default function ReceipentData() {
                             <option>Поиск по типу</option>
                         </select> */}
                     </div>
-                    <div className="border-">
+                    {/* <div className="border-">
                         <button className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 ">
                             Поиск
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
-                        <p className="text-[20px] font-semibold">
+                        <p className="text-[20px] px-[10px] font-semibold">
                             {totalItems} Вызовополучатели
                         </p>
                         <hr />
@@ -102,6 +106,11 @@ export default function ReceipentData() {
 
                     <div className="w-full flex flex-col gap-[20px]">
                         {/* Item */}
+                        {loader == true ? (
+                            <div className="w-full flex justify-center items-center">
+                                {loaderSvg()}
+                            </div>
+                        ) : null}
                         {listData?.length > 0 &&
                             listData?.map((value: any, index: number) => {
                                 return (
@@ -203,8 +212,9 @@ export default function ReceipentData() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-full flex justify-between">
-                                            <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light bg-blue-300 px-[10px] py-[10px] text-blue-700 rounded-[5px]">
+                                        <div className="w-full flex-col flex md:flex-row justify-between">
+                                            <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light py-[10px] text-black rounded-[5px]">
+                                                Курс обучения:{' '}
                                                 {value?.education_course}
                                             </span>
                                             <div className="flex flex-col">
