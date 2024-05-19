@@ -17,10 +17,12 @@ import PrimaryBtn01 from '@/HtmlComponent/PrimaryBtn01';
 import CancelBtn01 from '@/HtmlComponent/CancelBtn01';
 
 import 'cropperjs/dist/cropper.css';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 import MultiSelect from '@/Components/Multiselect';
 import { is_user_logged_in } from '@/Common/function';
+import { loaderSvg } from '@/Common/function';
 export default function Page() {
+    const [loader, setLoader] = useState(false);
     const [data, setData] = useState<any>();
 
     const [name, setName] = useState('');
@@ -33,6 +35,8 @@ export default function Page() {
     const [vuz, setVuz] = useState('');
     const [educationCourse, setEducationCourse] = useState('');
     const [interes, setInteres] = useState('');
+    const [company, setCompany] = useState('');
+
     const [urlTelegram, setUrlTelegram] = useState('');
 
     const router = useRouter();
@@ -42,7 +46,9 @@ export default function Page() {
     const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
     const getCategoryVoz = () => {
+        setLoader(true);
         requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
+            setLoader(false);
             getData();
             if (response?.success == true) {
                 setCategoryVoz(response?.data);
@@ -51,6 +57,7 @@ export default function Page() {
     };
 
     const getData = () => {
+        setLoader(true);
         requestGet(`${GETUSER}`, {}).then(response => {
             if (response?.success == true) {
                 setData(response?.user);
@@ -62,6 +69,7 @@ export default function Page() {
                 setVuz(response?.user?.vuz);
                 setEducationCourse(response?.user?.education_course);
                 setInteres(response?.user?.interes);
+                setCompany(response?.user?.company);
                 setUrlTelegram(response?.user?.url_telegram);
 
                 if (response?.user?.avatar != null) {
@@ -76,6 +84,7 @@ export default function Page() {
                     setSelectedCategory(response?.user?.category_voz);
                 }
             }
+            setLoader(false);
         });
     };
 
@@ -127,7 +136,7 @@ export default function Page() {
     const [image, setImage] = useState('');
 
     const [modalShow, setModalShow] = useState(false);
-    const [sizeOfImage, setSizeOfImage] = useState(512000); //500KB
+    const [sizeOfImage, setSizeOfImage] = useState(1024000); //500KB
     const [selectedSizeOfImage, setSelectedSizeOfImage] = useState<any>(0); //500KB
 
     const typedSize = 'kB';
@@ -184,333 +193,403 @@ export default function Page() {
     return (
         <div className="flex flex-col">
             <MainHeader />
-            <div
-                className={
-                    'fixed left-0 top-0 h-[100vh] w-full flex flex-col justify-center items-center z-50 ' +
-                    (modalShow == true ? '' : 'hidden')
-                }
-            >
-                <div className="w-fit flex flex-col gap-[20px] bg-orange-50 p-[50px] rounded-[30px]">
-                    <div className="flex gap-[20px]">
-                        <Cropper
-                            initialAspectRatio={1}
-                            minCropBoxHeight={100}
-                            minCropBoxWidth={100}
-                            ref={cropperRef}
-                            src={image}
-                            style={{ height: 300, width: 500 }}
-                        />
-                    </div>
-                    <div className="flex gap-[20px]">
-                        <PrimaryBtn01 onClick={getCropData} title="Сохранить" />
-                        <CancelBtn01 onClick={cancelImage} title="Отмена" />
-                    </div>
+            {loader == true ? (
+                <div className="w-full absolute top-[100px] flex justify-center items-center">
+                    {loaderSvg()}
                 </div>
-            </div>
-            <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
-                <div className="w-1/3 flex flex-col ">
-                    <div className="w-full shadow flex flex-col gap-[20px] justify-center items-center py-[30px]">
-                        <div className="w-[145px] h-[145px] relative">
-                            <AvatarComponent resultImage={resultImage} />
-                        </div>
-
-                        <div className="flex flex-col gap-[5px] justify-center items-center">
-                            <h4 className="font-semibold text-[20px] text-center">
-                                {data?.name}
-                            </h4>
-                            <p>
-                                Роль:{' '}
-                                <span className="font-semibold">
-                                    {data?.roles?.name == 'caller'
-                                        ? 'Вызоводатель'
-                                        : ''}
-                                    {data?.roles?.name == 'recipient'
-                                        ? 'Вызовополучатель'
-                                        : ''}
-                                </span>
-                            </p>
+            ) : (
+                <>
+                    <div
+                        className={
+                            'fixed left-0 top-0 h-[100vh] w-full flex flex-col justify-center items-center z-50 ' +
+                            (modalShow == true ? '' : 'hidden')
+                        }
+                    >
+                        <div className="w-fit flex flex-col gap-[20px] bg-orange-50 p-[50px] rounded-[30px]">
+                            <div className="flex gap-[20px]">
+                                <Cropper
+                                    initialAspectRatio={1}
+                                    minCropBoxHeight={100}
+                                    minCropBoxWidth={100}
+                                    ref={cropperRef}
+                                    src={image}
+                                    style={{ height: 300, width: 500 }}
+                                />
+                            </div>
+                            <div className="flex gap-[20px]">
+                                <PrimaryBtn01
+                                    onClick={getCropData}
+                                    title="Сохранить"
+                                />
+                                <CancelBtn01
+                                    onClick={cancelImage}
+                                    title="Отмена"
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-col">
-                        <Link href="/profile">
-                            <div className="w-full h-[55px] bg-blue-100 hover:bg-blue-100 border-b-[1px]  flex items-center  font-medium cursor-pointer transition-all ease-linear">
-                                <div className="w-[2px] bg-blue-800 h-[55px]"></div>
-                                <div className="flex gap-[5px] px-[15px] items-center">
-                                    <svg
-                                        height={15}
-                                        viewBox="0 0 448 512"
-                                        width={15}
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
-                                    </svg>
-                                    <p className="font-medium ">Профиль</p>
-                                </div>
-                            </div>
-                        </Link>
-                        {data?.roles?.name == 'caller' ? (
-                            <>
-                                <Link href="/create-challenges">
-                                    <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
-                                        <div className="w-[2px]  h-[55px]"></div>
-                                        <div className="flex gap-[5px] px-[15px] items-center">
-                                            <svg
-                                                height={15}
-                                                viewBox="0 0 384 512"
-                                                width={15}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z" />
-                                            </svg>
-                                            <p className="font-medium ">
-                                                Создать вызов
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Link>
-                                <Link href="/my-voz">
-                                    <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
-                                        <div className="w-[2px]  h-[55px]"></div>
-                                        <div className="flex gap-[5px] px-[15px] items-center">
-                                            <svg
-                                                height={15}
-                                                viewBox="0 0 512 512"
-                                                width={15}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
-                                            </svg>
-                                            <p className="font-medium ">
-                                                Мои вызовы
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/cv">
-                                    <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
-                                        <div className="w-[2px]  h-[55px]"></div>
-                                        <div className="flex gap-[5px] px-[15px] items-center">
-                                            <svg
-                                                height={15}
-                                                viewBox="0 0 512 512"
-                                                width={15}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
-                                            </svg>
-                                            <p className="font-medium ">CV</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                                <Link href="/my-aprove">
-                                    <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
-                                        <div className="w-[2px]  h-[55px]"></div>
-                                        <div className="flex gap-[5px] px-[15px] items-center">
-                                            <svg
-                                                height={15}
-                                                viewBox="0 0 576 512"
-                                                width={15}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M384 480h48c11.4 0 21.9-6 27.6-15.9l112-192c5.8-9.9 5.8-22.1 .1-32.1S555.5 224 544 224H144c-11.4 0-21.9 6-27.6 15.9L48 357.1V96c0-8.8 7.2-16 16-16H181.5c4.2 0 8.3 1.7 11.3 4.7l26.5 26.5c21 21 49.5 32.8 79.2 32.8H416c8.8 0 16 7.2 16 16v32h48V160c0-35.3-28.7-64-64-64H298.5c-17 0-33.3-6.7-45.3-18.7L226.7 50.7c-12-12-28.3-18.7-45.3-18.7H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H87.7 384z" />
-                                            </svg>
-                                            <p className="font-medium ">
-                                                Мои заявки
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </>
-                        )}
-                    </div>
-                </div>
-                <div className="w-full">
-                    <div className="w-full px-[10px] flex flex-col gap-[20px]">
-                        <p className="w-full text-[20px] font-semibold">
-                            Профиль
-                        </p>
-                        <hr />
-
-                        <div className="w-full grid grid-cols-2 gap-[10px] ">
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <InputTypeFile
-                                    onChange={onChange}
-                                    title={'Добавить фото'}
-                                />
-
-                                <div className="flex flex-col">
-                                    <CHdescription1
-                                        className={
-                                            '' +
-                                            (selectedSizeOfImage < 500 ||
-                                            selectedSizeOfImage == 0
-                                                ? '!text-green-700'
-                                                : '!text-orange-700')
-                                        }
-                                        title={`Размер аватара не должен превышать ${sizeOfImage / 1024}  ${typedSize}`}
-                                    />
-                                    <CHdescription1
-                                        className={
-                                            '' +
-                                            (selectedSizeOfImage < 500 ||
-                                            selectedSizeOfImage == 0
-                                                ? '!text-green-700'
-                                                : '!text-orange-700')
-                                        }
-                                        title={`Текущий размер: ${selectedSizeOfImage}  ${typedSize}`}
+                    <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
+                        <div className="w-1/3 flex flex-col ">
+                            <div className="w-full shadow flex flex-col gap-[20px] justify-center items-center py-[30px]">
+                                <div className="w-[145px] h-[145px] relative">
+                                    <AvatarComponent
+                                        resultImage={resultImage}
                                     />
                                 </div>
-                            </div>
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">ФИО:</span>
-                                <input
-                                    className="border shadow px-[10px] py-[10px]"
-                                    onChange={e => setName(e.target.value)}
-                                    placeholder="Your name"
-                                    type="text"
-                                    value={name}
-                                />
-                            </div>
-                            {data?.roles?.name == 'caller' ? (
-                                <>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Сфера бизнеса:
-                                        </span>
-                                        {categoryVoz.length > 0 ? (
-                                            <MultiSelect
-                                                defaultValue={defaultCategory}
-                                                onChange={handleLanguageFilter}
-                                                options={categoryVoz}
-                                            />
-                                        ) : null}
-                                    </div>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Описание деятельности:
-                                        </span>
-                                        <textarea
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setActionSector(e.target.value)
-                                            }
-                                            value={actionSector}
-                                        ></textarea>
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Дата рождения:
-                                        </span>
-                                        <input
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setDateBirth(e.target.value)
-                                            }
-                                            placeholder="Your name"
-                                            type="date"
-                                            value={dateBirth}
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            ВУЗ:
-                                        </span>
-                                        <input
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setVuz(e.target.value)
-                                            }
-                                            placeholder="Your name"
-                                            type="text"
-                                            value={vuz}
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Курс обучения:
-                                        </span>
-                                        <input
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setEducationCourse(
-                                                    e.target.value,
-                                                )
-                                            }
-                                            placeholder="Курс обучения"
-                                            type="text"
-                                            value={educationCourse}
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Ссылка на Telegram:
-                                        </span>
-                                        <input
-                                            className="border shadow px-[10px] py-[10px]"
-                                            onChange={e =>
-                                                setUrlTelegram(e.target.value)
-                                            }
-                                            placeholder="Your name"
-                                            type="text"
-                                            value={urlTelegram}
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-col gap-[5px]">
-                                        <span className="font-medium">
-                                            Краткое описание своих интересов:
-                                        </span>
-                                        <textarea
-                                            className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
-                                            cols={15}
-                                            onChange={e =>
-                                                setInteres(e.target.value)
-                                            }
-                                            placeholder="Краткое описание своих интересов"
-                                            rows={10}
-                                            value={interes}
-                                        ></textarea>
-                                    </div>
-                                </>
-                            )}
 
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">Эл Почта:</span>
-                                <input
-                                    className="border shadow px-[10px] py-[10px]"
-                                    disabled
-                                    placeholder="Your name"
-                                    type="text"
-                                    value={data?.email}
-                                />
+                                <div className="flex flex-col gap-[5px] justify-center items-center">
+                                    <h4 className="font-semibold text-[20px] text-center">
+                                        {data?.name}
+                                    </h4>
+                                    <p>
+                                        Роль:{' '}
+                                        <span className="font-semibold">
+                                            {data?.roles?.name == 'caller'
+                                                ? 'Вызоводатель'
+                                                : ''}
+                                            {data?.roles?.name == 'recipient'
+                                                ? 'Студент'
+                                                : ''}
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
-                            <div className="w-full flex flex-col gap-[5px]">
-                                <span className="font-medium">Пароль:</span>
-                                <input
-                                    className="border shadow px-[10px] py-[10px]"
-                                    onChange={e => setPassword(e.target.value)}
-                                    placeholder="Введите новый пароль"
-                                    type="text"
-                                    value={password}
-                                />
+                            <div className="w-full flex flex-col">
+                                <Link href="/profile">
+                                    <div className="w-full h-[55px] bg-blue-100 hover:bg-blue-100 border-b-[1px]  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                        <div className="w-[2px] bg-blue-800 h-[55px]"></div>
+                                        <div className="flex gap-[5px] px-[15px] items-center">
+                                            <svg
+                                                height={15}
+                                                viewBox="0 0 448 512"
+                                                width={15}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                                            </svg>
+                                            <p className="font-medium ">
+                                                Профиль
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Link>
+                                {data?.roles?.name == 'caller' ? (
+                                    <>
+                                        <Link href="/create-challenges">
+                                            <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                                <div className="w-[2px]  h-[55px]"></div>
+                                                <div className="flex gap-[5px] px-[15px] items-center">
+                                                    <svg
+                                                        height={15}
+                                                        viewBox="0 0 384 512"
+                                                        width={15}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z" />
+                                                    </svg>
+                                                    <p className="font-medium ">
+                                                        Создать вызов
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                        <Link href="/my-voz">
+                                            <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                                <div className="w-[2px]  h-[55px]"></div>
+                                                <div className="flex gap-[5px] px-[15px] items-center">
+                                                    <svg
+                                                        height={15}
+                                                        viewBox="0 0 512 512"
+                                                        width={15}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
+                                                    </svg>
+                                                    <p className="font-medium ">
+                                                        Мои вызовы
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link href="/cv">
+                                            <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                                <div className="w-[2px]  h-[55px]"></div>
+                                                <div className="flex gap-[5px] px-[15px] items-center">
+                                                    <svg
+                                                        height={15}
+                                                        viewBox="0 0 512 512"
+                                                        width={15}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
+                                                    </svg>
+                                                    <p className="font-medium ">
+                                                        CV
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                        <Link href="/my-aprove">
+                                            <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                                <div className="w-[2px]  h-[55px]"></div>
+                                                <div className="flex gap-[5px] px-[15px] items-center">
+                                                    <svg
+                                                        height={15}
+                                                        viewBox="0 0 576 512"
+                                                        width={15}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M384 480h48c11.4 0 21.9-6 27.6-15.9l112-192c5.8-9.9 5.8-22.1 .1-32.1S555.5 224 544 224H144c-11.4 0-21.9 6-27.6 15.9L48 357.1V96c0-8.8 7.2-16 16-16H181.5c4.2 0 8.3 1.7 11.3 4.7l26.5 26.5c21 21 49.5 32.8 79.2 32.8H416c8.8 0 16 7.2 16 16v32h48V160c0-35.3-28.7-64-64-64H298.5c-17 0-33.3-6.7-45.3-18.7L226.7 50.7c-12-12-28.3-18.7-45.3-18.7H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H87.7 384z" />
+                                                    </svg>
+                                                    <p className="font-medium ">
+                                                        Мои заявки
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="w-full">
-                            <button
-                                className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                onClick={() => update()}
-                            >
-                                Сохранить
-                            </button>
+                            <div className="w-full px-[10px] flex flex-col gap-[20px]">
+                                <p className="w-full text-[20px] font-semibold">
+                                    Профиль
+                                </p>
+                                <hr />
+
+                                <div className="w-full grid grid-cols-2 gap-[10px] ">
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <InputTypeFile
+                                            onChange={onChange}
+                                            title={'Добавить фото'}
+                                        />
+
+                                        <div className="flex flex-col">
+                                            <CHdescription1
+                                                className={
+                                                    '' +
+                                                    (selectedSizeOfImage <
+                                                        500 ||
+                                                    selectedSizeOfImage == 0
+                                                        ? '!text-green-700'
+                                                        : '!text-orange-700')
+                                                }
+                                                title={`Размер аватара не должен превышать ${sizeOfImage / 1024}  ${typedSize}`}
+                                            />
+                                            <CHdescription1
+                                                className={
+                                                    '' +
+                                                    (selectedSizeOfImage <
+                                                        500 ||
+                                                    selectedSizeOfImage == 0
+                                                        ? '!text-green-700'
+                                                        : '!text-orange-700')
+                                                }
+                                                title={`Текущий размер: ${selectedSizeOfImage}  ${typedSize}`}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            ФИО:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setName(e.target.value)
+                                            }
+                                            placeholder="Your name"
+                                            type="text"
+                                            value={name}
+                                        />
+                                    </div>
+                                    {data?.roles?.name == 'caller' ? (
+                                        <>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Сфера бизнеса:
+                                                </span>
+                                                {categoryVoz.length > 0 ? (
+                                                    <MultiSelect
+                                                        defaultValue={
+                                                            defaultCategory
+                                                        }
+                                                        onChange={
+                                                            handleLanguageFilter
+                                                        }
+                                                        options={categoryVoz}
+                                                    />
+                                                ) : null}
+                                                {/* <input
+                                        className="border shadow px-[10px] py-[10px]"
+                                        onChange={e =>
+                                            setBusinessSector(
+                                                e.target.value,
+                                            )
+                                        }
+                                        placeholder=""
+                                        type="text"
+                                        value={businessSector}
+                                    /> */}
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Описание деятельности:
+                                                </span>
+                                                <textarea
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setActionSector(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    value={actionSector}
+                                                ></textarea>
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Компания:
+                                                </span>
+                                                <input
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setCompany(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    value={company}
+                                                />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Дата рождения:
+                                                </span>
+                                                <input
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setDateBirth(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Your name"
+                                                    type="date"
+                                                    value={dateBirth}
+                                                />
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    ВУЗ:
+                                                </span>
+                                                <input
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setVuz(e.target.value)
+                                                    }
+                                                    placeholder="Your name"
+                                                    type="text"
+                                                    value={vuz}
+                                                />
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Курс обучения:
+                                                </span>
+                                                <input
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setEducationCourse(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Курс обучения"
+                                                    type="text"
+                                                    value={educationCourse}
+                                                />
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Ссылка на Telegram:
+                                                </span>
+                                                <input
+                                                    className="border shadow px-[10px] py-[10px]"
+                                                    onChange={e =>
+                                                        setUrlTelegram(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Your name"
+                                                    type="text"
+                                                    value={urlTelegram}
+                                                />
+                                            </div>
+                                            <div className="w-full flex flex-col gap-[5px]">
+                                                <span className="font-medium">
+                                                    Краткое описание своих
+                                                    интересов:
+                                                </span>
+                                                <textarea
+                                                    className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                                    cols={15}
+                                                    onChange={e =>
+                                                        setInteres(
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Краткое описание своих интересов"
+                                                    rows={10}
+                                                    value={interes}
+                                                ></textarea>
+                                            </div>
+                                        </>
+                                    )}
+
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Эл Почта:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            disabled
+                                            placeholder="Your name"
+                                            type="text"
+                                            value={data?.email}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Пароль:
+                                        </span>
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setPassword(e.target.value)
+                                            }
+                                            placeholder="Введите новый пароль"
+                                            type="text"
+                                            value={password}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full">
+                                    <button
+                                        className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                        onClick={() => update()}
+                                    >
+                                        Сохранить
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </>
+            )}
         </div>
     );
 }

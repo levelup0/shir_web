@@ -1,5 +1,5 @@
 'use client';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -7,7 +7,8 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
-import { is_user_logged_in, loaderSvg } from '@/Common/function';
+import { is_user_logged_in } from '@/Common/function';
+import { loaderSvg, num_word } from '@/Common/function';
 import { CONTACT_ASSETS, USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
@@ -108,7 +109,12 @@ export default function ReceipentData() {
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] px-[10px] font-semibold">
-                            {totalItems} Вызовополучатели
+                            {totalItems}{' '}
+                            {num_word(totalItems, [
+                                'Студент',
+                                'Студента',
+                                'Студентов',
+                            ])}
                         </p>
                         <hr />
                     </div>
@@ -124,7 +130,7 @@ export default function ReceipentData() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full flex flex-col gap-[25px]  shadow px-[10px] py-[20px]"
+                                        className="w-full flex flex-col gap-[25px]  shadow px-[10px] md:px-[20px] py-[20px]"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">

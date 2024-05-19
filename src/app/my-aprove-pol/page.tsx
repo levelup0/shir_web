@@ -17,7 +17,7 @@ import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { formatStatus, is_user_logged_in } from '@/Common/function';
 import { commonRequestAproveWithToken } from '@/Common/commonRequest';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
@@ -103,7 +103,7 @@ export default function Page() {
                                         ? 'Вызоводатель'
                                         : ''}
                                     {data?.roles?.name == 'recipient'
-                                        ? 'Вызовополучатель'
+                                        ? 'Студенты'
                                         : ''}
                                 </span>
                             </p>
@@ -190,7 +190,7 @@ export default function Page() {
                                 <tr className=" bg-blue-100 border py-[10px]">
                                     <th className="border flex items-center font-medium text-black dark:text-white"></th>
                                     <th className="border font-medium text-black dark:text-white">
-                                        Вызовополучатель
+                                        Студент
                                     </th>
                                     <th className="border font-medium text-black dark:text-white">
                                         Email

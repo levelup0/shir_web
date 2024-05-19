@@ -107,7 +107,7 @@ export default function Page() {
                                             (typeUser == 0 ? 'text-white' : '')
                                         }
                                     >
-                                        Вызовополучатель
+                                        Студенты
                                     </span>
                                 </div>
                                 <div

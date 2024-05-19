@@ -15,9 +15,9 @@ import {
 import { toast } from 'react-toastify';
 import { currentDate, is_user_logged_in } from '@/Common/function';
 import { commonRequestWithToken } from '@/Common/commonRequest';
-import TableheadCheckbox from '@/Common/TableheadCheckbox';
-import TableheadSort from '@/Common/TableheadSort';
-import AvatarComponent from '@/Common/AvatarComponent';
+import TableheadCheckbox from '@/Components/TableheadCheckbox';
+import TableheadSort from '@/Components/TableheadSort';
+import AvatarComponent from '@/Components/AvatarComponent';
 export default function Page() {
     const [resultImage, setResultImg] = useState('');
 
@@ -194,7 +194,7 @@ export default function Page() {
                                         ? 'Вызоводатель'
                                         : ''}
                                     {data?.roles?.name == 'recipient'
-                                        ? 'Вызовополучатель'
+                                        ? 'Студент'
                                         : ''}
                                 </span>
                             </p>
@@ -272,6 +272,24 @@ export default function Page() {
                                                 <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
                                             </svg>
                                             <p className="font-medium ">CV</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                                <Link href="/my-aprove">
+                                    <div className="w-full h-[55px]  border-b-[1px] hover:bg-blue-100  flex items-center  font-medium cursor-pointer transition-all ease-linear">
+                                        <div className="w-[2px]  h-[55px]"></div>
+                                        <div className="flex gap-[5px] px-[15px] items-center">
+                                            <svg
+                                                height={15}
+                                                viewBox="0 0 576 512"
+                                                width={15}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M384 480h48c11.4 0 21.9-6 27.6-15.9l112-192c5.8-9.9 5.8-22.1 .1-32.1S555.5 224 544 224H144c-11.4 0-21.9 6-27.6 15.9L48 357.1V96c0-8.8 7.2-16 16-16H181.5c4.2 0 8.3 1.7 11.3 4.7l26.5 26.5c21 21 49.5 32.8 79.2 32.8H416c8.8 0 16 7.2 16 16v32h48V160c0-35.3-28.7-64-64-64H298.5c-17 0-33.3-6.7-45.3-18.7L226.7 50.7c-12-12-28.3-18.7-45.3-18.7H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H87.7 384z" />
+                                            </svg>
+                                            <p className="font-medium ">
+                                                Мои заявки
+                                            </p>
                                         </div>
                                     </div>
                                 </Link>

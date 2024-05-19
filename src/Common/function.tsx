@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import moment from 'moment';
 import 'moment/locale/ru'; // without this line it didn't work
@@ -68,21 +69,6 @@ export const formatDateWithtimeTime = (date: string) => {
     return moment(date).format('D MMM YYYY HH:mm');
 };
 
-// Format long text to short for readability
-export const translateLanguageId = (id: number | undefined) => {
-    switch (id) {
-        case 1:
-            return 'Тоҷикӣ';
-        case 2:
-            return 'Русский';
-        case 3:
-            return 'English';
-
-        default:
-            return id;
-    }
-};
-
 export const loaderSvg = () => {
     return (
         <svg
@@ -123,10 +109,6 @@ export const formatStatus = (status: string | undefined) => {
                     Не активный
                 </span>
             );
-
-        /**
-         * complaints and suggestions statuses
-         */
         case 'new':
             return (
                 <span className="inline-flex rounded bg-secondary px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
@@ -158,4 +140,19 @@ export const formatStatus = (status: string | undefined) => {
         default:
             return status;
     }
+};
+
+export const num_word = (value: any, words: any) => {
+    value = Math.abs(value) % 100;
+    const num = value % 10;
+    if (value > 10 && value < 20) {
+        return words[2];
+    }
+    if (num > 1 && num < 5) {
+        return words[1];
+    }
+    if (num == 1) {
+        return words[0];
+    }
+    return words[2];
 };

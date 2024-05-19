@@ -1,5 +1,5 @@
 'use client';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -8,6 +8,7 @@ import {
     commonRequestWithToken,
 } from '@/Common/commonRequest';
 import { is_user_logged_in, loaderSvg } from '@/Common/function';
+import { num_word } from '@/Common/function';
 import { USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import { useRouter } from 'next/navigation';
@@ -107,7 +108,12 @@ export default function CallerData() {
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
                     <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {totalItems} Вызоводатели
+                            {totalItems}{' '}
+                            {num_word(totalItems, [
+                                'Вызоводатель',
+                                'Вызоводателей',
+                                'Вызоводателей',
+                            ])}
                         </p>
                         <hr />
                     </div>
@@ -124,7 +130,7 @@ export default function CallerData() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full flex flex-col gap-[25px] h-[150px] shadow px-[10px] py-[20px]"
+                                        className="w-full flex flex-col gap-[25px] h-[150px] shadow px-[10px] md:px-[20px] py-[20px]"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">
@@ -216,12 +222,6 @@ export default function CallerData() {
                                                         {value?.email}
                                                     </span>
                                                 </span>
-                                                {/* <span className="text-[14px] ">
-                                                    Роль:{' '}
-                                                    <span className="font-semibold">
-                                                        {value?.roles.name}
-                                                    </span>
-                                                </span> */}
                                             </div>
                                         </div>
                                     </div>
@@ -238,15 +238,6 @@ export default function CallerData() {
                                 totalItems={totalItems}
                             />
                         ) : null}
-                        {/* <div className="w-[30px] h-[30px] bg-blue-800 text-white flex justify-center items-center font-light text-[14px]">
-                            1
-                        </div>
-                        <div className="w-[30px] h-[30px]  flex justify-center items-center font-light text-[14px]">
-                            2
-                        </div>
-                        <div className="w-[30px] h-[30px]  flex justify-center items-center font-light text-[14px]">
-                            3
-                        </div> */}
                     </div>
                 </div>
             </div>

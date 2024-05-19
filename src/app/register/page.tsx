@@ -37,6 +37,7 @@ export default function Page() {
     const [vuz, setVuz] = useState('');
     const [educationCourse, setEducationCourse] = useState('');
     const [interes, setInteres] = useState('');
+    const [company, setCompany] = useState('');
 
     const [urlTelegram, setUrlTelegram] = useState('');
 
@@ -79,6 +80,7 @@ export default function Page() {
         form.append('education_course', educationCourse);
         form.append('interes', interes);
         form.append('url_telegram', urlTelegram);
+        form.append('company', company);
 
         form.append('email', email);
         form.append('password', password);
@@ -257,7 +259,7 @@ export default function Page() {
                                             (typeUser == 0 ? 'text-white' : '')
                                         }
                                     >
-                                        Вызовополучатель
+                                        Студент
                                     </span>
                                 </div>
                                 <div
@@ -477,16 +479,28 @@ export default function Page() {
                                 </div>
                             ) : null}
                             {typeUser == 1 ? (
-                                <div className="flex flex-col">
-                                    <textarea
-                                        className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
-                                        onChange={e =>
-                                            setActionSector(e.target.value)
-                                        }
-                                        placeholder="Описание деятельности"
-                                        value={actionSector}
-                                    ></textarea>
-                                </div>
+                                <>
+                                    <div className="flex flex-col">
+                                        <textarea
+                                            className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                            onChange={e =>
+                                                setActionSector(e.target.value)
+                                            }
+                                            placeholder="Описание деятельности"
+                                            value={actionSector}
+                                        ></textarea>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <input
+                                            className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                            onChange={e =>
+                                                setCompany(e.target.value)
+                                            }
+                                            placeholder="Компания"
+                                            value={company}
+                                        />
+                                    </div>
+                                </>
                             ) : null}
                             <input
                                 className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"

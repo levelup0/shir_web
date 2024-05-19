@@ -2,7 +2,7 @@
 // import Heading2 from '@/common/Heading2';
 // import { getNewsById } from '@/services/news';
 'use client';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 import {
     commonRequestAproveWithToken,
     getcommonDataById,

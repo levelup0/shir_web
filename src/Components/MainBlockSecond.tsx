@@ -1,5 +1,5 @@
 'use client';
-import AvatarComponent from '@/Common/AvatarComponent';
+import AvatarComponent from '@/Components/AvatarComponent';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { commonRequestWithToken } from '@/Common/commonRequest';
@@ -9,6 +9,7 @@ import {
     formatDateWithtimeTime,
     is_user_logged_in,
     loaderSvg,
+    num_word,
 } from '@/Common/function';
 import { VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
@@ -110,12 +111,17 @@ export default function MainBlockSecond() {
                 </div>
 
                 <div className="w-full  flex flex-col gap-[20px]">
-                    {/* <div className="w-full flex flex-col gap-[20px]">
+                    <div className="w-full flex flex-col gap-[20px]">
                         <p className="text-[20px] font-semibold">
-                            {totalItems} Вызовов
+                            {totalItems}{' '}
+                            {num_word(totalItems, [
+                                'Вызов',
+                                'Вызовов',
+                                'Вызовов',
+                            ])}
                         </p>
                         <hr />
-                    </div> */}
+                    </div>
 
                     <div className="w-full flex flex-col gap-[20px]">
                         {/* Item */}
@@ -128,7 +134,7 @@ export default function MainBlockSecond() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <Link
-                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] py-[20px] hover:bg-blue-50"
+                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
                                         href={{
                                             pathname: '/voz',
                                             query: { voz_id: value?.id },
@@ -192,7 +198,7 @@ export default function MainBlockSecond() {
                                                         <p className="text-[18px] font-semibold">
                                                             {value?.name}
                                                         </p>
-                                                        <span className="text-[14px] font-light">
+                                                        <span className="text-[14px] font-light line-clamp-2 md:pr-[50px]">
                                                             {value?.description}
                                                         </span>
                                                     </div>
