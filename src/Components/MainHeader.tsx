@@ -72,11 +72,7 @@ export default function MainHeader() {
                                         : '')
                                 }
                             >
-<<<<<<< HEAD
                                 О платформе
-=======
-                                Студенты
->>>>>>> 498c99b (faza 3 codding)
                             </div>
                         </Link>
 
@@ -284,13 +280,8 @@ export default function MainHeader() {
                                     ${activeLink === '/register' ? '!bg-white !text-black !px-3' : ''}
                                 `}
                             >
-<<<<<<< HEAD
-                                Регистрация
-                            </button>
-=======
                                 Студенты
-                            </div>
->>>>>>> 498c99b (faza 3 codding)
+                            </button>
                         </Link>
                     )}
                 </div>
