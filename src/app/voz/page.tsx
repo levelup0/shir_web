@@ -20,7 +20,6 @@ import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { formatDateWithoutTime, is_user_logged_in } from '@/Common/function';
-
 export default function Page() {
     const searchParams = useSearchParams();
     const _voz_id: any = searchParams.get('voz_id');
@@ -103,12 +102,12 @@ export default function Page() {
             <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
                 <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
                     <div className="w-full shadow flex flex-col justify-between gap-[30px] px-[30px] py-[30px] bg-white rounded-[5px] ">
-                        <Link
-                            className="font-light bg-primary_grey w-fit px-[10px] py-[2px] rounded-[4px] text-white"
-                            href="/"
+                        <div
+                            className="font-light cursor-pointer bg-primary_grey w-fit px-[10px] py-[2px] rounded-[4px] text-white"
+                            onClick={() => router.back()}
                         >
                             Назад
-                        </Link>
+                        </div>
                         <div className="w-full flex flex-col gap-[30px]">
                             <h2 className="font-semibold text-[18px]">
                                 {response?.data?.name}
@@ -154,14 +153,14 @@ export default function Page() {
                                 </div>
                                 <div className="w-full gap-[10px] md:gap-[0px] flex-col flex md:flex-row justify-start md:justify-between ">
                                     <div className="flex flex-col gap-[5px]">
-                                        <div className="flex text-[15px]">
-                                            Вызоводатель:{' '}
+                                        <div className="flex gap-[5px] text-[15px]">
+                                            <span>Вызоводатель:</span>
                                             <span className="text-primary_blue font-semibold">
                                                 {response?.data?.user?.name}
                                             </span>
                                         </div>
-                                        <div className="flex text-[15px]">
-                                            Категория:{'   '}
+                                        <div className="flex gap-[5px] text-[15px]">
+                                            <span>Категория:</span>
                                             <div className="flex gap-[5px]">
                                                 {response?.data?.category_voz
                                                     ?.length > 0 &&
@@ -183,8 +182,8 @@ export default function Page() {
                                                     )}
                                             </div>
                                         </div>
-                                        <div className="flex text-[15px]">
-                                            Дата размещения:{'   '}
+                                        <div className="flex gap-[5px] text-[15px]">
+                                            <span>Дата размещения:</span>
                                             <span className="text-primary_blue font-semibold">
                                                 {response?.data != null &&
                                                     formatDateWithoutTime(

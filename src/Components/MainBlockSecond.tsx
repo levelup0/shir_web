@@ -121,7 +121,7 @@ export default function MainBlockSecond() {
                             {totalItems}{' '}
                             {num_word(totalItems, [
                                 'Вызов',
-                                'Вызовов',
+                                'Вызова',
                                 'Вызовов',
                             ])}
                         </p>
@@ -139,7 +139,7 @@ export default function MainBlockSecond() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full z-10 flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
+                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[5px] md:gap-[20px] px-[1px]">
@@ -243,7 +243,7 @@ export default function MainBlockSecond() {
                                                                                 }
                                                                             >
                                                                                 <Link
-                                                                                    className="bg-blue-400 w-full z-20 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                                    className="bg-blue-400 w-full  text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                                                     href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS_VOZ_FILES}/${v?.src}`}
                                                                                     target="_blank"
                                                                                 >

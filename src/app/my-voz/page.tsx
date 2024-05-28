@@ -70,7 +70,7 @@ export default function Page() {
     };
 
     useEffect(() => {
-        if (is_user_logged_in()) {
+        if (!is_user_logged_in()) {
             router.push('/about');
         } else {
             getData();

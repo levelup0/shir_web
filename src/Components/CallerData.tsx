@@ -98,11 +98,11 @@ export default function CallerData() {
                             <option>Поиск по типу</option>
                         </select> */}
                     </div>
-                    <div className="border-">
+                    {/* <div className="border-">
                         <button className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 ">
                             Поиск
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="w-full mt-[30px] flex flex-col gap-[20px]">
@@ -111,8 +111,8 @@ export default function CallerData() {
                             {totalItems}{' '}
                             {num_word(totalItems, [
                                 'Вызоводатель',
-                                'Вызоводателей',
-                                'Вызоводателей',
+                                'Вызоводателя',
+                                'Вызоводателя',
                             ])}
                         </p>
                         <hr />

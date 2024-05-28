@@ -222,14 +222,14 @@ export default function Page() {
                             <div className="w-full px-[10px] flex flex-col gap-[20px]">
                                 <div className="w-full flex justify-between">
                                     <p className="w-full text-[20px] font-semibold">
-                                        Мои вызовы
+                                        Мои заявки
                                     </p>
-                                    <Link
+                                    {/* <Link
                                         className="flex justify-center items-center px-[20px] w-full md:max-w-[100px]  h-[38px] rounded-[4px] bg-primary_yellow border text-[#FFF] text-[14px] font-normal hover:active:bg-[#FFF] hover:active:text-primary2 transition-all ease-in-out"
                                         href={'add-cv'}
                                     >
                                         Добавить
-                                    </Link>
+                                    </Link> */}
                                 </div>
                                 <hr />
 
@@ -241,7 +241,7 @@ export default function Page() {
                                                 Название
                                             </th>
                                             <th className="border font-medium text-black dark:text-white">
-                                                Размер
+                                                Описание
                                             </th>
                                             {/* <th className="font-medium text-black dark:text-white">
                                         Вызоводатель
@@ -265,10 +265,10 @@ export default function Page() {
                                                         key={item?.id}
                                                     >
                                                         <td className="border border-[#eee]  dark:border-strokedark"></td>
-                                                        <td className=" border border-[#eee]  dark:border-strokedark">
+                                                        <td className=" border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {item?.voz?.name}
                                                         </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
+                                                        <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {
                                                                 item?.voz
                                                                     ?.description
@@ -278,12 +278,12 @@ export default function Page() {
                                                         {/* <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
                                                     {item?.user?.name}
                                                 </td> */}
-                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
+                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark p-[8px]">
                                                             {formatStatus(
                                                                 item?.status,
                                                             )}
                                                         </td>
-                                                        <td className="border-b border-[#eee]  dark:border-strokedark">
+                                                        <td className="border-b border-[#eee]  dark:border-strokedark p-[8px]">
                                                             <div className="flex gap-[5px]">
                                                                 {/* <button
                                                             className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "

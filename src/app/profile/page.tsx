@@ -535,7 +535,7 @@ export default function Page() {
                                                     интересов:
                                                 </span>
                                                 <textarea
-                                                    className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                                    className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[1px] border text-[16px] outline-none"
                                                     cols={15}
                                                     onChange={e =>
                                                         setInteres(

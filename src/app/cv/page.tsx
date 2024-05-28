@@ -255,13 +255,13 @@ export default function Page() {
                                                         className="py-[10px] h-[55px]"
                                                         key={item?.id}
                                                     >
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
+                                                        <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {item?.id}
                                                         </td>
-                                                        <td className=" border border-[#eee]  dark:border-strokedark">
+                                                        <td className=" border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {item?.name}
                                                         </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
+                                                        <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {(
                                                                 item?.size /
                                                                 1024 /
@@ -270,10 +270,10 @@ export default function Page() {
                                                             МБ
                                                         </td>
 
-                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
+                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark p-[8px]">
                                                             {item?.format}
                                                         </td>
-                                                        <td className="border-b border-[#eee]  dark:border-strokedark">
+                                                        <td className="border-b border-[#eee]  dark:border-strokedark p-[8px]">
                                                             <div className="flex gap-[5px]">
                                                                 <button
                                                                     className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
