@@ -95,12 +95,31 @@ export default function Page() {
             return;
         }
         const form = new FormData();
+
+        const _files = [...files];
+
+        let sum: any = 10485760;
+
+        if (_files.length > 0) {
+            for (let i = 0; i < _files.length; i += 1) {
+                if (_files[i].file_size != null) {
+                    sum = parseFloat(sum) - parseFloat(_files[i].file_size);
+                }
+            }
+
+            if (sum < 0) {
+                toast.error('Превышение допустимого размера файлов 10 MB');
+                return false;
+            }
+        }
+
         form.append('name', name);
         form.append('sector', sector);
         form.append('description', description);
         form.append('publish_date', publishDate);
         form.append('end_date', endDate);
         form.append('voz_category_relation', selectedCategory);
+        form.append('files', JSON.stringify(files));
 
         const response = await requestPostWithToken(VOZ, form);
         if (response?.success == true) {
@@ -121,6 +140,90 @@ export default function Page() {
             getData();
         }
     }, []);
+
+    const [availableSize, setAvailableSize] = useState<any>(10485760);
+
+    const [files, setFiles] = useState<any>([]);
+
+    const addFiles = () => {
+        const _files: any = [...files];
+
+        _files.push({
+            file_format: null,
+            file_name: null,
+            file_size: null,
+            base64: null,
+        });
+        setFiles(_files);
+    };
+
+    const removeFile = (index: any) => {
+        const _files = [...files];
+        _files.splice(index, 1);
+        setFiles(_files);
+    };
+
+    const updateAvailableSize = () => {
+        const _files: any = [...files];
+
+        let sum: any = 10485760;
+
+        if (_files.length > 0) {
+            for (let i = 0; i < _files.length; i += 1) {
+                if (_files[i].file_size != null) {
+                    sum = parseFloat(sum) - parseFloat(_files[i].file_size);
+                }
+            }
+        }
+        if (sum < 0) {
+            toast.error('Превышение допустимого размера файлов 10 MB');
+            setAvailableSize(sum);
+            return false;
+        }
+
+        setAvailableSize(sum);
+
+        return true;
+    };
+
+    useEffect(() => {
+        updateAvailableSize();
+    }, [files]);
+
+    const onChangeFileInput = (e: any) => {
+        const key = e.target.getAttribute('data-key');
+        const value = e.target.files[0];
+        const _files: any = [...files];
+
+        const test =
+            /\.(gif|jpg|jpeg|tiff|png|pdf|txt|xls|xlsx|ppt|pptx|doc|docx|csv)$/i.test(
+                value.name,
+            );
+        if (!test) {
+            _files.splice(key, 1);
+            setFiles(_files);
+
+            toast.error(
+                'Доступные форматы: gif, jpg, jpeg, tiff, png, pdf, txt, xls, xlsx, ppt, pptx, doc, docx, csv',
+            );
+            return;
+        }
+
+        const reader: any = new FileReader();
+        reader.readAsDataURL(value);
+
+        reader.onloadend = function () {
+            const base64String = reader.result
+                .replace('data:', '')
+                .replace(/^.+,/, '');
+
+            _files[key].file_format = value.name.split('.').pop();
+            _files[key].file_name = value.name;
+            _files[key].file_size = value.size;
+            _files[key].base64 = base64String;
+            setFiles(_files);
+        };
+    };
 
     return (
         <div className="flex flex-col">
@@ -323,6 +426,98 @@ export default function Page() {
                                             }
                                             value={description}
                                         ></textarea>
+                                    </div>
+                                </div>
+                                <div className="w-full flex flex-col gap-[5px]">
+                                    <div className="">
+                                        {availableSize > 0 ? (
+                                            <label
+                                                className="text text-green-600 text-[14px] fs-6 text-muted"
+                                                htmlFor="file"
+                                            >
+                                                {' Доступно: '}
+                                                {(
+                                                    availableSize /
+                                                    1024 /
+                                                    1024
+                                                ).toFixed(2)}
+                                                МБ
+                                            </label>
+                                        ) : (
+                                            <label
+                                                className="text text-red-500 fs-6"
+                                                htmlFor="file"
+                                            >
+                                                {}
+                                                {' Превышено допущенного'}
+                                                {(
+                                                    availableSize /
+                                                    1024 /
+                                                    1024
+                                                ).toFixed(2)}{' '}
+                                                MB
+                                            </label>
+                                        )}
+                                    </div>
+                                    <div className="">
+                                        {files.length > 0
+                                            ? files.map(
+                                                  (
+                                                      value: any,
+                                                      index: number,
+                                                  ) => (
+                                                      <div
+                                                          className="input-group mb-3"
+                                                          key={index}
+                                                      >
+                                                          <input
+                                                              aria-describedby="basic-addon1"
+                                                              aria-label="Username"
+                                                              className="form-control"
+                                                              data-key={index}
+                                                              id="file"
+                                                              name="file"
+                                                              onChange={
+                                                                  onChangeFileInput
+                                                              }
+                                                              placeholder=""
+                                                              type="file"
+                                                          />
+
+                                                          <button
+                                                              className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                              onClick={() =>
+                                                                  removeFile(
+                                                                      index,
+                                                                  )
+                                                              }
+                                                          >
+                                                              <svg
+                                                                  className="fill-white"
+                                                                  height={15}
+                                                                  viewBox="0 0 448 512"
+                                                                  width={12}
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                              >
+                                                                  <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                                              </svg>
+                                                          </button>
+                                                      </div>
+                                                  ),
+                                              )
+                                            : null}
+
+                                        <div className="col-sm-6 col-md-5">
+                                            <div className="awards-form__button last">
+                                                <button
+                                                    className="flex justify-center items-center px-[20px] w-full md:max-w-[400px]  h-[50px] rounded-[10px] bg-primary_yellow border text-[#FFF] text-[16px] font-normal hover:active:bg-[#FFF] hover:active:text-primary2 transition-all ease-in-out"
+                                                    onClick={() => addFiles()}
+                                                    type="button"
+                                                >
+                                                    {'добавить файл'}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="w-full flex gap-[5px]">

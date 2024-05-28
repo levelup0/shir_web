@@ -7,7 +7,12 @@ import {
     commonRequestAproveWithToken,
     getcommonDataById,
 } from '@/Common/commonRequest';
-import { APROVE, GETUSER, VOZ_MAIN } from '@/Common/urls';
+import {
+    APROVE,
+    CONTACT_ASSETS_VOZ_FILES,
+    GETUSER,
+    VOZ_MAIN,
+} from '@/Common/urls';
 import MainHeader from '@/Components/MainHeader';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -111,6 +116,30 @@ export default function Page() {
                             <p className="text-[16px] font-light">
                                 {response?.data?.description}
                             </p>
+                            <div className="flex gap-[15px]">
+                                <span className="text-[14px] font-light">
+                                    Файлы:
+                                </span>
+                                <div className="text-[14px] font-light w-full flex gap-[5px]">
+                                    {response?.data?.voz_file != null &&
+                                        response?.data?.voz_file?.length > 0 &&
+                                        response?.data?.voz_file?.map(
+                                            (v: any, i: number) => {
+                                                return (
+                                                    <div key={i}>
+                                                        <Link
+                                                            className="bg-blue-400 w-full z-20 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                            href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS_VOZ_FILES}/${v?.src}`}
+                                                            target="_blank"
+                                                        >
+                                                            {v?.name}
+                                                        </Link>
+                                                    </div>
+                                                );
+                                            },
+                                        )}
+                                </div>
+                            </div>
                             <div className="flex gap-[10px]">
                                 <div className="w-[80px] h-[80px] shadow">
                                     {response?.data?.user != null &&

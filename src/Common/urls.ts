@@ -17,6 +17,7 @@ export const CATEGORY_VOZ = 'category-voz';
 export const MASS_ACTION = 'mass-action';
 export const CV = 'cv';
 export const CONTACT_ASSETS = 'contact-assets';
+export const CONTACT_ASSETS_VOZ_FILES = 'contact-assets-voz-files';
 export const USERS = 'users';
 export const APROVE = 'aprove';
 

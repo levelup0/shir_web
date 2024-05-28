@@ -11,7 +11,12 @@ import {
     loaderSvg,
     num_word,
 } from '@/Common/function';
-import { VOZ, VOZ_MAIN } from '@/Common/urls';
+import {
+    CONTACT_ASSETS,
+    CONTACT_ASSETS_VOZ_FILES,
+    VOZ,
+    VOZ_MAIN,
+} from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -133,12 +138,8 @@ export default function MainBlockSecond() {
                         {listData?.length > 0 &&
                             listData?.map((value: any, index: number) => {
                                 return (
-                                    <Link
-                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
-                                        href={{
-                                            pathname: '/voz',
-                                            query: { voz_id: value?.id },
-                                        }}
+                                    <div
+                                        className="w-full z-10 flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[5px] md:gap-[20px] px-[1px]">
@@ -193,14 +194,68 @@ export default function MainBlockSecond() {
                                                 )}
                                             </div>
                                             <div className="w-full flex flex-col gap-[5px]">
-                                                <div className="flex justify-between">
+                                                <div className="flex flex-col gap-[5px] justify-between">
                                                     <div className="">
-                                                        <p className="text-[18px] font-semibold">
+                                                        <Link
+                                                            className="text-[18px] font-semibold hover:underline"
+                                                            href={{
+                                                                pathname:
+                                                                    '/voz',
+                                                                query: {
+                                                                    voz_id: value?.id,
+                                                                },
+                                                            }}
+                                                        >
                                                             {value?.name}
-                                                        </p>
-                                                        <span className="text-[14px] font-light line-clamp-2 md:pr-[50px]">
+                                                        </Link>
+                                                        <Link
+                                                            className="text-[14px] font-light line-clamp-2 md:pr-[50px]"
+                                                            href={{
+                                                                pathname:
+                                                                    '/voz',
+                                                                query: {
+                                                                    voz_id: value?.id,
+                                                                },
+                                                            }}
+                                                        >
                                                             {value?.description}
+                                                        </Link>
+                                                    </div>
+                                                    <div className="flex gap-[15px]">
+                                                        <span className="text-[14px] font-light">
+                                                            Файлы:
                                                         </span>
+                                                        <div className="text-[14px] font-light w-full flex gap-[5px]">
+                                                            {value?.voz_file !=
+                                                                null &&
+                                                                value?.voz_file
+                                                                    ?.length >
+                                                                    0 &&
+                                                                value?.voz_file?.map(
+                                                                    (
+                                                                        v: any,
+                                                                        i: number,
+                                                                    ) => {
+                                                                        return (
+                                                                            <div
+                                                                                key={
+                                                                                    i
+                                                                                }
+                                                                            >
+                                                                                <Link
+                                                                                    className="bg-blue-400 w-full z-20 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                                    href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS_VOZ_FILES}/${v?.src}`}
+                                                                                    target="_blank"
+                                                                                >
+                                                                                    {
+                                                                                        v?.name
+                                                                                    }
+                                                                                </Link>
+                                                                            </div>
+                                                                        );
+                                                                    },
+                                                                )}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,12 +302,20 @@ export default function MainBlockSecond() {
                                                         </span>
                                                     </span>
                                                 </div>
-                                                <button className="w-fit self-end h-[40px] rounded-[4px] bg-blue-500 hover:bg-blue-600 active:bg-blue-900 font-normal text-white py-[1px] px-[10px]">
+                                                <Link
+                                                    className="w-fit py-[8px] rounded-[4px] bg-blue-500 hover:bg-blue-600 active:bg-blue-900 font-normal text-white px-[10px]"
+                                                    href={{
+                                                        pathname: '/voz',
+                                                        query: {
+                                                            voz_id: value?.id,
+                                                        },
+                                                    }}
+                                                >
                                                     Подробнее
-                                                </button>
+                                                </Link>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 );
                             })}
                     </div>
