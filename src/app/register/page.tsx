@@ -47,6 +47,8 @@ export default function Page() {
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const [categoryVoz, setCategoryVoz] = useState<any>([]);
 
+    const [code, setCode] = useState('');
+
     const register = async () => {
         setLoader(true);
         const form = new FormData();
@@ -89,6 +91,7 @@ export default function Page() {
         form.append('files', JSON.stringify(files));
 
         form.append('voz_category_relation', selectedCategory);
+        form.append('code', code);
 
         const response = await requestPost(REGISTER, form);
         setLoader(false);
@@ -524,6 +527,14 @@ export default function Page() {
                                 placeholder="Повторите пароль"
                                 type="password"
                                 value={confirm}
+                            />
+
+                            <input
+                                className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                onChange={e => setCode(e.target.value)}
+                                placeholder="Введите код"
+                                type="text"
+                                value={code}
                             />
                         </div>
                         <button
