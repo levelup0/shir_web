@@ -96,7 +96,7 @@ export default function Page() {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-[5px] justify-center items-center">
-                                    <h4 className="font-semibold text-[20px]">
+                                    <h4 className="font-semibold text-[20px] text-center">
                                         {data?.name}
                                     </h4>
                                     <p>
@@ -182,53 +182,54 @@ export default function Page() {
                                 </p>
                                 <hr />
 
-                                <table className="w-full table-auto">
-                                    <thead>
-                                        <tr className=" bg-blue-100 border py-[10px]">
-                                            <th className="border flex items-center font-medium text-black dark:text-white"></th>
-                                            <th className="border font-medium text-black dark:text-white">
-                                                Название
-                                            </th>
-                                            <th className="border font-medium text-black dark:text-white">
+                                {listData.length > 0 ? (
+                                    <table className="w-full table-auto">
+                                        <thead>
+                                            <tr className=" bg-blue-100 border py-[10px]">
+                                                {/* <th className="border flex items-center font-medium text-black dark:text-white"></th> */}
+                                                <th className="border font-medium text-black dark:text-white">
+                                                    Название
+                                                </th>
+                                                {/* <th className="border font-medium text-black dark:text-white">
                                                 Категория
-                                            </th>
-                                            {/* <th className="font-medium text-black dark:text-white">
+                                            </th> */}
+                                                {/* <th className="font-medium text-black dark:text-white">
                                         Сфера вызова
                                     </th> */}
-                                            <th className="font-medium text-black dark:text-white">
-                                                Описание
-                                            </th>
-                                            <th className=" items-center font-medium text-black dark:text-white">
-                                                Дата публикации
-                                            </th>
-                                            <th className=" items-center font-medium text-black dark:text-white">
-                                                Дата закрытия
-                                            </th>
-                                            <th className="items-center font-medium text-black dark:text-white">
-                                                Статус
-                                            </th>
-                                            <th className="font-medium text-black dark:text-white">
-                                                Действие
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {listData.length == 0 ? (
-                                            <></>
-                                        ) : (
-                                            listData?.map((item: any) => {
-                                                return (
-                                                    <tr
-                                                        className="py-[10px] h-[55px]"
-                                                        key={item?.id}
-                                                    >
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
+                                                <th className="font-medium text-black dark:text-white">
+                                                    Описание
+                                                </th>
+                                                <th className=" items-center font-medium text-black dark:text-white">
+                                                    Дата публикации
+                                                </th>
+                                                <th className=" items-center font-medium text-black dark:text-white">
+                                                    Дата закрытия
+                                                </th>
+                                                <th className="items-center font-medium text-black dark:text-white">
+                                                    Статус
+                                                </th>
+                                                <th className="font-medium text-black dark:text-white">
+                                                    Действие
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {listData.length == 0 ? (
+                                                <></>
+                                            ) : (
+                                                listData?.map((item: any) => {
+                                                    return (
+                                                        <tr
+                                                            className="py-[10px] h-[55px]"
+                                                            key={item?.id}
+                                                        >
+                                                            {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                             {item?.id}
-                                                        </td>
-                                                        <td className=" border border-[#eee]  dark:border-strokedark">
-                                                            {item?.name}
-                                                        </td>
-                                                        <td className="flex gap-[5px] border border-[#eee]  dark:border-strokedark">
+                                                        </td> */}
+                                                            <td className=" border border-[#eee]  dark:border-strokedark">
+                                                                {item?.name}
+                                                            </td>
+                                                            {/* <td className="flex gap-[5px] border border-[#eee]  dark:border-strokedark">
                                                             {item?.category_voz
                                                                 ?.length > 0 &&
                                                                 item?.category_voz?.map(
@@ -252,83 +253,90 @@ export default function Page() {
                                                                         );
                                                                     },
                                                                 )}
-                                                        </td>
-                                                        {/* <td className="border border-[#eee]  dark:border-strokedark">
+                                                        </td> */}
+                                                            {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.sector}
                                                 </td> */}
-                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
-                                                            {item?.description}
-                                                        </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
-                                                            {formatDateWithoutTime(
-                                                                item?.publish_date,
-                                                            )}
-                                                        </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
-                                                            {formatDateWithoutTime(
-                                                                item?.end_date,
-                                                            )}
-                                                        </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark">
-                                                            {item?.status}
-                                                        </td>
+                                                            <td className="border border-[#eee] text-[14px]  dark:border-strokedark">
+                                                                {
+                                                                    item?.description
+                                                                }
+                                                            </td>
+                                                            <td className="border border-[#eee]  dark:border-strokedark">
+                                                                {formatDateWithoutTime(
+                                                                    item?.publish_date,
+                                                                )}
+                                                            </td>
+                                                            <td className="border border-[#eee]  dark:border-strokedark">
+                                                                {formatDateWithoutTime(
+                                                                    item?.end_date,
+                                                                )}
+                                                            </td>
+                                                            <td className="border border-[#eee]  dark:border-strokedark">
+                                                                {item?.status}
+                                                            </td>
 
-                                                        <td className="border-b border-[#eee]  dark:border-strokedark">
-                                                            <div className="flex gap-[5px]">
-                                                                <button
-                                                                    className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                                    onClick={() =>
-                                                                        removeItem(
-                                                                            item?.id,
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <svg
-                                                                        className="fill-white"
-                                                                        height={
-                                                                            15
+                                                            <td className="border-b border-[#eee]  dark:border-strokedark">
+                                                                <div className="flex gap-[5px]">
+                                                                    <button
+                                                                        className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                        onClick={() =>
+                                                                            removeItem(
+                                                                                item?.id,
+                                                                            )
                                                                         }
-                                                                        viewBox="0 0 448 512"
-                                                                        width={
-                                                                            12
-                                                                        }
-                                                                        xmlns="http://www.w3.org/2000/svg"
                                                                     >
-                                                                        <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-                                                                    </svg>
-                                                                </button>
-                                                                <Link
-                                                                    className="bg-green-500 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                                    href={{
-                                                                        pathname:
-                                                                            '/my-aprove-pol',
-                                                                        query: {
-                                                                            voz_id: item?.id,
-                                                                        },
-                                                                    }}
-                                                                >
-                                                                    <svg
-                                                                        className="fill-white"
-                                                                        height={
-                                                                            15
-                                                                        }
-                                                                        viewBox="0 0 640 512"
-                                                                        width={
-                                                                            12
-                                                                        }
-                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        <svg
+                                                                            className="fill-white"
+                                                                            height={
+                                                                                15
+                                                                            }
+                                                                            viewBox="0 0 448 512"
+                                                                            width={
+                                                                                12
+                                                                            }
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <Link
+                                                                        className="bg-green-500 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                        href={{
+                                                                            pathname:
+                                                                                '/my-aprove-pol',
+                                                                            query: {
+                                                                                voz_id: item?.id,
+                                                                            },
+                                                                        }}
                                                                     >
-                                                                        <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
-                                                                    </svg>
-                                                                </Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                        )}
-                                    </tbody>
-                                </table>
+                                                                        <svg
+                                                                            className="fill-white"
+                                                                            height={
+                                                                                15
+                                                                            }
+                                                                            viewBox="0 0 640 512"
+                                                                            width={
+                                                                                12
+                                                                            }
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                            <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
+                                                                        </svg>
+                                                                    </Link>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            )}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <div className="w-full justify-center items-center text-center">
+                                        Данные не найдены
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

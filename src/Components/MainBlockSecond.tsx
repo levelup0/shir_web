@@ -221,7 +221,7 @@ export default function MainBlockSecond() {
                                                             {value?.description}
                                                         </Link>
                                                     </div>
-                                                    <div className="flex gap-[15px]">
+                                                    {/* <div className="flex gap-[15px]">
                                                         <span className="text-[14px] font-light">
                                                             Файлы:
                                                         </span>
@@ -256,7 +256,7 @@ export default function MainBlockSecond() {
                                                                     },
                                                                 )}
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                         </div>

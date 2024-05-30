@@ -7,7 +7,7 @@ import {
     commonRequestUsers,
     commonRequestWithToken,
 } from '@/Common/commonRequest';
-import { is_user_logged_in } from '@/Common/function';
+import { formatDateWithoutTime, is_user_logged_in } from '@/Common/function';
 import { loaderSvg, num_word } from '@/Common/function';
 import { CONTACT_ASSETS, USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
@@ -188,7 +188,7 @@ export default function ReceipentData() {
                                                 <p className="text-[18px] font-semibold">
                                                     {value?.name}
                                                 </p>
-                                                <span className="text-[14px] font-light">
+                                                <span className="text-[14px] font-light line-clamp-5 md:pr-[50px]">
                                                     {value?.interes}
                                                 </span>
                                                 <div className="flex gap-[15px]">
@@ -228,21 +228,25 @@ export default function ReceipentData() {
                                             </div>
                                         </div>
                                         <div className="w-full flex-col flex md:flex-row justify-between">
-                                            <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light py-[10px] text-black rounded-[5px]">
-                                                Курс обучения:{' '}
-                                                {value?.education_course}
-                                            </span>
+                                            <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light py-[10px] text-black rounded-[5px]"></span>
                                             <div className="flex flex-col">
                                                 <span className="text-[14px] ">
                                                     ВУЗ:{' '}
                                                     <span className="font-semibold">
                                                         {value?.vuz}
                                                     </span>
+                                                    <span className="font-semibold">
+                                                        {
+                                                            value?.education_course
+                                                        }
+                                                    </span>
                                                 </span>
                                                 <span className="text-[14px] ">
                                                     Дата рождение:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.date_birth}
+                                                        {formatDateWithoutTime(
+                                                            value?.date_birth,
+                                                        )}
                                                     </span>
                                                 </span>
                                                 <span className="text-[14px] ">

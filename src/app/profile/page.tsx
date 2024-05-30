@@ -108,6 +108,7 @@ export default function Page() {
         form.append('interes', interes);
         form.append('url_telegram', urlTelegram);
         form.append('voz_category_relation', selectedCategory);
+        form.append('company', company);
 
         const response = await requestPostWithToken(USER_PASSWORD_UPDATE, form);
         if (response?.success == true) {
@@ -536,14 +537,12 @@ export default function Page() {
                                                 </span>
                                                 <textarea
                                                     className="w-full h-[120px] md:max-w-[400px] p-[20px] rounded-[1px] border text-[16px] outline-none"
-                                                    cols={15}
                                                     onChange={e =>
                                                         setInteres(
                                                             e.target.value,
                                                         )
                                                     }
                                                     placeholder="Краткое описание своих интересов"
-                                                    rows={10}
                                                     value={interes}
                                                 ></textarea>
                                             </div>

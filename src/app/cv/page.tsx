@@ -93,7 +93,7 @@ export default function Page() {
                                 </div>
 
                                 <div className="flex flex-col gap-[5px] justify-center items-center">
-                                    <h4 className="font-semibold text-[20px]">
+                                    <h4 className="font-semibold text-[20px] text-center">
                                         {data?.name}
                                     </h4>
                                     <p>
@@ -216,7 +216,7 @@ export default function Page() {
                             <div className="w-full px-[10px] flex flex-col gap-[20px]">
                                 <div className="w-full flex justify-between">
                                     <p className="w-full text-[20px] font-semibold">
-                                        Мои вызовы
+                                        Мои файлы
                                     </p>
                                     <Link
                                         className="flex justify-center items-center px-[20px] w-full md:max-w-[100px]  h-[38px] rounded-[4px] bg-primary_yellow border text-[#FFF] text-[14px] font-normal hover:active:bg-[#FFF] hover:active:text-primary2 transition-all ease-in-out"
@@ -227,103 +227,111 @@ export default function Page() {
                                 </div>
                                 <hr />
 
-                                <table className="w-full table-auto">
-                                    <thead>
-                                        <tr className=" bg-blue-100 border py-[10px]">
-                                            <th className="border flex items-center font-medium text-black dark:text-white"></th>
-                                            <th className="border font-medium text-black dark:text-white">
-                                                Название
-                                            </th>
-                                            <th className="border font-medium text-black dark:text-white">
-                                                Размер
-                                            </th>
-                                            <th className="font-medium text-black dark:text-white">
+                                {listData.length > 0 ? (
+                                    <table className="w-full table-auto">
+                                        <thead>
+                                            <tr className=" bg-blue-100 border py-[10px]">
+                                                {/* <th className="border flex items-center font-medium text-black dark:text-white"></th> */}
+                                                <th className="border font-medium text-black dark:text-white">
+                                                    Название
+                                                </th>
+                                                <th className="border font-medium text-black dark:text-white">
+                                                    Размер
+                                                </th>
+                                                {/* <th className="font-medium text-black dark:text-white">
                                                 Формат
-                                            </th>
-                                            <th className="font-medium text-black dark:text-white">
-                                                Действие
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {listData.length == 0 ? (
-                                            <></>
-                                        ) : (
-                                            listData?.map((item: any) => {
-                                                return (
-                                                    <tr
-                                                        className="py-[10px] h-[55px]"
-                                                        key={item?.id}
-                                                    >
-                                                        <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
+                                            </th> */}
+                                                <th className="font-medium text-black dark:text-white">
+                                                    Действие
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {listData.length == 0 ? (
+                                                <></>
+                                            ) : (
+                                                listData?.map((item: any) => {
+                                                    return (
+                                                        <tr
+                                                            className="py-[10px] h-[55px]"
+                                                            key={item?.id}
+                                                        >
+                                                            {/* <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
                                                             {item?.id}
-                                                        </td>
-                                                        <td className=" border border-[#eee]  dark:border-strokedark p-[8px]">
-                                                            {item?.name}
-                                                        </td>
-                                                        <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
-                                                            {(
-                                                                item?.size /
-                                                                1024 /
-                                                                1024
-                                                            ).toFixed(2)}{' '}
-                                                            МБ
-                                                        </td>
+                                                        </td> */}
+                                                            <td className=" border border-[#eee]  dark:border-strokedark p-[8px]">
+                                                                {item?.name}
+                                                            </td>
+                                                            <td className="border border-[#eee]  dark:border-strokedark p-[8px]">
+                                                                {(
+                                                                    item?.size /
+                                                                    1024 /
+                                                                    1024
+                                                                ).toFixed(
+                                                                    2,
+                                                                )}{' '}
+                                                                МБ
+                                                            </td>
 
-                                                        <td className="border border-[#eee] text-[14px]  dark:border-strokedark p-[8px]">
+                                                            {/* <td className="border border-[#eee] text-[14px]  dark:border-strokedark p-[8px]">
                                                             {item?.format}
-                                                        </td>
-                                                        <td className="border-b border-[#eee]  dark:border-strokedark p-[8px]">
-                                                            <div className="flex gap-[5px]">
-                                                                <button
-                                                                    className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                                    onClick={() =>
-                                                                        removeItem(
-                                                                            item?.id,
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <svg
-                                                                        className="fill-white"
-                                                                        height={
-                                                                            15
+                                                        </td> */}
+                                                            <td className="border-b border-[#eee]  dark:border-strokedark p-[8px]">
+                                                                <div className="flex justify-center items-center gap-[5px]">
+                                                                    <button
+                                                                        className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                        onClick={() =>
+                                                                            removeItem(
+                                                                                item?.id,
+                                                                            )
                                                                         }
-                                                                        viewBox="0 0 448 512"
-                                                                        width={
-                                                                            12
-                                                                        }
-                                                                        xmlns="http://www.w3.org/2000/svg"
                                                                     >
-                                                                        <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-                                                                    </svg>
-                                                                </button>
-                                                                <Link
-                                                                    className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                                    href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS}/${item?.src}`}
-                                                                    target="_blank"
-                                                                >
-                                                                    <svg
-                                                                        className="fill-white"
-                                                                        height={
-                                                                            15
-                                                                        }
-                                                                        viewBox="0 0 576 512"
-                                                                        width={
-                                                                            12
-                                                                        }
-                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        <svg
+                                                                            className="fill-white"
+                                                                            height={
+                                                                                15
+                                                                            }
+                                                                            viewBox="0 0 448 512"
+                                                                            width={
+                                                                                12
+                                                                            }
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <Link
+                                                                        className="bg-blue-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                        href={`${process.env.NEXT_PUBLIC_API_URL}api/v1/${CONTACT_ASSETS}/${item?.src}`}
+                                                                        target="_blank"
                                                                     >
-                                                                        <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
-                                                                    </svg>
-                                                                </Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                        )}
-                                    </tbody>
-                                </table>
+                                                                        <svg
+                                                                            className="fill-white"
+                                                                            height={
+                                                                                15
+                                                                            }
+                                                                            viewBox="0 0 576 512"
+                                                                            width={
+                                                                                12
+                                                                            }
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
+                                                                        </svg>
+                                                                    </Link>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            )}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <div className="w-full justify-center items-center text-center">
+                                        Данные не найдены
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

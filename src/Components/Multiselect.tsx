@@ -33,7 +33,7 @@ export default function MultiSelect({
     }
 
     return (
-        <div className="relative z-20 bg-white dark:bg-form-input">
+        <div className="relative bg-white dark:bg-form-input">
             <Select
                 classNames={{
                     control: ({ isFocused }) =>

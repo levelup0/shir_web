@@ -41,13 +41,13 @@ export default function MainHeader() {
     const [mobileMenuShow, setMobileMenuShow] = useState(false);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
             <div
                 className={
                     'w-full fixed header-section transition-all ease-in bg-gray-700 z-10'
                 }
             >
-                <div className="flex w-full lg:px-[175px] h-[90px] m-auto px-[20px] md:px-[30px] justify-between items-center ">
+                <div className="flex w-[1140px] h-[90px] m-auto md:px-[1px] justify-between items-center ">
                     <Link
                         className="flex flex-col leading-[34px] justify-center italic font-bold text-white text-[42px]"
                         href="/"

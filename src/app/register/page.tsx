@@ -15,11 +15,17 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { CommonContext } from '@/Common/context';
 import { signIn, SignInResponse, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import MultiSelect from '@/Components/Multiselect';
 
 export default function Page() {
+    const searchParams = useSearchParams();
+    const [code, setCode] = useState(searchParams.get('code') || '');
+    const [typeUser, setTypeUser] = useState<any>(
+        searchParams.get('type_user') || 0,
+    ); //Вызоводатель
+
     const router = useRouter();
     const { data: session }: any = useSession();
     const { setUserAuth } = useContext(CommonContext);
@@ -32,7 +38,6 @@ export default function Page() {
 
     const { executeRecaptcha } = useReCaptcha();
 
-    const [typeUser, setTypeUser] = useState<any>(0); //Вызоводатель
     const [dateBirth, setDateBirth] = useState('');
     const [vuz, setVuz] = useState('');
     const [educationCourse, setEducationCourse] = useState('');
@@ -46,8 +51,6 @@ export default function Page() {
 
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const [categoryVoz, setCategoryVoz] = useState<any>([]);
-
-    const [code, setCode] = useState('');
 
     const register = async () => {
         setLoader(true);
@@ -397,7 +400,7 @@ export default function Page() {
                                                               <input
                                                                   aria-describedby="basic-addon1"
                                                                   aria-label="Username"
-                                                                  className="form-control"
+                                                                  className="form-control w-[150px]"
                                                                   data-key={
                                                                       index
                                                                   }
@@ -409,7 +412,7 @@ export default function Page() {
                                                                   placeholder=""
                                                                   type="file"
                                                               />
-
+                                                              {value?.file_name}
                                                               <button
                                                                   className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                                   onClick={() =>
@@ -459,7 +462,7 @@ export default function Page() {
                                         onChange={e =>
                                             setUrlTelegram(e.target.value)
                                         }
-                                        placeholder="@name"
+                                        placeholder="@telegram_username"
                                         type="text"
                                         value={urlTelegram}
                                     />
@@ -527,7 +530,7 @@ export default function Page() {
                             <input
                                 className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                 onChange={e => setCode(e.target.value)}
-                                placeholder="Введите код"
+                                placeholder="Индивидуальный код регистрации"
                                 type="text"
                                 value={code}
                             />

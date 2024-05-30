@@ -67,8 +67,6 @@ export default function Page() {
     }, []);
 
     const changeStatus = async (id: any, status: any) => {
-        console.log(id);
-
         const form = new FormData();
         form.append('aprove_id', id);
         form.append('status', status);
@@ -92,7 +90,7 @@ export default function Page() {
                             <AvatarComponent resultImage={resultImage} />
                         </div>
                         <div className="flex flex-col gap-[5px] justify-center items-center">
-                            <h4 className="font-semibold text-[20px]">
+                            <h4 className="font-semibold text-[20px] text-center">
                                 {data?.name}
                             </h4>
                             <p>

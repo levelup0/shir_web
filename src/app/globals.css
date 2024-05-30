@@ -46,3 +46,6 @@
     )
     rgb(var(--background-start-rgb));
 } */
+input[type='file'] {
+  color: transparent;
+}

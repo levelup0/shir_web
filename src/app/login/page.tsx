@@ -70,7 +70,7 @@ export default function Page() {
         setLoader(false);
     };
 
-    const [typeUser, setTypeUser] = useState(0);
+    // const [typeUser, setTypeUser] = useState(0);
 
     return (
         <div className="flex flex-col gap-[5px]">
@@ -82,7 +82,7 @@ export default function Page() {
                             Войти
                         </h2>
                         <div className="flex flex-col gap-[20px]">
-                            <div className="flex border">
+                            {/* <div className="flex border">
                                 <div
                                     className={
                                         'w-1/2 cursor-pointer  flex gap-[5px] rounded-[5px] justify-center items-center px-[5px] py-[10px] ' +
@@ -137,7 +137,7 @@ export default function Page() {
                                         Вызоводатель
                                     </span>
                                 </div>
-                            </div>
+                            </div> */}
                             <input
                                 className="w-full md:max-w-[400px] h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                 onChange={e => setEmail(e.target.value)}

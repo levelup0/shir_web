@@ -28,6 +28,7 @@ export default function Page() {
 
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const [categoryVoz, setCategoryVoz] = useState<any>([]);
+    const [files, setFiles] = useState<any>([]);
 
     const getData = () => {
         setLoader(true);
@@ -39,8 +40,11 @@ export default function Page() {
                     setResultImg(response?.user?.avatar);
                 }
             }
+            getCategoryVoz();
         });
+    };
 
+    const getCategoryVoz = () => {
         requestGet(`${CATEGORY_VOZ}`, {}).then(response => {
             setLoader(false);
             if (response?.success == true) {
@@ -128,6 +132,10 @@ export default function Page() {
             setDescription(' ');
             setPublishDate(' ');
             setEnddate('');
+            setSelectedCategory([]);
+            setCategoryVoz([]);
+            getCategoryVoz();
+            setFiles([]);
         } else {
             toast.error(response?.msg);
         }
@@ -142,8 +150,6 @@ export default function Page() {
     }, []);
 
     const [availableSize, setAvailableSize] = useState<any>(10485760);
-
-    const [files, setFiles] = useState<any>([]);
 
     const addFiles = () => {
         const _files: any = [...files];
@@ -243,7 +249,7 @@ export default function Page() {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-[5px] justify-center items-center">
-                                    <h4 className="font-semibold text-[20px]">
+                                    <h4 className="font-semibold text-[20px] text-center">
                                         {data?.name}
                                     </h4>
                                     <p>
@@ -473,7 +479,7 @@ export default function Page() {
                                                           <input
                                                               aria-describedby="basic-addon1"
                                                               aria-label="Username"
-                                                              className="form-control"
+                                                              className="form-control w-[150px]"
                                                               data-key={index}
                                                               id="file"
                                                               name="file"
@@ -483,7 +489,7 @@ export default function Page() {
                                                               placeholder=""
                                                               type="file"
                                                           />
-
+                                                          {value?.file_name}
                                                           <button
                                                               className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                               onClick={() =>
