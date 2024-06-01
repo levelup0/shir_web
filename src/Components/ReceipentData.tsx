@@ -225,9 +225,12 @@ export default function ReceipentData() {
                                                 </div>
 
                                                 <div className="flex gap-[15px]">
-                                                    <span className="text-[14px] font-light">
-                                                        Файлы:
-                                                    </span>
+                                                    {value?.cv?.length > 0 ? (
+                                                        <span className="text-[14px] font-light">
+                                                            Файлы:
+                                                        </span>
+                                                    ) : null}
+
                                                     <div className="text-[14px] font-light w-full flex gap-[5px]">
                                                         {value?.cv != null &&
                                                             value?.cv?.length >

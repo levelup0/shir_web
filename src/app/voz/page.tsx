@@ -123,9 +123,11 @@ export default function Page() {
                                 {response?.data?.description}
                             </p>
                             <div className="flex gap-[15px]">
-                                <span className="text-[14px] font-light">
-                                    Файлы:
-                                </span>
+                                {response?.data?.voz_file?.length > 0 ? (
+                                    <span className="text-[14px] font-light">
+                                        Файлы:
+                                    </span>
+                                ) : null}
                                 <div className="text-[14px] font-light w-full flex gap-[5px]">
                                     {response?.data?.voz_file != null &&
                                         response?.data?.voz_file?.length > 0 &&
@@ -224,12 +226,32 @@ export default function Page() {
 
                                         {myAprove == true ? (
                                             status == 'approved' ? (
-                                                <button
-                                                    className="w-fit self-end h-[40px] rounded-[4px] bg-green-500  opacity-100 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
-                                                    disabled
-                                                >
-                                                    Заявка принята
-                                                </button>
+                                                <div className=" flex flex-col gap-[5px]">
+                                                    <button
+                                                        className="w-fit self-end h-[40px] rounded-[4px] bg-gray-500  opacity-100 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
+                                                        disabled
+                                                    >
+                                                        Заявка принята
+                                                    </button>
+                                                    {myAprove == true ? (
+                                                        status == 'approved' ? (
+                                                            <button
+                                                                className="w-fit self-end h-[40px] rounded-[4px] text-gray-500 text-[14px]  opacity-100 cursor-not-allowed font-normal  py-[1px] px-[10px]"
+                                                                disabled
+                                                            >
+                                                                Письмо с
+                                                                инструкциями
+                                                                направлено на
+                                                                почту{' '}
+                                                                <span className="font-semibold">
+                                                                    {
+                                                                        data?.email
+                                                                    }
+                                                                </span>
+                                                            </button>
+                                                        ) : null
+                                                    ) : null}
+                                                </div>
                                             ) : null
                                         ) : null}
                                     </div>
