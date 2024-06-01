@@ -294,7 +294,7 @@ export default function Page() {
                             <input
                                 className="w-full md:max-w-[400px] h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                 onChange={e => setName(e.target.value)}
-                                placeholder="ФИО"
+                                placeholder="Имя Фамилия"
                                 type="text"
                                 value={name}
                             />
@@ -471,17 +471,17 @@ export default function Page() {
                             ) : null}
 
                             {typeUser == 1 ? (
-                                <div className="flex flex-col">
-                                    {categoryVoz.length > 0 ? (
-                                        <MultiSelect
-                                            onChange={handleLanguageFilter}
-                                            options={categoryVoz}
-                                        />
-                                    ) : null}
-                                </div>
-                            ) : null}
-                            {typeUser == 1 ? (
                                 <>
+                                    <div className="flex flex-col">
+                                        <input
+                                            className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
+                                            onChange={e =>
+                                                setCompany(e.target.value)
+                                            }
+                                            placeholder="Название компании"
+                                            value={company}
+                                        />
+                                    </div>
                                     <div className="flex flex-col">
                                         <textarea
                                             className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
@@ -492,18 +492,33 @@ export default function Page() {
                                             value={actionSector}
                                         ></textarea>
                                     </div>
+                                    <div className="flex flex-col gap-[5px]">
+                                        {categoryVoz.length > 0 ? (
+                                            <MultiSelect
+                                                onChange={handleLanguageFilter}
+                                                options={categoryVoz}
+                                                placeholder="Теги"
+                                            />
+                                        ) : null}
+                                        <span className="px-[5px] text-[14px] text-gray-500 ">
+                                            Выберите все теги, характеризующие
+                                            ваш бизнес или экспертизу
+                                        </span>
+                                    </div>
                                     <div className="flex flex-col">
                                         <input
                                             className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                             onChange={e =>
-                                                setCompany(e.target.value)
+                                                setUrlTelegram(e.target.value)
                                             }
-                                            placeholder="Компания"
-                                            value={company}
+                                            placeholder="@telegram_username"
+                                            type="text"
+                                            value={urlTelegram}
                                         />
                                     </div>
                                 </>
                             ) : null}
+                            {typeUser == 1 ? <></> : null}
                             <input
                                 className="w-full md:max-w-[400px]  h-[50px] p-[20px] rounded-[10px] border text-[16px] outline-none"
                                 onChange={e => setEmail(e.target.value)}

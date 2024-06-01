@@ -7,6 +7,7 @@ export default function MultiSelect({
     options,
     onChange,
     defaultValue = [],
+    placeholder,
 }: any) {
     let defaultValueStateOld: any = [];
 
@@ -61,7 +62,7 @@ export default function MultiSelect({
                 isSearchable={false}
                 onChange={handleChange}
                 options={options}
-                placeholder="Категория"
+                placeholder={placeholder != null ? placeholder : 'Категория'}
             />
         </div>
     );

@@ -25,6 +25,7 @@ export default function Page() {
     const _voz_id: any = searchParams.get('voz_id');
     const [data, setData] = useState<any>();
     const [myAprove, setMyAprove] = useState<any>(false);
+    const [status, setStatus] = useState<any>('');
 
     const router = useRouter();
 
@@ -33,12 +34,18 @@ export default function Page() {
             APROVE,
             user_id,
             _voz_id,
-            'in_progress',
         );
+
         if (response?.success == true) {
             if (response?.data?.data?.length == 0) {
                 setMyAprove(false);
             } else {
+                if (
+                    response?.data?.data[0].status == 'in_progress' ||
+                    response?.data?.data[0].status == 'approved'
+                ) {
+                    setStatus(response?.data?.data[0].status);
+                }
                 setMyAprove(true);
             }
         }
@@ -205,12 +212,25 @@ export default function Page() {
                                         ) : null}
 
                                         {myAprove == true ? (
-                                            <button
-                                                className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
-                                                disabled
-                                            >
-                                                Заявка отправлена
-                                            </button>
+                                            status == 'in_progress' ? (
+                                                <button
+                                                    className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
+                                                    disabled
+                                                >
+                                                    Заявка отправлена
+                                                </button>
+                                            ) : null
+                                        ) : null}
+
+                                        {myAprove == true ? (
+                                            status == 'approved' ? (
+                                                <button
+                                                    className="w-fit self-end h-[40px] rounded-[4px] bg-green-500  opacity-100 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
+                                                    disabled
+                                                >
+                                                    Заявка принята
+                                                </button>
+                                            ) : null
                                         ) : null}
                                     </div>
                                 </div>

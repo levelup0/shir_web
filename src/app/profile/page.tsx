@@ -29,6 +29,7 @@ export default function Page() {
     const [actionSector, setActionSector] = useState('');
     const [businessSector, setBusinessSector] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirm] = useState('');
     const [resultImage, setResultImg] = useState('');
 
     const [dateBirth, setDateBirth] = useState('');
@@ -94,6 +95,16 @@ export default function Page() {
 
     const update = async () => {
         // setCreateProfileStatus(true);
+        if (
+            password != null ||
+            typeof password != 'undefined' ||
+            password != ''
+        ) {
+            if (password !== confirmPassword) {
+                toast.error('Пароль с подтверждением не совпадают');
+                return;
+            }
+        }
 
         const form = new FormData();
         form.append('password', password);
@@ -439,20 +450,6 @@ export default function Page() {
                                             </div>
                                             <div className="w-full flex flex-col gap-[5px]">
                                                 <span className="font-medium">
-                                                    Описание деятельности:
-                                                </span>
-                                                <textarea
-                                                    className="border shadow px-[10px] py-[10px]"
-                                                    onChange={e =>
-                                                        setActionSector(
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    value={actionSector}
-                                                ></textarea>
-                                            </div>
-                                            <div className="w-full flex flex-col gap-[5px]">
-                                                <span className="font-medium">
                                                     Компания:
                                                 </span>
                                                 <input
@@ -548,7 +545,23 @@ export default function Page() {
                                             </div>
                                         </>
                                     )}
-
+                                </div>
+                                {data?.roles?.name == 'caller' ? (
+                                    <div className="w-full flex flex-col gap-[5px]">
+                                        <span className="font-medium">
+                                            Описание деятельности:
+                                        </span>
+                                        <textarea
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setActionSector(e.target.value)
+                                            }
+                                            value={actionSector}
+                                        ></textarea>
+                                    </div>
+                                ) : null}
+                                <hr />
+                                <div className="w-1/2 flex flex-col gap-[10px]">
                                     <div className="w-full flex flex-col gap-[5px]">
                                         <span className="font-medium">
                                             Эл Почта:
@@ -571,8 +584,17 @@ export default function Page() {
                                                 setPassword(e.target.value)
                                             }
                                             placeholder="Введите новый пароль"
-                                            type="text"
+                                            type="password"
                                             value={password}
+                                        />
+                                        <input
+                                            className="border shadow px-[10px] py-[10px]"
+                                            onChange={e =>
+                                                setConfirm(e.target.value)
+                                            }
+                                            placeholder="Повторите пароль"
+                                            type="password"
+                                            value={confirmPassword}
                                         />
                                     </div>
                                 </div>
