@@ -353,7 +353,7 @@ export default function Page() {
                                     </table>
                                 ) : (
                                     <div className="w-full justify-center items-center text-center">
-                                        Данные не найдены
+                                        Вы пока не разместили ни одного вызова
                                     </div>
                                 )}
                             </div>
