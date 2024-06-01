@@ -79,7 +79,7 @@ export default function Page() {
                 <div className="flex w-full mt-[100px] md:max-w-[1200px] m-auto px-[20px] md:px-[30px] py-[15px] md:py-[45px] justify-center">
                     <div className="flex flex-col gap-[20px] w-full md:max-w-[400px]">
                         <h2 className="text-[18px] font-semibold text-center">
-                            Войти
+                            Вход
                         </h2>
                         <div className="flex flex-col gap-[20px]">
                             {/* <div className="flex border">
@@ -160,7 +160,7 @@ export default function Page() {
                             disabled={loader}
                             onClick={() => login()}
                         >
-                            Войти
+                            Вход
                             {loader ? (
                                 <div className="flex items-center pl-1">
                                     {loaderSvg()}

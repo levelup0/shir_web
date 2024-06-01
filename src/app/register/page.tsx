@@ -398,6 +398,7 @@ export default function Page() {
                                                               key={index}
                                                           >
                                                               <input
+                                                                  accept="application/pdf"
                                                                   aria-describedby="basic-addon1"
                                                                   aria-label="Username"
                                                                   className="form-control w-[150px]"
@@ -551,7 +552,7 @@ export default function Page() {
                         <div className="flex gap-[10px] items-center justify-center">
                             <p>У вас есть акаунт Шторм-трек?</p>
                             <Link className="text-blue-500" href="/login">
-                                Войти
+                                Вход
                             </Link>
                         </div>
                     </div>

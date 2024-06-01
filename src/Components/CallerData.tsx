@@ -79,6 +79,8 @@ export default function CallerData() {
         }
     }, []);
 
+    const [showMoreData, setShowMoreData] = useState();
+
     return (
         <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
             <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
@@ -112,7 +114,7 @@ export default function CallerData() {
                             {num_word(totalItems, [
                                 'Вызоводатель',
                                 'Вызоводателя',
-                                'Вызоводателя',
+                                'Вызоводателей',
                             ])}
                         </p>
                         <hr />
@@ -130,7 +132,7 @@ export default function CallerData() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full flex flex-col gap-[25px] h-[150px] shadow px-[10px] md:px-[20px] py-[20px]"
+                                        className="w-full flex flex-col gap-[25px] shadow px-[10px] md:px-[20px] py-[20px]"
                                         key={index}
                                     >
                                         <div className="w-full flex gap-[20px] px-[1px]">
@@ -188,9 +190,42 @@ export default function CallerData() {
                                                 <p className="text-[18px] font-semibold">
                                                     {value?.name}
                                                 </p>
-                                                <span className="text-[14px] font-light">
-                                                    {value?.action_sector}
-                                                </span>
+                                                <div className="flex gap-[10px]">
+                                                    <span
+                                                        className={
+                                                            'text-[14px] font-light ' +
+                                                            (showMoreData !=
+                                                            value?.id
+                                                                ? 'line-clamp-2 '
+                                                                : '')
+                                                        }
+                                                    >
+                                                        {value?.action_sector}
+                                                    </span>
+
+                                                    <span className="text-[14px] font-light"></span>
+                                                    {value?.action_sector
+                                                        ?.length > 200 ? (
+                                                        <button
+                                                            className="bg-blue-200 hover:bg-blue-300 h-fit w-fit px-[5px] py-[5px] text-[14px] font-light rounded-[4px]"
+                                                            onClick={() =>
+                                                                setShowMoreData(
+                                                                    value.id,
+                                                                )
+                                                            }
+                                                        >
+                                                            <svg
+                                                                className="fill-blue-500"
+                                                                height={15}
+                                                                viewBox="0 0 512 512"
+                                                                width={15}
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                                            </svg>
+                                                        </button>
+                                                    ) : null}
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="w-full flex justify-between">

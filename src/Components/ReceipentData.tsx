@@ -80,6 +80,7 @@ export default function ReceipentData() {
         }
     }, []);
 
+    const [showMoreData, setShowMoreData] = useState();
     return (
         <div className="w-full mt-[90px] flex justify-center items-center py-[5px] md:py-[20px]">
             <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
@@ -184,13 +185,45 @@ export default function ReceipentData() {
                                                     </svg>
                                                 )}
                                             </div>
-                                            <div className="w-full flex flex-col gap-[5px]">
+                                            <div className="w-full flex flex-col gap-[10px]">
                                                 <p className="text-[18px] font-semibold">
                                                     {value?.name}
                                                 </p>
-                                                <span className="text-[14px] font-light line-clamp-5 md:pr-[50px]">
-                                                    {value?.interes}
-                                                </span>
+                                                <div className="flex gap-[10px]">
+                                                    <span
+                                                        className={
+                                                            'text-[14px] font-light ' +
+                                                            (showMoreData !=
+                                                            value?.id
+                                                                ? 'line-clamp-2 '
+                                                                : '')
+                                                        }
+                                                    >
+                                                        {value?.interes}
+                                                    </span>
+                                                    {value?.interes?.length >
+                                                    200 ? (
+                                                        <button
+                                                            className="bg-blue-200 hover:bg-blue-300 h-fit w-fit px-[5px] py-[5px] text-[14px] font-light rounded-[4px]"
+                                                            onClick={() =>
+                                                                setShowMoreData(
+                                                                    value.id,
+                                                                )
+                                                            }
+                                                        >
+                                                            <svg
+                                                                className="fill-blue-500"
+                                                                height={15}
+                                                                viewBox="0 0 512 512"
+                                                                width={15}
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                                            </svg>
+                                                        </button>
+                                                    ) : null}
+                                                </div>
+
                                                 <div className="flex gap-[15px]">
                                                     <span className="text-[14px] font-light">
                                                         Файлы:
@@ -230,15 +263,14 @@ export default function ReceipentData() {
                                         <div className="w-full flex-col flex md:flex-row justify-between">
                                             <span className="w-fit h-[40px] flex justify-center items-center text-[14px] font-light py-[10px] text-black rounded-[5px]"></span>
                                             <div className="flex flex-col">
-                                                <span className="text-[14px] ">
+                                                <span className="flex gap-[5px] text-[14px] ">
                                                     ВУЗ:{' '}
                                                     <span className="font-semibold">
-                                                        {value?.vuz}
+                                                        {value?.vuz},
                                                     </span>
                                                     <span className="font-semibold">
-                                                        {
-                                                            value?.education_course
-                                                        }
+                                                        {value?.education_course +
+                                                            ' курс'}
                                                     </span>
                                                 </span>
                                                 <span className="text-[14px] ">

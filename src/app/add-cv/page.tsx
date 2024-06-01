@@ -271,7 +271,9 @@ export default function Page() {
                                             >
                                                 <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z" />
                                             </svg>
-                                            <p className="font-medium ">CV</p>
+                                            <p className="font-medium ">
+                                                Мои файлы
+                                            </p>
                                         </div>
                                     </div>
                                 </Link>
@@ -354,9 +356,10 @@ export default function Page() {
                                                       key={index}
                                                   >
                                                       <input
+                                                          accept="application/pdf"
                                                           aria-describedby="basic-addon1"
                                                           aria-label="Username"
-                                                          className="form-control"
+                                                          className="form-control w-[150px]"
                                                           data-key={index}
                                                           id="file"
                                                           name="file"
@@ -366,7 +369,7 @@ export default function Page() {
                                                           placeholder=""
                                                           type="file"
                                                       />
-
+                                                      {value?.file_name}
                                                       <button
                                                           className="bg-red-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                           onClick={() =>

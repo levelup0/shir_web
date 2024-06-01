@@ -150,7 +150,7 @@ export default function MainHeader() {
                                     </svg>
                                 ) : null}
 
-                                {userAuth == true ? 'Мой профиль' : 'Войти'}
+                                {userAuth == true ? 'Мой профиль' : 'Вход'}
                             </div>
                         </Link>
 
@@ -271,7 +271,7 @@ export default function MainHeader() {
                                 ${activeLink === '/login' || activeLink === '/profile' ? 'bg-primary_yellow ' : ''}
                             `}
                         >
-                            {userAuth == true ? 'Мой профиль' : 'Войти'}
+                            {userAuth == true ? 'Мой профиль' : 'Вход'}
                         </div>
                     </Link>
 
