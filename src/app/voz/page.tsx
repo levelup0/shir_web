@@ -19,7 +19,11 @@ import { useEffect, useState } from 'react';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { formatDateWithoutTime, is_user_logged_in } from '@/Common/function';
+import {
+    formatDateWithoutTime,
+    is_user_logged_in,
+    loaderSvg,
+} from '@/Common/function';
 export default function Page() {
     const searchParams = useSearchParams();
     const _voz_id: any = searchParams.get('voz_id');
@@ -78,13 +82,21 @@ export default function Page() {
         }
     }, []);
 
+    const [detail, setDetail] = useState<any>();
+
     const apply = async () => {
+        setLoader(true);
+
         if (typeof data == 'undefined' || data == null || data == '') {
             toast.error('Пользователь не авторизован!');
+            setLoader(false);
+
             return;
         }
         if (data?.roles?.name === 'caller') {
             toast.error('Вызоводатели не могут предложить услуги');
+            setLoader(false);
+
             return;
         }
         if (data?.roles?.name === 'recipient') {
@@ -95,17 +107,104 @@ export default function Page() {
 
             const response = await requestPostWithToken(APROVE, form);
             if (response?.success == true) {
+                setLoader(false);
+
                 toast.success(response?.msg);
                 getMyAprove(data?.id);
             } else {
                 toast.error(response?.msg);
+                setLoader(false);
             }
         }
+    };
+
+    const [showModal, setShowModal] = useState(false);
+
+    const [loader, setLoader] = useState(false);
+    const changeStatusPre = async () => {
+        setShowModal(true);
+    };
+
+    const sendPurpose = async () => {
+        await apply();
+        setShowModal(false);
     };
 
     return (
         <div className="flex flex-col">
             <MainHeader />
+            {showModal == true ? (
+                <div className="absolute left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center  overflow-y-auto  overflow-x-hidden text-center ">
+                    <div className="relative max-h-full w-full max-w-[591px] p-4">
+                        <div className="relative rounded-[8px] bg-white shadow-lg flex flex-col gap-[10px] ">
+                            <div className="w-full flex justify-between items-center px-[12px] py-[5px]">
+                                <h2 className="text-[22px] px-[5px] py-[2px] font-semibold font-nunito  text-[#252628] "></h2>
+                                <button
+                                    className="transition-all ease-linear ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    onClick={() => setShowModal(!showModal)}
+                                    type="button"
+                                >
+                                    <svg
+                                        aria-hidden="true"
+                                        className="h-3 w-3"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div className="w-full justify-start items-center px-[18px]">
+                                <div className="flex gap-[16px] flex-wrap w-full justify-start text-start">
+                                    Напишите небольшое мотивационное письмо.
+                                    Почему именно вы должны взяться за этот
+                                    вызов? Какие ваши навыки и экспертиза
+                                    поспособстуют его реализации?
+                                </div>
+                            </div>
+                            <textarea
+                                className="m-[18px] p-[8px] border rounded-[4px] text-[14px] font-nunito"
+                                cols={2}
+                                onChange={e => setDetail(e.target.value)}
+                                placeholder=""
+                                rows={2}
+                                value={detail}
+                            ></textarea>
+                            <div className="w-full  flex gap-[10px] px-[20px] py-[10px] transition-all ease-linear">
+                                <div
+                                    className="py-[10px] transition-all ease-linear active:bg-[#5870ed] h-[56px] hover:text-white hover:bg-[#768aed] w-1/2 border border-[#cfcfcf] rounded-[4px]  flex flex-col justify-center items-center"
+                                    onClick={() => setShowModal(!showModal)}
+                                >
+                                    <div className="select-none   py-[13px] w-1/2  flex flex-col justify-center items-center cursor-pointer">
+                                        <p className="select-none font-nunito text-[16px]">
+                                            Отменить
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    className={
+                                        'transition-all ease-linear select-none py-[10px] rounded-[4px] h-[56px] w-1/2 bg-[#4E67EA] active:bg-[#5870ed] hover:bg-[#768aed] flex flex-col justify-center items-center cursor-pointer '
+                                    }
+                                    onClick={() => sendPurpose()}
+                                >
+                                    <p className="select-none font-nunito text-[16px]  text-white">
+                                        {loader == true
+                                            ? loaderSvg()
+                                            : 'Отправить'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <div className="w-full mt-[90px] flex justify-center items-center py-[20px]">
                 <div className="w-[1140px] m-auto  flex gap-[10px] flex-col ">
                     <div className="w-full shadow flex flex-col justify-between gap-[30px] px-[30px] py-[30px] bg-white rounded-[5px] ">
@@ -213,7 +312,9 @@ export default function Page() {
                                                     'caller' ? (
                                                     <button
                                                         className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
-                                                        onClick={() => apply()}
+                                                        onClick={() =>
+                                                            changeStatusPre()
+                                                        }
                                                     >
                                                         Подать заявку
                                                     </button>

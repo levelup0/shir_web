@@ -15,7 +15,7 @@ import {
 } from '@/Common/urls';
 import { requestGet, requestPostWithToken } from '@/Common/requests';
 import { toast } from 'react-toastify';
-import { formatStatus, is_user_logged_in } from '@/Common/function';
+import { formatStatus, is_user_logged_in, loaderSvg } from '@/Common/function';
 import { commonRequestAproveWithToken } from '@/Common/commonRequest';
 import AvatarComponent from '@/Components/AvatarComponent';
 import { useSearchParams } from 'next/navigation';
@@ -23,6 +23,8 @@ import { useSearchParams } from 'next/navigation';
 export default function Page() {
     const searchParams = useSearchParams();
     const _voz_id: any = searchParams.get('voz_id');
+    const [loader, setLoader] = useState(false);
+    const [listData, setListData] = useState<any>([]);
 
     const getMyAprove = async (user_id: any) => {
         const response = await commonRequestAproveWithToken(
@@ -41,7 +43,6 @@ export default function Page() {
     };
 
     const [resultImage, setResultImg] = useState('');
-    const [listData, setListData] = useState<any>([]);
     const [data, setData] = useState<any>();
 
     const router = useRouter();
@@ -80,9 +81,100 @@ export default function Page() {
         }
     };
 
+    const [showModal, setShowModal] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState<any>();
+    const [selectedStatus, setSelectedStatus] = useState<any>();
+
+    const changeStatusPre = async (id: any, status: any) => {
+        setShowModal(true);
+        setSelectedItemId(id);
+        setSelectedStatus(status);
+    };
+
+    const sendPurpose = async () => {
+        setLoader(true);
+        const form = new FormData();
+        form.append('aprove_id', selectedItemId);
+        form.append('status', selectedStatus);
+
+        const response = await requestPostWithToken(APROVE_UPDATE_STATUS, form);
+        setLoader(false);
+        setShowModal(false);
+        if (response?.success == true) {
+            toast.success(response?.msg);
+            getData();
+        } else {
+            toast.error(response?.msg);
+        }
+    };
+
     return (
         <div className="flex flex-col">
             <MainHeader />
+            {showModal == true ? (
+                <div className="absolute left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center  overflow-y-auto  overflow-x-hidden text-center ">
+                    <div className="relative max-h-full w-full max-w-[591px] p-4">
+                        <div className="relative rounded-[8px] bg-white shadow-lg flex flex-col gap-[20px] ">
+                            <div className="w-full flex justify-between items-center px-[12px] py-[5px]">
+                                <h2 className="text-[22px] px-[5px] py-[10px] font-semibold font-nunito  text-[#252628] "></h2>
+                                <button
+                                    className="transition-all ease-linear ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    onClick={() => setShowModal(!showModal)}
+                                    type="button"
+                                >
+                                    <svg
+                                        aria-hidden="true"
+                                        className="h-3 w-3"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div className="w-full justify-center items-center px-[5px]">
+                                <div className="flex gap-[16px] flex-wrap w-full justify-center">
+                                    Вы уверены, что хотите принять заявку?
+                                    Студенту на электронную почту будет
+                                    направлено письмо с Вашими контактами и
+                                    приглашением к работе
+                                </div>
+                            </div>
+                            <div className="w-full  flex gap-[10px] px-[30px] py-[10px] transition-all ease-linear">
+                                <div
+                                    className="py-[10px] transition-all ease-linear active:bg-[#5870ed] h-[56px] hover:text-white hover:bg-[#768aed] w-1/2 border border-[#cfcfcf] rounded-[4px]  flex flex-col justify-center items-center"
+                                    onClick={() => setShowModal(!showModal)}
+                                >
+                                    <div className="select-none   py-[13px] w-1/2  flex flex-col justify-center items-center cursor-pointer">
+                                        <p className="select-none font-nunito text-[16px]">
+                                            Отменить
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    className={
+                                        'transition-all ease-linear select-none py-[10px] rounded-[4px] h-[56px] w-1/2 bg-[#4E67EA] active:bg-[#5870ed] hover:bg-[#768aed] flex flex-col justify-center items-center cursor-pointer '
+                                    }
+                                    onClick={() => sendPurpose()}
+                                >
+                                    <p className="select-none font-nunito text-[16px]  text-white">
+                                        {loader == true
+                                            ? loaderSvg()
+                                            : 'Подвердить'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <div className="w-[1140px] flex gap-[20px] m-auto mt-[120px]">
                 <div className="w-1/3 flex flex-col ">
                     <div className="w-full shadow flex flex-col gap-[20px] justify-center items-center py-[30px]">
@@ -282,7 +374,7 @@ export default function Page() {
                                                             <button
                                                                 className="bg-green-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
                                                                 onClick={() =>
-                                                                    changeStatus(
+                                                                    changeStatusPre(
                                                                         item?.id,
                                                                         'approved',
                                                                     )
@@ -291,17 +383,19 @@ export default function Page() {
                                                                 Принять
                                                             </button>
                                                         ) : (
-                                                            <button
-                                                                className="bg-yellow-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
-                                                                onClick={() =>
-                                                                    changeStatus(
-                                                                        item?.id,
-                                                                        'in_progress',
-                                                                    )
-                                                                }
-                                                            >
-                                                                Отменить
-                                                            </button>
+                                                            <>
+                                                                {/* <button
+                                                                    className="bg-yellow-600 text-white rounded-[5px] px-[10px] py-[8px] hover:bg-blue-700 "
+                                                                    onClick={() =>
+                                                                        changeStatus(
+                                                                            item?.id,
+                                                                            'in_progress',
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Отменить
+                                                                </button> */}
+                                                            </>
                                                         )}
                                                     </div>
                                                 </td>
