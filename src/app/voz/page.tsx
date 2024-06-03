@@ -103,6 +103,7 @@ export default function Page() {
             const form = new FormData();
             form.append('user_id', data?.id);
             form.append('voz_id', _voz_id);
+            form.append('text', detail);
             form.append('status', 'in_progress');
 
             const response = await requestPostWithToken(APROVE, form);

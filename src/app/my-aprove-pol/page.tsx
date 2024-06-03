@@ -283,9 +283,9 @@ export default function Page() {
                                         Студент
                                     </th>
                                     <th className="border font-medium text-black dark:text-white">
-                                        Email
+                                        Текст
                                     </th>
-                                    <th className="font-medium text-black dark:text-white">
+                                    {/* <th className="font-medium text-black dark:text-white">
                                         Курс обучения
                                     </th>
                                     <th className="font-medium text-black dark:text-white">
@@ -296,7 +296,7 @@ export default function Page() {
                                     </th>
                                     <th className=" items-center font-medium text-black dark:text-white">
                                         Сфера бизнеса
-                                    </th>
+                                    </th> */}
                                     <th className="items-center font-medium text-black dark:text-white">
                                         Статус
                                     </th>
@@ -326,9 +326,9 @@ export default function Page() {
                                                     </Link>
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
-                                                    {item?.user?.email}
+                                                    {item?.text}
                                                 </td>
-                                                <td className="border border-[#eee]  dark:border-strokedark">
+                                                {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {
                                                         item?.user
                                                             ?.education_course
@@ -339,8 +339,8 @@ export default function Page() {
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.user?.url_telegram}
-                                                </td>
-                                                <td className="border border-[#eee]  dark:border-strokedark">
+                                                </td> */}
+                                                {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.voz?.category_voz
                                                         ?.length > 0 &&
                                                         item?.voz?.category_voz?.map(
@@ -362,7 +362,7 @@ export default function Page() {
                                                                 );
                                                             },
                                                         )}
-                                                </td>
+                                                </td> */}
                                                 <td className="border border-[#eee] !text-[12px]  dark:border-strokedark">
                                                     {formatStatus(item?.status)}
                                                 </td>
