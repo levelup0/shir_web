@@ -164,9 +164,12 @@ export default function Page() {
                                     <div className="flex flex-col gap-[5px]">
                                         <div className="flex gap-[5px] text-[15px]">
                                             <span>Вызоводатель:</span>
-                                            <span className="text-primary_blue font-semibold">
+                                            <Link
+                                                className="text-primary_blue font-semibold hover:underline"
+                                                href={`/caller/${response?.data?.user?.id}`}
+                                            >
                                                 {response?.data?.user?.name}
-                                            </span>
+                                            </Link>
                                         </div>
                                         <div className="flex gap-[5px] text-[15px]">
                                             <span>Категория:</span>
