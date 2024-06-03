@@ -99,14 +99,14 @@ export const formatStatus = (status: string | undefined) => {
         case 'created':
             return (
                 <span className="bg-green-600 text-[12px] inline-flex rounded bg-success px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
-                    Активный
+                    Активен
                 </span>
             );
 
         case 'closed':
             return (
                 <span className="bg-yellow-600 text-[12px] inline-flex rounded bg-warning px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
-                    Не активный
+                    Закрыт
                 </span>
             );
         case 'new':

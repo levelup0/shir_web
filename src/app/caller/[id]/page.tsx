@@ -15,8 +15,6 @@ export default function Page({ params: { id } }: any) {
     const getData = async () => {
         const response = await getDataById(id, USERS);
         setResponse(response);
-
-        console.log(response);
     };
     useEffect(() => {
         getData();
