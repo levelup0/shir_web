@@ -186,9 +186,12 @@ export default function ReceipentData() {
                                                 )}
                                             </div>
                                             <div className="w-full flex flex-col gap-[10px]">
-                                                <p className="text-[18px] font-semibold">
+                                                <Link
+                                                    className="text-[18px] font-semibold hover:underline"
+                                                    href={`/recipient/${value?.id}`}
+                                                >
                                                     {value?.name}
-                                                </p>
+                                                </Link>
                                                 <div className="flex gap-[10px]">
                                                     <span
                                                         className={

@@ -186,7 +186,7 @@ export default function Page() {
                         <table className="w-full table-auto">
                             <thead>
                                 <tr className=" bg-blue-100 border py-[10px]">
-                                    <th className="border flex items-center font-medium text-black dark:text-white"></th>
+                                    {/* <th className="border flex items-center font-medium text-black dark:text-white"></th> */}
                                     <th className="border font-medium text-black dark:text-white">
                                         Студент
                                     </th>
@@ -223,11 +223,15 @@ export default function Page() {
                                                 className="py-[10px] h-[55px]"
                                                 key={item?.id}
                                             >
-                                                <td className="border border-[#eee]  dark:border-strokedark">
+                                                {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.id}
-                                                </td>
-                                                <td className=" border border-[#eee]  dark:border-strokedark">
-                                                    {item?.user?.name}
+                                                </td> */}
+                                                <td className=" border border-[#eee]  dark:border-strokedark hover:underline">
+                                                    <Link
+                                                        href={`/recipient/${item?.user?.id}`}
+                                                    >
+                                                        {item?.user?.name}
+                                                    </Link>
                                                 </td>
                                                 <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.user?.email}

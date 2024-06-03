@@ -13,6 +13,7 @@ import { USERS, VOZ, VOZ_MAIN } from '@/Common/urls';
 import ProjectPagination from '@/HtmlComponent/pagination';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function CallerData() {
     const [loader, setLoader] = useState(false);
@@ -187,9 +188,12 @@ export default function CallerData() {
                                                 )}
                                             </div>
                                             <div className="w-full flex flex-col gap-[5px]">
-                                                <p className="text-[18px] font-semibold">
+                                                <Link
+                                                    className="text-[18px] font-semibold hover:underline"
+                                                    href={`/caller/${value?.id}`}
+                                                >
                                                     {value?.name}
-                                                </p>
+                                                </Link>
                                                 <div className="flex gap-[10px]">
                                                     <span
                                                         className={

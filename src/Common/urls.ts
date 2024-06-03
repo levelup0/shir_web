@@ -22,3 +22,4 @@ export const USERS = 'users';
 export const APROVE = 'aprove';
 
 export const APROVE_UPDATE_STATUS = 'aprove-update-status';
+export const VOZ_UPDATE_STATUS = 'voz-update-status';

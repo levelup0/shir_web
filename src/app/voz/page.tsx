@@ -203,56 +203,63 @@ export default function Page() {
                                         </div>
                                     </div>
                                     <div className="flex items-end justify-end md:justify-end">
-                                        {myAprove == false &&
-                                        data?.roles?.name != 'caller' ? (
-                                            <button
-                                                className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
-                                                onClick={() => apply()}
-                                            >
-                                                Подать заявку
-                                            </button>
-                                        ) : null}
-
-                                        {myAprove == true ? (
-                                            status == 'in_progress' ? (
-                                                <button
-                                                    className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
-                                                    disabled
-                                                >
-                                                    Заявка отправлена
-                                                </button>
-                                            ) : null
-                                        ) : null}
-
-                                        {myAprove == true ? (
-                                            status == 'approved' ? (
-                                                <div className=" flex flex-col gap-[5px]">
+                                        {data?.status != 'closed' ? (
+                                            <>
+                                                {myAprove == false &&
+                                                data?.roles?.name !=
+                                                    'caller' ? (
                                                     <button
-                                                        className="w-fit self-end h-[40px] rounded-[4px] bg-gray-500  opacity-100 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
-                                                        disabled
+                                                        className="w-fit self-end h-[40px] rounded-[4px] bg-green-500 hover:bg-green-600 active:bg-green-900 font-normal text-white py-[1px] px-[10px]"
+                                                        onClick={() => apply()}
                                                     >
-                                                        Заявка принята
+                                                        Подать заявку
                                                     </button>
-                                                    {myAprove == true ? (
-                                                        status == 'approved' ? (
+                                                ) : null}
+
+                                                {myAprove == true ? (
+                                                    status == 'in_progress' ? (
+                                                        <button
+                                                            className="w-fit self-end h-[40px] rounded-[4px] bg-black opacity-30 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
+                                                            disabled
+                                                        >
+                                                            Заявка отправлена
+                                                        </button>
+                                                    ) : null
+                                                ) : null}
+
+                                                {myAprove == true ? (
+                                                    status == 'approved' ? (
+                                                        <div className=" flex flex-col gap-[5px]">
                                                             <button
-                                                                className="w-fit self-end h-[40px] rounded-[4px] text-gray-500 text-[14px]  opacity-100 cursor-not-allowed font-normal  py-[1px] px-[10px]"
+                                                                className="w-fit self-end h-[40px] rounded-[4px] bg-gray-500  opacity-100 cursor-not-allowed font-normal text-white py-[1px] px-[10px]"
                                                                 disabled
                                                             >
-                                                                Письмо с
-                                                                инструкциями
-                                                                направлено на
-                                                                почту{' '}
-                                                                <span className="font-semibold">
-                                                                    {
-                                                                        data?.email
-                                                                    }
-                                                                </span>
+                                                                Заявка принята
                                                             </button>
-                                                        ) : null
-                                                    ) : null}
-                                                </div>
-                                            ) : null
+                                                            {myAprove ==
+                                                            true ? (
+                                                                status ==
+                                                                'approved' ? (
+                                                                    <button
+                                                                        className="w-fit self-end h-[40px] rounded-[4px] text-gray-500 text-[14px]  opacity-100 cursor-not-allowed font-normal  py-[1px] px-[10px]"
+                                                                        disabled
+                                                                    >
+                                                                        Письмо с
+                                                                        инструкциями
+                                                                        направлено
+                                                                        на почту{' '}
+                                                                        <span className="font-semibold">
+                                                                            {
+                                                                                data?.email
+                                                                            }
+                                                                        </span>
+                                                                    </button>
+                                                                ) : null
+                                                            ) : null}
+                                                        </div>
+                                                    ) : null
+                                                ) : null}
+                                            </>
                                         ) : null}
                                     </div>
                                 </div>

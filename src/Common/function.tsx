@@ -96,16 +96,16 @@ export const formatStatus = (status: string | undefined) => {
         /**
          * default statuses
          */
-        case '1':
+        case 'created':
             return (
-                <span className="inline-flex rounded bg-success px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                <span className="bg-green-600 text-[12px] inline-flex rounded bg-success px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
                     Активный
                 </span>
             );
 
-        case '0':
+        case 'closed':
             return (
-                <span className="inline-flex rounded bg-danger px-2 py-1 text-sm font-medium text-[#FFF] hover:bg-opacity-90">
+                <span className="bg-yellow-600 text-[12px] inline-flex rounded bg-warning px-2 py-1  font-medium text-[#FFF] hover:bg-opacity-90">
                     Не активный
                 </span>
             );

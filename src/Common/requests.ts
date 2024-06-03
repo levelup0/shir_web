@@ -93,3 +93,11 @@ export const requestPost = async (url: string, form: any | null) => {
         return error;
     }
 };
+
+export async function getDataById(id: string, model: any) {
+    const response = await requestGet(`${model}/${id}`, {
+        // language_filter: JSON.stringify([selectedLanguage]),
+    });
+
+    return response;
+}

@@ -139,9 +139,14 @@ export default function MainBlockSecond() {
                             listData?.map((value: any, index: number) => {
                                 return (
                                     <div
-                                        className="w-full flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
+                                        className="w-full relative flex flex-col gap-[5px] md:gap-[25px] shadow rounded-[4px] px-[10px] md:px-[20px] py-[20px] hover:bg-blue-50"
                                         key={index}
                                     >
+                                        {value?.status == 'closed' ? (
+                                            <div className="absolute text-white text-[14px] top-[-5px] right-0 px-[10px] bg-gray-500 py-[5px] rounded-[4px]">
+                                                Сбор заявок завершен
+                                            </div>
+                                        ) : null}
                                         <div className="w-full flex gap-[5px] md:gap-[20px] px-[1px]">
                                             <div className="w-[60px] h-[60px] relative">
                                                 {value?.user?.avatar != null ? (
@@ -193,7 +198,7 @@ export default function MainBlockSecond() {
                                                     </svg>
                                                 )}
                                             </div>
-                                            <div className="w-full flex flex-col gap-[5px]">
+                                            <div className="w-full flex flex-col gap-[5px] relative">
                                                 <div className="flex flex-col gap-[5px] justify-between">
                                                     <div className="">
                                                         <Link
@@ -221,6 +226,7 @@ export default function MainBlockSecond() {
                                                             {value?.description}
                                                         </Link>
                                                     </div>
+
                                                     {/* <div className="flex gap-[15px]">
                                                         <span className="text-[14px] font-light">
                                                             Файлы:
