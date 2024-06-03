@@ -279,7 +279,7 @@ export default function Page() {
                                                             {/* <td className="border border-[#eee]  dark:border-strokedark">
                                                     {item?.sector}
                                                 </td> */}
-                                                            <td className="border border-[#eee] text-[14px]  line-clamp-3 p-[5px] dark:border-strokedark">
+                                                            <td className="border border-[#eee] text-[14px] p-[5px] dark:border-strokedark">
                                                                 {
                                                                     item?.description
                                                                 }
