@@ -37,7 +37,9 @@ export default function Page({ params: { id } }: any) {
                                 {response?.data?.name}
                             </h2>
                             <p className="text-[16px] font-light">
-                                {response?.data?.action_sector}
+                                {response?.data?.action_sector != null
+                                    ? response?.data?.action_sector
+                                    : ''}
                             </p>
                             <div className="flex gap-[15px]">
                                 {response?.data?.voz_file?.length > 0 ? (

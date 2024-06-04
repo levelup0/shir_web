@@ -204,7 +204,10 @@ export default function CallerData() {
                                                                 : '')
                                                         }
                                                     >
-                                                        {value?.action_sector}
+                                                        {value?.action_sector !=
+                                                        null
+                                                            ? value?.action_sector
+                                                            : ''}
                                                     </span>
 
                                                     <span className="text-[14px] font-light"></span>
